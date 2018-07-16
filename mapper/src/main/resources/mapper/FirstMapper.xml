@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.staging.mapper.FirstMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.staging.entity.First">
+        <id column="id" property="id" />
+        <result column="userId" property="userId" />
+        <result column="theFirstLanding" property="theFirstLanding" />
+        <result column="theFirstLandingTime" property="theFirstLandingTime" />
+        <result column="register" property="register" />
+        <result column="registerTime" property="registerTime" />
+        <result column="perfectBasicInformation" property="perfectBasicInformation" />
+        <result column="perfectBasicInformationTime" property="perfectBasicInformationTime" />
+        <result column="perfectContactInformation" property="perfectContactInformation" />
+        <result column="perfectContactInformationTime" property="perfectContactInformationTime" />
+        <result column="bindEmailAddress" property="bindEmailAddress" />
+        <result column="bindEmailAddressTime" property="bindEmailAddressTime" />
+        <result column="bindMobilePhoneNumber" property="bindMobilePhoneNumber" />
+        <result column="bindMobilePhoneNumberTime" property="bindMobilePhoneNumberTime" />
+        <result column="uploadPic" property="uploadPic" />
+        <result column="uploadPicTime" property="uploadPicTime" />
+    </resultMap>
+
+</mapper>

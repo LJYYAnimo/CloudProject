@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.staging.mapper.ThedailytableMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.staging.entity.Thedailytable">
+        <id column="id" property="id" />
+        <result column="userId" property="userId" />
+        <result column="everydayLogin" property="everydayLogin" />
+        <result column="praiseWorks" property="praiseWorks" />
+        <result column="comment" property="comment" />
+        <result column="collectWorks" property="collectWorks" />
+        <result column="attentionAuthor" property="attentionAuthor" />
+        <result column="downloadWorks" property="downloadWorks" />
+        <result column="downloadCourseware" property="downloadCourseware" />
+        <result column="uploadingWorks" property="uploadingWorks" />
+        <result column="uploadingCourseware" property="uploadingCourseware" />
+        <result column="uploadingVideo" property="uploadingVideo" />
+        <result column="creatTime" property="creatTime" />
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.staging.mapper.IntegralTaskMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.staging.entity.IntegralTask">
+        <id column="id" property="id" />
+        <result column="task_property" property="taskProperty" />
+        <result column="task_english_name" property="taskEnglishName" />
+        <result column="task_name" property="taskName" />
+        <result column="task_integral" property="taskIntegral" />
+        <result column="task_empirical" property="taskEmpirical" />
+        <result column="task_explain" property="taskExplain" />
+        <result column="task_completion_status" property="taskCompletionStatus" />
+        <result column="task_link" property="taskLink" />
+        <result column="task_status" property="taskStatus" />
+    </resultMap>
+
+</mapper>

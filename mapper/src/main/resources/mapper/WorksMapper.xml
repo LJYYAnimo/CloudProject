@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.staging.mapper.WorksMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.staging.entity.Works">
+        <id column="id" property="id" />
+        <result column="works_title" property="worksTitle" />
+        <result column="works_typeid" property="worksTypeid" />
+        <result column="works_label" property="worksLabel" />
+        <result column="works_teacher" property="worksTeacher" />
+        <result column="works_about" property="worksAbout" />
+        <result column="works_address" property="worksAddress" />
+        <result column="works_photoAddress" property="worksPhotoaddress" />
+        <result column="works_date" property="worksDate" />
+        <result column="user_id" property="userId" />
+        <result column="works_audit" property="worksAudit" />
+        <result column="audit_date" property="auditDate" />
+        <result column="school_typeid" property="schoolTypeid" />
+        <result column="no_checked_reason" property="noCheckedReason" />
+        <result column="area_id" property="areaId" />
+        <result column="city_id" property="cityId" />
+        <result column="province_id" property="provinceId" />
+        <result column="worksIntegral" property="worksIntegral" />
+        <result column="stl" property="stl" />
+    </resultMap>
+
+</mapper>

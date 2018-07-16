@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.staging.mapper.CityMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.staging.entity.City">
+        <id column="id" property="id"/>
+        <result column="cname" property="cname"/>
+        <result column="city_banner" property="cityBanner"/>
+        <result column="city_logo" property="cityLogo"/>
+        <result column="pid" property="pid"/>
+    </resultMap>
+
+    <select id="queryPage" resultType="com.staging.entity.vo.CityVo">
+        SELECT c.*,p.province_name FROM t_city AS c
+        LEFT JOIN t_province AS p on c.pid = p.id limit #{beginIndex},#{pageSize}
+    </select>
+
+</mapper>

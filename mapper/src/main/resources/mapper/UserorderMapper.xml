@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.staging.mapper.UserorderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.staging.entity.Userorder">
+        <id column="order_Id" property="orderId" />
+        <result column="order_work_id" property="orderWorkId" />
+        <result column="order_Num" property="orderNum" />
+        <result column="order_Integral" property="orderIntegral" />
+        <result column="order_userId" property="orderUserid" />
+        <result column="order_status" property="orderStatus" />
+        <result column="order_time" property="orderTime" />
+    </resultMap>
+
+</mapper>

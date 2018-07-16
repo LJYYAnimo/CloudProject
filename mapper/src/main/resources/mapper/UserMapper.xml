@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.staging.mapper.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.staging.entity.User">
+        <id column="id" property="id" />
+        <result column="userName" property="userName" />
+        <result column="userPassword" property="userPassword" />
+        <result column="creatTime" property="creatTime" />
+        <result column="email" property="email" />
+        <result column="grade" property="grade" />
+        <result column="phone" property="phone" />
+        <result column="school" property="school" />
+        <result column="sex" property="sex" />
+        <result column="brithday" property="brithday" />
+        <result column="qq" property="qq" />
+        <result column="realName" property="realName" />
+        <result column="des" property="des" />
+        <result column="province" property="province" />
+        <result column="city" property="city" />
+        <result column="county" property="county" />
+        <result column="betterAddress" property="betterAddress" />
+        <result column="teacherName" property="teacherName" />
+        <result column="teacherEmail" property="teacherEmail" />
+        <result column="teacherPhone" property="teacherPhone" />
+        <result column="img" property="img" />
+        <result column="schoolTypeId" property="schoolTypeId" />
+        <result column="fans_num" property="fansNum" />
+        <result column="watch_num" property="watchNum" />
+        <result column="area_id" property="areaId" />
+        <result column="city_id" property="cityId" />
+        <result column="province_id" property="provinceId" />
+        <result column="directly_states" property="directlyStates" />
+        <result column="credits" property="credits" />
+        <result column="experience" property="experience" />
+        <result column="clazz" property="clazz" />
+        <result column="salt" property="salt" />
+    </resultMap>
+
+</mapper>

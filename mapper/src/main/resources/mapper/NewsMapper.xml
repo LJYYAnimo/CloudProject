@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.staging.mapper.NewsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.staging.entity.News">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="dept" property="dept" />
+        <result column="author" property="author" />
+        <result column="shooter" property="shooter" />
+        <result column="editor" property="editor" />
+        <result column="content" property="content" />
+        <result column="createTime" property="createTime" />
+        <result column="updateTime" property="updateTime" />
+        <result column="title_img" property="titleImg" />
+        <result column="about" property="about" />
+        <result column="area_id" property="areaId" />
+        <result column="city_id" property="cityId" />
+        <result column="province_id" property="provinceId" />
+    </resultMap>
+
+    <select id="queryPage" resultType="com.staging.entity.News">
+        select title,dept,author,shooter,editor,createTime,updateTime,title_img,about,area_id,city_id,province_id
+         from t_news  limit #{beginIndex},#{pageSize}
+    </select>
+
+    <sql id="select_columns">
+        id as id,title as title,dept as dept,author as author,shooter as shooter,editor as editor,createTime as createTime,
+        updateTime as updateTime,title_img as titleImg,about as about,area_id as areaId,city_id as cityId,province_id as provinceId
+    </sql>
+
+    <sql id="query_where_clause">
+        <if test="news != null and news.id != null">
+            id = #{news.id}
+        </if>
+        <if test="news != null and news.title != null and news.title != ''">
+            and title like concat('%', #{news.title}, '%')
+        </if>
+        <!--<if test="news != null and news.createTimeStart != null and news.createTimeEnd == null">-->
+            <!--and create_time <![CDATA[ >= ]]> #{news.createTimeStart}-->
+        <!--</if>-->
+        <!--<if test="news != null and news.createTimeStart == null and news.createTimeEnd != null">-->
+            <!--and create_time <![CDATA[ <= ]]> #{news.createTimeEnd}-->
+        <!--</if>-->
+        <!--<if test="news != null and news.createTimeStart != null and news.createTimeEnd != null">-->
+            <!--and create_time <![CDATA[ >= ]]> #{news.createTimeStart} and create_time <![CDATA[ <= ]]> #{news.createTimeEnd}-->
+        <!--</if>-->
+        <!--<if test="news != null and news.updateTimeStart != null and news.updateTimeEnd == null">-->
+            <!--and update_time <![CDATA[ >= ]]> #{news.updateTimeStart}-->
+        <!--</if>-->
+        <!--<if test="news != null and news.updateTimeStart == null and news.updateTimeEnd != null">-->
+            <!--and update_time <![CDATA[ <= ]]> #{news.updateTimeEnd}-->
+        <!--</if>-->
+        <!--<if test="news != null and news.updateTimeStart != null and news.updateTimeEnd != null">-->
+            <!--and update_time <![CDATA[ >= ]]> #{news.updateTimeStart} and update_time <![CDATA[ <= ]]> #{news.updateTimeEnd}-->
+        <!--</if>-->
+        <!--<if test="news != null and news.helpersRecordId != null">-->
+            <!--and helpers_record_id = #{news.helpersRecordId}-->
+        <!--</if>-->
+    </sql>
+
+    <select id="queryPageTitle" resultType="com.staging.entity.News">
+        select
+        <include refid="select_columns"/>
+         from t_news
+        <!--<where>-->
+            <!--<include refid="query_where_clause"/>-->
+        <!--</where>-->
+        limit #{pager.beginIndex},#{pager.pageSize}
+    </select>
+
+</mapper>

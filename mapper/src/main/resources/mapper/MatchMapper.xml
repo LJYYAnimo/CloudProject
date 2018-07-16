@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.staging.mapper.MatchMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.staging.entity.Match">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="des" property="des" />
+        <result column="startTime" property="startTime" />
+        <result column="endTime" property="endTime" />
+        <result column="image" property="image" />
+        <result column="notice" property="notice" />
+        <result column="commend" property="commend" />
+        <result column="createTime" property="createTime" />
+        <result column="updateTime" property="updateTime" />
+        <result column="match_bonus" property="matchBonus" />
+        <result column="match_type" property="matchType" />
+        <result column="matcherCount" property="matcherCount" />
+        <result column="match_about" property="matchAbout" />
+        <result column="match_introduction" property="matchIntroduction" />
+        <result column="match_rules" property="matchRules" />
+        <result column="area_id" property="areaId" />
+        <result column="city_id" property="cityId" />
+        <result column="province_id" property="provinceId" />
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.staging.mapper.NoticeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.staging.entity.Notice">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="editor" property="editor" />
+        <result column="dept" property="dept" />
+        <result column="author" property="author" />
+        <result column="shooter" property="shooter" />
+        <result column="content" property="content" />
+        <result column="createTime" property="createTime" />
+        <result column="updateTime" property="updateTime" />
+        <result column="title_img" property="titleImg" />
+        <result column="about" property="about" />
+        <result column="area_id" property="areaId" />
+        <result column="city_id" property="cityId" />
+        <result column="province_id" property="provinceId" />
+    </resultMap>
+
+</mapper>

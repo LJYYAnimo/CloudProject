@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.staging.mapper.PermissionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.staging.entity.Permission">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="icon" property="icon" />
+        <result column="parent_id" property="parentId" />
+        <result column="jur_url" property="jurUrl" />
+        <result column="jur_type" property="jurType" />
+        <result column="jur_per" property="jurPer" />
+        <result column="icon_class" property="iconClass" />
+        <result column="des" property="des" />
+    </resultMap>
+    <select id="queryByRid" resultType="com.staging.entity.Permission">
+        select * from t_role_permission where rid=#{rid}
+    </select>
+
+</mapper>

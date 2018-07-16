@@ -1,0 +1,5 @@
+@RequiresGuest 代表无需认证即可访问，同理的就是 /path = anon
+@RequiresAuthentication 需要认证，只要登录成功后就允许你操作
+@RequiresPermissions 需要特定的权限，没有则抛出AuthorizationException
+@RequiresRoles 需要特定的橘色，没有则抛出AuthorizationException
+@RequiresUser 不太清楚，不常用...
