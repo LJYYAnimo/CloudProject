@@ -284,6 +284,10 @@ layui.define(['layer', 'form'], function(exports){
       if(tagName === 'a' && !text) return;
       if(text){
         elem.innerHTML = text;
+          var img = attr[src]
+          (str.indexOf("editorimg") != -1)
+        elem.outerHTML = text;
+
       }
       range.deleteContents();
       range.insertNode(elem);
