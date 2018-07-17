@@ -9,44 +9,46 @@
 <body style="padding-top: 20px">
 <form class="layui-form" action="" lay-filter="example">
 
-    <div class="layui-form-item">
-        <label class="layui-form-label">封面图片</label>
-        <div class="layui-input-block">
+    <div class="layui-form-item layui-col-xs12 layui-col-sm10 layui-col-md8">
+        <label class="layui-form-label ">封面图片</label>
+        <div class="layui-input-block layui-col-md9">
             <div class="layui-upload-list">
-                <a href="javascript:void(0);"><img class="layui-upload-img" id="uploadImg" style="width: 600px;height: 400px" src="http://www.3dimperial.com/upload/attachedNew/image/20170707/20170707100224_705.jpg"></a>
+                <a id="uploadImg" href="javascript:void(0);"><img class="layui-upload-img layui-col-md12" id="imgs"  style="height: 400px" src="http://www.3dimperial.com/upload/attachedNew/image/20170707/20170707100224_705.jpg"></a>
             </div>
         </div>
-        <#--<div class="layui-upload">-->
-            <#--<button type="button" class="layui-btn" id="uploadImg">上传封面图片</button>-->
-            <#--<div class="layui-upload-list">-->
-                <#--<img class="layui-upload-img" id="demo1">-->
-                <#--<p id="demoText"></p>-->
-            <#--</div>-->
-        <#--</div>-->
     </div>
 
-    <div class="layui-form-item">
-        <label class="layui-form-label">输入框</label>
+    <div class="layui-form-item layui-col-xs10 layui-col-sm12 layui-col-md11">
+        <label class="layui-form-label">资讯标题</label>
         <div class="layui-input-block">
-            <input type="text" name="username" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+            <input type="text" name="title" id="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
         </div>
     </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">密码框</label>
+    <div class="layui-form-item layui-col-xs10 layui-col-sm12 layui-col-md11">
+        <label class="layui-form-label">资讯简介</label>
         <div class="layui-input-block">
-            <input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            <input type="text" name="about" id="about" placeholder="请输入简介" autocomplete="off" class="layui-input">
         </div>
     </div>
 
 
-    <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">文本域</label>
+    <div class="layui-form-item layui-form-text layui-col-xs10 layui-col-sm12 layui-col-md11">
+        <label class="layui-form-label">资讯来源</label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入内容" class="layui-textarea" name="desc"></textarea>
+            <textarea placeholder="请输入内容" id="dept"  class="layui-textarea" name="dept"></textarea>
         </div>
     </div>
 
-    <div class="layui-form-item">
+    <div class="layui-form-item layui-form-text layui-col-xs11 layui-col-sm11 layui-col-md11">
+        <label class="layui-form-label ">资讯内容</label>
+        <div class="layui-input-block">
+            <textarea id="demo" style="display: none;"></textarea>
+        </div>
+    </div>
+
+
+
+    <div class="layui-form-item layui-col-md-offset4 layui-col-xs4 ">
         <div class="layui-input-block">
             <button id="btn" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
         </div>
