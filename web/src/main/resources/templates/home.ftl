@@ -78,12 +78,12 @@
             <ul id="animo" class="layui-nav layui-nav-tree" lay-filter="kitNavbar" kit-navbar>
                 <#list permissionVo.permissionVoList as items>
                 <li class="layui-nav-item">
-                    <a href="javascript:;"><span>${items.permission.title}</span></a>
+                    <a href="javascript:;"><span>${items.permission.name}</span></a>
                     <#list items.permissionList as item>
                     <dl class="layui-nav-child">
                         <dd>
-                            <a href="javascript:;" kit-target data-options="{url:'${item.jurUrl}',icon:'&#xe770;',title:'${item.title}',id:'${item.id}'}">
-                                <i class="layui-icon">&#xe770;</i><span>${item.title}</span></a>
+                            <a href="javascript:;" kit-target data-options="{url:'${item.jurUrl}',icon:'&#xe770;',title:'${item.name}',id:'${item.id}'}">
+                                <i class="layui-icon">&#xe770;</i><span>${item.name}</span></a>
                         </dd>
                     </dl>
                     </#list>

@@ -5,9 +5,9 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.staging.entity.Permission">
         <id column="id" property="id" />
-        <result column="title" property="title" />
+        <result column="name" property="name" />
         <result column="icon" property="icon" />
-        <result column="parent_id" property="parentId" />
+        <result column="pid" property="pid" />
         <result column="jur_url" property="jurUrl" />
         <result column="jur_type" property="jurType" />
         <result column="jur_per" property="jurPer" />
