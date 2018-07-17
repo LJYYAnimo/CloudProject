@@ -85,12 +85,12 @@ public class ShiroUtils {
         for(Permission permission : permissions){
             PermissionVo permissionVo;
             //如果父id为0  这个就是目录
-            if(permission.getPid()==0){
+            if(permission.getpId()==0){
                 permissionVo = new PermissionVo();
                 permissionVo.setPermission(permission);
                 List<Permission> permissionList = new ArrayList<>();
                 for(Permission permission1 : permissions){
-                    if(permission1.getPid()==permission.getId()){
+                    if(permission1.getpId()==permission.getId()){
                         permissionList.add(permission1);
                     }
                 }

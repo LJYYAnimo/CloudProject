@@ -37,7 +37,8 @@ public class Permission extends Model<Permission> {
     /**
      * 父id
      */
-    private Integer pid;
+    @TableField("p_id")
+    private Integer pId;
     /**
      * 权限地址
      */
@@ -68,4 +69,11 @@ public class Permission extends Model<Permission> {
         return this.id;
     }
 
+    public void setpId(Integer pId) {
+        this.pId = pId;
+    }
+
+    public Integer getpId() {
+        return pId;
+    }
 }
