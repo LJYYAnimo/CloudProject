@@ -155,7 +155,6 @@ layui.define(['layer', 'form'], function(exports){
         ,'a{color:#01AAED; text-decoration:none;}a:hover{color:#c00}'
         ,'p{margin-bottom: 10px;}'
         ,'img{display: inline-block; border: none; vertical-align: middle;width:700px}'
-        ,'img{display: inline-block; border: none; vertical-align: middle;}'
         ,'pre{margin: 10px 0; padding: 10px; line-height: 20px; border: 1px solid #ddd; border-left-width: 6px; background-color: #F2F2F2; color: #333; font-family: Courier New; font-size: 12px;}'
       ,'</style>'].join(''))
       ,body = conts.find('body');
@@ -413,7 +412,6 @@ layui.define(['layer', 'form'], function(exports){
                   layer.msg("图片");
               }
 
-            }
           });
         });
       }
