@@ -154,6 +154,7 @@ layui.define(['layer', 'form'], function(exports){
         ,'body{padding: 10px; line-height: 20px; overflow-x: hidden; word-wrap: break-word; font: 14px Helvetica Neue,Helvetica,PingFang SC,Microsoft YaHei,Tahoma,Arial,sans-serif; -webkit-box-sizing: border-box !important; -moz-box-sizing: border-box !important; box-sizing: border-box !important;}'
         ,'a{color:#01AAED; text-decoration:none;}a:hover{color:#c00}'
         ,'p{margin-bottom: 10px;}'
+        ,'img{display: inline-block; border: none; vertical-align: middle;width:700px}'
         ,'img{display: inline-block; border: none; vertical-align: middle;}'
         ,'pre{margin: 10px 0; padding: 10px; line-height: 20px; border: 1px solid #ddd; border-left-width: 6px; background-color: #F2F2F2; color: #333; font-family: Courier New; font-size: 12px;}'
       ,'</style>'].join(''))
@@ -394,7 +395,10 @@ layui.define(['layer', 'form'], function(exports){
           upload.render({
             url: uploadImage.url
             ,method: uploadImage.type
+            ,size: 5120
             ,elem: $(that).find('input')[0]
+            ,acceptMime: 'image/jpg, image/png,image/jpeg'
+            ,ext: 'jpg|png|jpeg'
             ,done: function(res){
               if(res.code == 0){
                 res.data = res.data || {};
@@ -405,6 +409,10 @@ layui.define(['layer', 'form'], function(exports){
               } else {
                 layer.msg(res.msg||'上传失败');
               }
+            },error: function(index, upload){
+                  layer.msg("图片");
+              }
+
             }
           });
         });
