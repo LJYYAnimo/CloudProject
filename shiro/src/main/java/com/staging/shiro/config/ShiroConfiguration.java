@@ -171,6 +171,7 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/images/**", "anon");
         filterChainDefinitionMap.put("/layui/**", "anon");
         filterChainDefinitionMap.put("/xiangcecss/**", "anon");
+        filterChainDefinitionMap.put("/ztree/**", "anon");
         filterChainDefinitionMap.put("/user/login", "anon");
         //从数据库中加载权限规则
         Map<String, String> permissions = new LinkedHashMap<>();

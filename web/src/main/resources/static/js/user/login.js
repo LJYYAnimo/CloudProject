@@ -11,7 +11,7 @@ layui.use(['table', 'upload', 'form'], function () {
             contentType: "application/json",
             success: function (response) {
                 if (response.code == 0) {
-                    layer.msg(response.message, {icon: 6});
+                    layer.msg("登录成功", {icon: 6});
                     window.location.href = "/user/home";
                 } else {
                     layer.msg(response.message, {icon: 5})
