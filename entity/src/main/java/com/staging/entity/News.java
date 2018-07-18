@@ -50,10 +50,12 @@ public class News extends Model<News> {
     /**
      * 创建时间
      */
+    @TableField("createTime")
     private Date createTime;
     /**
      * 更新时间
      */
+    @TableField("updateTime")
     private Date updateTime;
     /**
      * 标题旁图片

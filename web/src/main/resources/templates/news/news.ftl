@@ -24,6 +24,7 @@
 <script type="text/javascript" src="/layui/layui.js"></script>
 <script src="/js/public.js"></script>
 <script src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/axios.min.js"></script>
 <script src="/js/qs.js"></script>
 <script src="/xiangcecss/js/baguetteBox.min.js"></script>
 <script src="/js/news/news.js"></script>

@@ -44,11 +44,20 @@ layui.use(['table','upload','form'], function(){
         }
     });
 
+
+    function reloads() {
+        table.reload('idTest', {
+            page: {
+                curr: 1
+            }
+        });
+    }
+
     $("#addNews").click(function () {
         layer.open({
             type: 2,
             title:'添加资讯',
-            area: ['1000px', '700px'],
+            area: ['1000px', '730px'],
             fixed: false, //不固定
             maxmin: true,
             content: '/news/addUpdateNews'
@@ -64,7 +73,12 @@ layui.use(['table','upload','form'], function(){
                 ,btn: ['删除', '取消']
                 ,yes: function(index){
                     layer.close(index);
-                    layer.msg("删除成功",{icon:6});
+                    axios.post('/news/deletNew', Qs.stringify(data)).then(function (response) {
+                        return layer.msg(response.data.message,{icon:6});
+                    }).catch(function (error) {
+                        layer.msg(error);
+                    });
+
                 }
             });
         }else if(obj.event === 'query'){
