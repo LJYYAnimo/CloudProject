@@ -2,8 +2,6 @@ layui.use(['table', 'upload', 'form'], function () {
     var table = layui.table,
         upload = layui.upload,
         form = layui.form;
-    var $ = layui.$;
-
 
     table.render({
         elem: '#xinkai'
@@ -27,6 +25,27 @@ layui.use(['table', 'upload', 'form'], function () {
         ]]
         , id: 'idTest'
         , page: true
+    });
+
+    table.on('tool(demo)', function (obj) {
+        var data = obj.data;
+        if (obj.event === 'distribution') {
+            layer.open({
+                type: 2,
+                title: '分配权限',
+                area: ['475px', '475px'],
+                fixed: false, //不固定
+                maxmin: true,
+                content: '/permission/page',
+                success: function (index) {
+                    //TODO 未完善的权限分配
+                    alert(4);
+                }
+            });
+        }else if(obj.event === 'delete'){
+            layer.msg("删除");
+        }
+
     });
 
 

@@ -4,10 +4,9 @@ layui.use(['table', 'upload', 'form'], function () {
         form = layui.form;
     var $ = layui.$;
 
-
     table.render({
         elem: '#xinkai'
-        , url: '/schoolType/pager'
+        , url: '/userType/pager'
         , cellMinWidth: 100 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
         , method: 'post'
         ,dataType:'json'
@@ -31,15 +30,19 @@ layui.use(['table', 'upload', 'form'], function () {
     $("#add").click(function () {
         layer.open({
             type: 1,
-            title: '学校类型添加',
+            title: '用户类型添加',
             shadeClose: true,
             area: ['380px', '175px'],
             content: $('#addDiv')
         });
     });
+
+
+
     //监听提交
-    form.on('submit(schoolTypeAdd)', function (data) {
-        axios.post('/schoolType/save', Qs.stringify(data.field)).then(function (response) {
+    form.on('submit(userTypeAdd)', function (data) {
+        axios.post('/userType/save', Qs.stringify(data.field)).then(function (response) {
+            console.log(response);
             if (response.data.code == 0) {
                 layer.closeAll();
                 layer.msg(response.data.message, {icon: 6});
@@ -56,42 +59,21 @@ layui.use(['table', 'upload', 'form'], function () {
     //监听工具条
     table.on('tool(demo)', function (obj) {
         var data = obj.data;
-        if (obj.event === 'del') {
+        if (obj.event === 'delete') {
             layer.msg('确定删除？', {
                 time: 0 //不自动关闭
                 , btn: ['删除', '取消']
                 , yes: function (index) {
-                    $.ajax({
-                        url: "/schoolType/delete",
-                        data: JSON.stringify(data),
-                        type: "POST",
-                        dataType: "json",
-                        contentType: "application/json;charset=utf-8",
-                        success: function (response) {
-                            if (response.code == 0) {
-                                layer.close(index);
-                                layer.msg(response.message, {icon: 6});
-                                return table.reload("idTest");
-                            }
-                            layer.msg(response.message, {icon: 5});
-                        }, error: function (response) {
-                            layer.msg("接口请求异常", {icon: 5})
+                    axios.post('/userType/delete', Qs.stringify(data)).then(function (response) {
+                        if (response.data.code == 0) {
+                            layer.close(index);
+                            layer.msg(response.data.message, {icon: 6});
+                            return table.reload("idTest");
                         }
+                        layer.msg(response.data.message, {icon: 5});
+                    }).catch(function (error) {
+                        layer.msg(error);
                     });
-                }
-            });
-        } else if (obj.event === 'query') {
-            layer.open({
-                type: 2,
-                title: '所有学校',
-                area: ['1165px', '475px'],
-                fixed: false, //不固定
-                maxmin: true,
-                content: '/school/page',
-                success: function (layero, index) {
-                    // 向子页面传递参数
-                    var iframe = window['layui-layer-iframe' + index];
-                    iframe.child(obj.data);
                 }
             });
         }

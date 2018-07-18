@@ -2,6 +2,10 @@ package com.staging.common;
 
 import java.util.List;
 
+/**
+ * 如果自己实现分页的话用此方法返回 比如需要动态传递参数
+ * @param <T>
+ */
 public class Pager<T> {
 
     private Integer pageNo;

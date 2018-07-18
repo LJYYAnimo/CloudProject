@@ -93,11 +93,7 @@ public class MpGenerator {
         // strategy.setCapitalMode(true);// 全局大写命名 ORACLE 注意
         strategy.setTablePrefix(new String[] { "t_"});// 此处可以修改为您的表前缀
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
-<<<<<<< HEAD
-        strategy.setInclude(new String[] { "t_user_role","t_role_permission" }); // 需要生成的表
-=======
-        strategy.setInclude(new String[] { "t_role","t_permission" }); // 需要生成的表
->>>>>>> 0320647739512dcb4af6309dc4280318f9cc6557
+        strategy.setInclude(new String[] { "t_user_type"}); // 需要生成的表
         // strategy.setExclude(new String[]{"test"}); // 排除生成的表
         // 自定义实体父类
         //strategy.setSuperEntityClass("com.spf.model.Entity");

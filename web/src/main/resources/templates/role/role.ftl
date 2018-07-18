@@ -9,11 +9,15 @@
 <table id="xinkai" lay-filter="demo"></table>
 
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn layui-btn-xs" lay-event="query">分配权限</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="query">删除</a>
+    <a class="layui-btn layui-btn layui-btn-xs" lay-event="distribution">分配权限</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
 </script>
 
+<script type="text/javascript" src="/js/jquery.min.js"></script>
 <script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/ztree/js/jquery.ztree.all.js"></script>
+<script type="text/javascript" src="/ztree/js/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="/ztree/js/jquery.ztree.excheck.js"></script>
 <script type="text/javascript" src="/js/role/role.js"></script>
 </body>
 </html>

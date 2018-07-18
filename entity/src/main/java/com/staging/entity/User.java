@@ -166,6 +166,9 @@ public class User extends Model<User> {
 
     private String salt;
 
+    @TableField("user_type")
+    private Integer userType;
+
     @Override
     protected Serializable pkVal() {
         return this.id;

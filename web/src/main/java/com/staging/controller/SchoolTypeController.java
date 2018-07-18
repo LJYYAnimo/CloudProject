@@ -41,7 +41,7 @@ public class SchoolTypeController {
     @PostMapping("save")
     @ApiOperation(value = "类型添加")
     @ResponseBody
-    public ServerResponse save(@Validated(value = Groups.Default.class)@RequestBody SchoolType schoolType){
+    public ServerResponse save(@Validated(value = Groups.Default.class)SchoolType schoolType){
         if(cityService.insert(schoolType)){
             return ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_SAVE);
         }
@@ -56,7 +56,6 @@ public class SchoolTypeController {
         if(result!=0){
             return ServerResponse.createByError("该类型下还有学校不能删除");
         }
-        schoolService.selectCount( new EntityWrapper<School>().eq("school_type", schoolType.getId()));
         if(cityService.deleteById(schoolType.getId())){
             return ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_DELET);
         }

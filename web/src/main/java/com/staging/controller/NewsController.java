@@ -16,12 +16,15 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -144,8 +147,16 @@ public class NewsController {
     @PostMapping("deletNew")
     @ApiOperation("删除资讯")
     @ResponseBody
-    public ServerResponse<String> deletNew(@RequestBody News news){
+    public ServerResponse<String> deletNew(News news){
         return newsService.deleteById(news.getId())?ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_DELET):ServerResponse.createByError(ServerResponseConstant.SERVERRESPONSE_ERROR_DELET);
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+//        System.out.println("============处理所有@RequestMapping注解方法，在其执行之前初始化数据绑定器");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        dateFormat.setLenient(false);//这句一个不要存在，不然还是处理不了时间转换
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 }
 

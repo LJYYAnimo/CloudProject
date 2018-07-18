@@ -1,7 +1,8 @@
-layui.use(['table', 'upload', 'form'], function () {
+layui.use(['table', 'layer', 'form'], function () {
     var table = layui.table,
-        upload = layui.upload,
+        layer = layui.layer,
         form = layui.form;
+
     var setting = {
         check: {
             enable: true,
@@ -33,17 +34,7 @@ layui.use(['table', 'upload', 'form'], function () {
         limit: 100
     };
 
-    var permission={
-        "id":null,
-        "name":null,
-        "icon":null,
-        "pId":null,
-        "jurUrl":null,
-        "jurType":null,
-        "jurPer":null,
-        "iconClass":null,
-        "des":null
-    };
+
 
     //用户点击单选框的回调函数
     function zTreeBeforeCheck(treeId, treeNode) {
@@ -56,29 +47,44 @@ layui.use(['table', 'upload', 'form'], function () {
     }
 
     function zTreeBeforeMouseDown(treeId, treeNode) {
-        permission.id = treeNode.id;
-        permission.name = treeNode.name;
-        permission.icon = treeNode.icon;
-        permission.pId = treeNode.pId;
-        permission.jurUrl = treeNode.jurUrl;
-        permission.jurType = treeNode.jurType;
-        permission.jurPer = treeNode.jurPer;
-        permission.iconClass = treeNode.iconClass;
-        permission.des = treeNode.des;
-        form.val('formDemo', permission);
+        form.val('permissionForm',{
+            "id":treeNode.id,
+            "name":treeNode.name,
+            "icon":treeNode.icon,
+            "pId":treeNode.pId,
+            "jurUrl":treeNode.jurUrl,
+            "jurType":treeNode.jurType,
+            "jurPer":treeNode.jurPer,
+            "iconClass":treeNode.iconClass,
+            "des":treeNode.des
+        });
         layer.open({
-            type: 2,
-            title: '菜单操作',
-            area: ['1165px', '475px'],
-            fixed: false, //不固定
+            type: 1,
+            title: '编辑菜单',
+            shadeClose: true,
+            area: ['333px', '475px'],
             maxmin: true,
-            content: $("#permissionEdit")
+            content: $('#permissionEdit')
         });
     }
-
     axios.post('/permission/pager', Qs.stringify(pagerLayui)).then(function (response) {
         $.fn.zTree.init($("#treeDemo"), setting, response.data.rows);
     }).catch(function (error) {
         layer.msg(error);
     });
+
+    //监听提交
+    form.on('submit(formDemo)', function(data){
+        axios.post('/permission/update', Qs.stringify(data.field)).then(function (response) {
+            if(response.data.code==0){
+                layer.msg(response.data.message);
+                layer.closeAll();
+                location.reload(true);
+            }
+        }).catch(function (error) {
+            layer.msg(error);
+        });
+        return false;
+    });
+
 });

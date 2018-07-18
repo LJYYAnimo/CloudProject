@@ -20,8 +20,8 @@ layui.use(['table', 'upload', 'form'], function () {
         elem: '#xinkai'
         , url: '/school/pager'
         , cellMinWidth: 100 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-        , contentType: "application/json"
         , method: 'post'
+        ,dataType:'json'
         , where: value
         , response: {
             statusName: 'code' //数据状态的字段名称，默认：code

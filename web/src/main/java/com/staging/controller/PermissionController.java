@@ -1,10 +1,15 @@
 package com.staging.controller;
 
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.staging.common.PagerLayui;
+import com.staging.common.ServerResponse;
+import com.staging.common.constant.ServerResponseConstant;
+import com.staging.entity.Permission;
 import com.staging.service.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
+
+import java.util.List;
 
 /**
  * <p>
@@ -40,12 +47,24 @@ public class PermissionController {
         return p;
     }
 
+    @PostMapping("update")
+    @ResponseBody
+    public ServerResponse update(Permission permission){
+        boolean result = permissionService.updateById(permission);
+        if(result){
+            return ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_UPDATE);
+        }
+        return ServerResponse.createByError(ServerResponseConstant.SERVERRESPONSE_ERROR_UPDATE);
+    }
+
     /**
      * 权限地址
      * @return
      */
     @GetMapping("page")
-    public String page(){
+    public String page(ModelMap map){
+        List<Permission> list = permissionService.selectList(new EntityWrapper<Permission>().eq("p_id",0));
+        map.addAttribute("permissionList",list);
         return "permission/permission";
     }
 

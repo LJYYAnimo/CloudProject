@@ -2,6 +2,9 @@ package com.staging.controller;
 
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.staging.common.Pager;
+import com.staging.common.PagerLayui;
 import com.staging.common.ServerResponse;
 import com.staging.entity.*;
 import com.staging.entity.vo.RolePermissionVo;
@@ -58,6 +61,9 @@ public class UserController {
     @Autowired
     private RolePermissionService rolePermissionService;
 
+    @Autowired
+    private UserTypeService userTypeService;
+
     /**
      * 用户登录
      * @param user
@@ -111,6 +117,26 @@ public class UserController {
     }
 
 
+    @PostMapping("pager")
+    @ResponseBody
+    public PagerLayui pager(PagerLayui pagerLayui ,UserType userType,EntityWrapper<User> entityWrapper){
+        Page<User> pageEntity = new Page(pagerLayui.getPage(), pagerLayui.getLimit());
+        UserType utp = userTypeService.selectOne(new EntityWrapper<UserType>().eq("name",userType.getName()));
+        if(!StringUtils.isEmpty(utp)){
+            entityWrapper.eq("user_type",utp.getId());
+        }
+        pageEntity = userService.selectPage(pageEntity,entityWrapper);
+        PagerLayui p = new PagerLayui();
+        p.setRows(pageEntity.getRecords());
+        p.setTotal(pageEntity.getTotal());
+        return p;
+    }
+
+    @GetMapping("page")
+    public String page(ModelMap map){
+        map.addAttribute("userTypeList",userTypeService.selectList(new EntityWrapper<>()));
+        return "user/user";
+    }
 
 
     @GetMapping("home")

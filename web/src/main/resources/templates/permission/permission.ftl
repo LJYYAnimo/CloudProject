@@ -11,9 +11,16 @@
 <body style="padding-top:20px">
 
 <div>
-<ul id="treeDemo" class="ztree" style="float: left;"></ul>
+<ul id="treeDemo" class="ztree"></ul>
 
-<form class="layui-form" style="display: none" id="permissionEdit">
+<div id="permissionEdit" style="display: none">
+<form class="layui-form" lay-filter="permissionForm">
+    <div class="layui-form-item" hidden>
+        <div class="layui-input-inline">
+            <input type="text" name="id" class="layui-input">
+        </div>
+    </div>
+
     <div class="layui-form-item">
         <label class="layui-form-label">菜单名称</label>
         <div class="layui-input-inline">
@@ -37,9 +44,11 @@
         <div class="layui-input-inline">
             <select name="pId" lay-verify="required">
                 <option value=""></option>
-                <option value="0">系统管理</option>
-                <option value="1">权限管理</option>
-                <option value="2">云平台</option>
+                <#list permissionList as item>
+
+                <option value="${item.id}">${item.name}</option>
+
+                </#list>
             </select>
         </div>
     </div>
@@ -63,13 +72,15 @@
     </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            <button class="layui-btn" lay-submit lay-filter="formDemo">修改</button>
         </div>
     </div>
 </form>
+    </div>
+
 </div>
-<script type="text/javascript" src="/ztree/js/jquery-1.4.4.min.js"></script>
+</body>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
 <script type="text/javascript" src="/ztree/js/jquery.ztree.all.js"></script>
 <script type="text/javascript" src="/ztree/js/jquery.ztree.core.js"></script>
 <script type="text/javascript" src="/ztree/js/jquery.ztree.excheck.js"></script>
@@ -77,5 +88,4 @@
 <script type="text/javascript" src="/js/qs.js"></script>
 <script type="text/javascript" src="/layui/layui.js"></script>
 <script type="text/javascript" src="/js/permission/permission.js"></script>
-</body>
 </html>
