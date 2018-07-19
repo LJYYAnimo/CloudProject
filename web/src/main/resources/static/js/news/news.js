@@ -27,10 +27,10 @@ layui.use(['table','upload','form'], function(){
             ,{field:'editor', title:'作者',align: 'center'}
             ,{field:'createTime', title:'创建时间',align: 'center'}
             ,{field:'updateTime', title:'更新时间',align: 'center'}
-            ,{field:'titleImg', title:'标题封面',align: 'center',templet:'<div><a class="" href="{{ d.titleImg }}"  alt="{{ d.titleImg }}">' +
+            ,{field:'titleImg',width:170, title:'标题封面',align: 'center',templet:'<div><a class="" href="{{ d.titleImg }}"  alt="{{ d.titleImg }}">' +
             '<img src="{{ d.titleImg }}" style="width: 150px;height: 50px" alt="40x20" class="img-rounded"></a></div>'}
             ,{field:'about', title:'简介',align: 'center'}
-            ,{field:'caozuo',width:150,title: '操作',toolbar: '#barDemo',fixed: 'right'}
+            ,{field:'caozuo',width:200,title: '操作',toolbar: '#barDemo',fixed: 'right'}
         ]]
         ,id: 'idTest'
         ,page:true,
@@ -53,15 +53,26 @@ layui.use(['table','upload','form'], function(){
         });
     }
 
-    $("#addNews").click(function () {
+    function openNews(data,title) {
         layer.open({
             type: 2,
-            title:'添加资讯',
+            title: title,
             area: ['1000px', '730px'],
             fixed: false, //不固定
             maxmin: true,
-            content: '/news/addUpdateNews'
+            content: '/news/addUpdateNews',
+            success: function (layero, index) {
+                // 向子页面传递参数
+                var iframe = window['layui-layer-iframe' + index];
+                iframe.child(data);
+            },end:function(index){
+                // reloads();
+            }
         });
+    }
+
+    $("#addNews").click(function () {
+        openNews("","添加资讯");
     });
 
     //监听工具条
@@ -74,15 +85,34 @@ layui.use(['table','upload','form'], function(){
                 ,yes: function(index){
                     layer.close(index);
                     axios.post('/news/deletNew', Qs.stringify(data)).then(function (response) {
+                        reloads();
                         return layer.msg(response.data.message,{icon:6});
                     }).catch(function (error) {
                         layer.msg(error);
                     });
-
                 }
             });
         }else if(obj.event === 'query'){
-            layer.msg("查看区域");
+            if(data!=null&&data!=undefined){
+                layer.open({
+                    type: 2,
+                    title: '资讯详情',
+                    area: ['1000px', '730px'],
+                    fixed: false, //不固定
+                    maxmin: true,
+                    content: '/news/article',
+                    success: function (layero, index) {
+                        // 向子页面传递参数
+                        var iframe = window['layui-layer-iframe' + index];
+                        iframe.child(data);
+                    },end:function(index){
+                        // reloads();
+                    }
+                });
+            }
+
+        }else if(obj.event === 'update'){
+            openNews(data,"更新资讯");
         }
     });
 

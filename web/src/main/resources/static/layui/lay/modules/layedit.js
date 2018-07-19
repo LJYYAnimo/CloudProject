@@ -36,7 +36,7 @@
         if (i[0]) return e(i[0].document.body).text()
     }, c.prototype.setContent = function (t, i, a) {
         var l = u(t);
-        l[0] && (a ? e(l[0].document.body).append(i) : e(l[0].document.body).html(i), layedit.sync(t))
+        l[0] && (a ? e(l[0].document.body).append(i) : e(l[0].document.body).html(i), this.sync(t))
     }, c.prototype.sync = function (t) {
         var i = u(t);
         if (i[0]) {
@@ -145,7 +145,8 @@
                 layui.use("upload", function (o) {
                     var r = l.uploadImage || {};
                     o.render({
-                        url: r.url, method: r.type, elem: e(n).find("input")[0],
+                        url: r.url, method: r.type, elem: e(n).find("input")[0]
+                        ,size: 5120,
                         done: function (e) {
                             0 == e.code ? (e.data = e.data || {}, v.call(t, "img", {
                                 src: e.data.src,

@@ -18,7 +18,8 @@
 
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-    <a class="layui-btn layui-btn layui-btn-xs" lay-event="query">查看详情</a>
+    <a class="layui-btn layui-btn-xs" lay-event="query">查看详情</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="update">更新</a>
 </script>
 
 <script type="text/javascript" src="/layui/layui.js"></script>

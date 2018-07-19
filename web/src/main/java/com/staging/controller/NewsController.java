@@ -7,6 +7,7 @@ import com.staging.common.Pager;
 import com.staging.common.ServerResponse;
 import com.staging.common.constant.ServerResponseConstant;
 import com.staging.common.enums.MIMETypeEnum;
+import com.staging.common.utils.DeleteFileUtil;
 import com.staging.common.utils.FileUtils;
 import com.staging.entity.News;
 import com.staging.entity.vo.LayEditMsg;
@@ -18,11 +19,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -71,6 +74,17 @@ public class NewsController {
     }
 
     /**
+     * @Author: 95DBC 
+     * @Date: 2018/7/19 14:29
+     * @Description: 查看资讯详情的页面跳转
+     *
+     */
+    @GetMapping("article")
+    public String Article(){
+        return "news/article";
+    }
+
+    /**
      *  TODO 资讯搜索后期可能会增加多个字段查询
      * 模糊搜索某个字段的所有资讯和查询所有资讯
      * @param
@@ -99,7 +113,6 @@ public class NewsController {
         String fileName = file.getOriginalFilename();
         String value = FileUtils.getExtensionWithoutDot(fileName);
         if(MIMETypeEnum.JPEG.getValue().equals(value) || MIMETypeEnum.JPG.getValue().equals(value)|| MIMETypeEnum.PNG.getValue().equals(value)){
-
             String path = FileUtils.uploadPath(request,"editorimg","admin/");//把用户的图片存放到admin用户的editorimg文件夹下
             try {
                 String file1 = FileUtils.uploadFile(file, path);
@@ -109,7 +122,6 @@ public class NewsController {
             } catch (IOException e) {
                 e.printStackTrace();
                 layui.setCode(1);
-
                 layui.setMsg("上传错误");
                 return layui;
             }
@@ -126,7 +138,6 @@ public class NewsController {
         String fileName = file.getOriginalFilename();
         String value = FileUtils.getExtensionWithoutDot(fileName);
         if(MIMETypeEnum.JPEG.getValue().equals(value) || MIMETypeEnum.JPG.getValue().equals(value)|| MIMETypeEnum.PNG.getValue().equals(value)){
-
             String path = FileUtils.uploadPath(request,"img","admin/");//把用户的图片存放到adming用户的img下
             try {
                 String file1 = FileUtils.uploadFile(file, path);
@@ -134,20 +145,54 @@ public class NewsController {
                 news.setTitleImg("/upload/admin/img/"+file1);
                 news.setCreateTime(Calendar.getInstance().getTime());
                 newsService.insert(news);
-                return ServerResponse.createBySuccess("添加成功");
+                return ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_SAVE);
             } catch (IOException e) {
                 e.printStackTrace();
                 return ServerResponse.createByError("上传异常");
             }
-
         }
-        return ServerResponse.createByError("上传失败");
+        return ServerResponse.createByError(ServerResponseConstant.SERVERRESPONSE_ERROR_SAVE);
+    }
+
+    /**
+     * @Author: 95DBC
+     * @Date: 2018/7/18 17:27
+     * @param news 要更新的对象
+     * @param file  上传的图片
+     * @param deletImg  更新资讯的时候先删除原来的图片，这里存放着原来的图片的地址
+     * @Description:
+     *
+     */
+    @PostMapping("updateNews")
+    @ApiOperation("更新资讯")
+    @ResponseBody
+    public ServerResponse<News> updateNews(MultipartFile file,News news,String deletImg, HttpServletRequest request){
+        if(null!=file){
+            String fileName = file.getOriginalFilename();
+            String value = FileUtils.getExtensionWithoutDot(fileName);
+            if(MIMETypeEnum.JPEG.getValue().equals(value) || MIMETypeEnum.JPG.getValue().equals(value)|| MIMETypeEnum.PNG.getValue().equals(value)){
+                String path = FileUtils.uploadPath(request,"img","admin/");//把用户的图片存放到adming用户的img下
+                try {
+                    if(path!=null){
+                        String file1 = FileUtils.uploadFile(file, path);
+                        news.setTitleImg("/upload/admin/img/"+file1);
+                        DeleteFileUtil.delete(FileUtils.getClasspath()+"static"+deletImg);//删除原来图片
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return ServerResponse.createByError("上传异常");
+                }
+            }
+        }
+        news.setUpdateTime(Calendar.getInstance().getTime());
+        return  newsService.updateById(news)?ServerResponse.createByError(ServerResponseConstant.SERVERRESPONSE_SUCCESS_UPDATE):ServerResponse.createByError(ServerResponseConstant.SERVERRESPONSE_ERROR_UPDATE);
     }
 
     @PostMapping("deletNew")
     @ApiOperation("删除资讯")
     @ResponseBody
     public ServerResponse<String> deletNew(News news){
+        DeleteFileUtil.delete(FileUtils.getClasspath()+"static"+news.getTitleImg());//删除原来图片
         return newsService.deleteById(news.getId())?ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_DELET):ServerResponse.createByError(ServerResponseConstant.SERVERRESPONSE_ERROR_DELET);
     }
 

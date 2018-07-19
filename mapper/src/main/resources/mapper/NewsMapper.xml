@@ -26,7 +26,7 @@
     </select>
 
     <sql id="select_columns">
-        id as id,title as title,dept as dept,author as author,shooter as shooter,editor as editor,create_time as createTime,
+        id as id,title as title,dept as dept,author as author,shooter as shooter,editor as editor,create_time as createTime,content as content,
         update_time as updateTime,title_img as titleImg,about as about,area_id as areaId,city_id as cityId,province_id as provinceId
     </sql>
 
