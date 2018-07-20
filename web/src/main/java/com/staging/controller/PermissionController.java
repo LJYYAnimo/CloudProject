@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.staging.common.PagerLayui;
 import com.staging.common.ServerResponse;
 import com.staging.common.constant.ServerResponseConstant;
-import com.staging.entity.IntegralTask;
 import com.staging.entity.Permission;
 import com.staging.entity.Role;
 import com.staging.entity.RolePermission;
@@ -14,7 +13,6 @@ import com.staging.entity.vo.PermissionIdsVo;
 import com.staging.service.PermissionService;
 import com.staging.service.RolePermissionService;
 import com.staging.shiro.config.utils.ShiroUtils;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -24,10 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.stereotype.Controller;
-import sun.jvm.hotspot.jdi.IntegerTypeImpl;
 
 import java.util.ArrayList;
 import java.util.List;
