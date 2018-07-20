@@ -14,4 +14,33 @@
         <result column="directly_states" property="directlyStates" />
     </resultMap>
 
+    <sql id="select_columns">
+        sc.id as id,sc.school_name as schoolName,sc.school_address as schoolAddress,sc.school_type as schoolType,sc.creat_time as creatTime,
+        sc.area_id as areaId,sc.city_id as cityId,sc.directly_states as directlyStates
+    </sql>
+
+    <sql id="query_not_null">
+        <if test="school.schoolType != null">
+            sc.school_type = #{school.schoolType}
+        </if>
+        <if test="school.id != null">
+            and sc.id = #{school.id}
+        </if>
+    </sql>
+
+    <select id="selectSchool" resultType="com.staging.entity.vo.SchoolTypeVo">
+    select
+        <include refid="select_columns"></include>,sct.name
+        from  t_school as  sc left join t_school_type as sct on sc.school_type = sct.id
+        where
+        <include refid="query_not_null"></include>
+        limit #{pager.beginIndex},#{pager.pageSize}
+    </select>
+
+    <select id="count" resultType="java.lang.Long">
+        select count(sc.id) from t_school as sc where
+        <include refid="query_not_null"></include>
+    </select>
+
+
 </mapper>

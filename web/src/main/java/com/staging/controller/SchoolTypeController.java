@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.*;
 public class SchoolTypeController {
 
     @Autowired
-    private SchoolTypeService cityService;
+    private SchoolTypeService schoolTypeService;
 
     @Autowired
     private SchoolService schoolService;
@@ -42,7 +42,11 @@ public class SchoolTypeController {
     @ApiOperation(value = "类型添加")
     @ResponseBody
     public ServerResponse save(@Validated(value = Groups.Default.class)SchoolType schoolType){
-        if(cityService.insert(schoolType)){
+        int result = schoolTypeService.selectCount(new EntityWrapper<SchoolType>().eq("name",schoolType.getName()));
+        if(result==1){
+            return ServerResponse.createByError("数据重复");
+        }
+        if(schoolTypeService.insert(schoolType)){
             return ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_SAVE);
         }
         return ServerResponse.createByError(ServerResponseConstant.SERVERRESPONSE_ERROR_SAVE);
@@ -51,12 +55,12 @@ public class SchoolTypeController {
     @PostMapping("delete")
     @ApiOperation(value = "删除类型")
     @ResponseBody
-    public ServerResponse delete(@RequestBody SchoolType schoolType){
+    public ServerResponse delete(SchoolType schoolType){
         int  result =  schoolService.selectCount(new EntityWrapper<School>().eq("school_type",schoolType.getId()));
         if(result!=0){
             return ServerResponse.createByError("该类型下还有学校不能删除");
         }
-        if(cityService.deleteById(schoolType.getId())){
+        if(schoolTypeService.deleteById(schoolType.getId())){
             return ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_DELET);
         }
         return ServerResponse.createByError(ServerResponseConstant.SERVERRESPONSE_ERROR_DELET);
@@ -66,7 +70,7 @@ public class SchoolTypeController {
     @ApiOperation(value = "更新类型")
     @ResponseBody
     public ServerResponse update(@Validated(value = {Groups.Default.class, Groups.Update.class})@RequestBody SchoolType schoolType){
-        if(cityService.updateAllColumnById(schoolType)){
+        if(schoolTypeService.updateAllColumnById(schoolType)){
             return ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_UPDATE);
         }
         return ServerResponse.createByError(ServerResponseConstant.SERVERRESPONSE_ERROR_UPDATE);
@@ -76,7 +80,7 @@ public class SchoolTypeController {
     @ApiOperation("分页查询")
     @ResponseBody
     public PagerLayui pager(PagerLayui pagerLayui){
-        Page page = cityService.selectPage(new Page<>(pagerLayui.getPage(), pagerLayui.getLimit()));
+        Page page = schoolTypeService.selectPage(new Page<>(pagerLayui.getPage(), pagerLayui.getLimit()));
         PagerLayui p = new PagerLayui();
         p.setRows(page.getRecords());
         p.setTotal(page.getTotal());

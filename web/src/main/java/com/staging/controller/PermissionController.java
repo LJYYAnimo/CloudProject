@@ -6,10 +6,18 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.staging.common.PagerLayui;
 import com.staging.common.ServerResponse;
 import com.staging.common.constant.ServerResponseConstant;
+import com.staging.entity.IntegralTask;
 import com.staging.entity.Permission;
+import com.staging.entity.Role;
+import com.staging.entity.RolePermission;
+import com.staging.entity.vo.PermissionIdsVo;
 import com.staging.service.PermissionService;
+import com.staging.service.RolePermissionService;
+import com.staging.shiro.config.utils.ShiroUtils;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +27,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
+import sun.jvm.hotspot.jdi.IntegerTypeImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,6 +46,9 @@ public class PermissionController {
 
     @Autowired
     private PermissionService permissionService;
+
+    @Autowired
+    private RolePermissionService rolePermissionService;
 
     @PostMapping("pager")
     @ResponseBody
@@ -55,6 +68,43 @@ public class PermissionController {
             return ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_UPDATE);
         }
         return ServerResponse.createByError(ServerResponseConstant.SERVERRESPONSE_ERROR_UPDATE);
+    }
+
+    /**
+     *  授权
+     * @return
+     */
+    @PostMapping("save")
+    @ResponseBody
+    public ServerResponse save(PermissionIdsVo permissionIdsVo){
+        boolean result = rolePermissionService.delete(new EntityWrapper<RolePermission>().eq("rid",permissionIdsVo.getRid()));
+        if(result){
+            String[] id = permissionIdsVo.getIds().split(",");
+            List<RolePermission> rolePermissions = new ArrayList<>();
+            for(String i: id){
+                rolePermissions.add(new RolePermission(permissionIdsVo.getRid(),Integer.valueOf(i)));
+            }
+            boolean res = rolePermissionService.insertBatch(rolePermissions);
+            if(res){
+                return ServerResponse.createBySuccess("授权成功");
+            }
+            return ServerResponse.createByError("授权失败");
+        }
+        return ServerResponse.createByError("角色ID无效");
+    }
+
+    @PostMapping("getPermission")
+    @ResponseBody
+    public ServerResponse getPermission(Role role){
+        List<RolePermission> rolePermissions = rolePermissionService.selectList(new EntityWrapper<RolePermission>().eq("rid",role.getId()));
+        if(StringUtils.isEmpty(rolePermissions)){
+            return ServerResponse.createByError();
+        }
+        List<Integer> list = new ArrayList<>();
+        for(RolePermission selectBatchIds : rolePermissions){
+            list.add(selectBatchIds.getPid());
+        }
+        return ServerResponse.createBySuccess(ShiroUtils.getPermissionVo(permissionService.selectBatchIds(list)));
     }
 
     /**

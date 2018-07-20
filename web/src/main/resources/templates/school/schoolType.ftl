@@ -37,12 +37,11 @@
 
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-    <a class="layui-btn layui-btn layui-btn-xs" lay-event="query">查看学校</a>
 </script>
 
+<script src="/js/jquery.min.js"></script>
 <script type="text/javascript" src="/layui/layui.js"></script>
 <script src="/js/public.js"></script>
-<script src="/js/jquery.min.js"></script>
 <script src="/js/axios.min.js"></script>
 <script src="/js/qs.js"></script>
 <script src="/js/school/schoolType.js"></script>

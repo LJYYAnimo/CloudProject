@@ -60,7 +60,7 @@ public class User extends Model<User> {
     /**
      * 学校
      */
-    private String school;
+    private Integer school;
     /**
      * 性别 1为男，0为女
      */

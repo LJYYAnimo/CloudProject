@@ -1,5 +1,6 @@
 package com.staging.service;
 
+import com.staging.common.Pager;
 import com.staging.entity.School;
 import com.baomidou.mybatisplus.service.IService;
 
@@ -12,5 +13,7 @@ import com.baomidou.mybatisplus.service.IService;
  * @since 2018-07-06
  */
 public interface SchoolService extends IService<School> {
+
+    Pager selectSchool(Pager pager,School school);
 
 }

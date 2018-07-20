@@ -27,6 +27,8 @@ public class RolePermission extends Model<RolePermission> {
     private Integer pid;
 
 
+
+
     public Integer getRid() {
         return rid;
     }
@@ -48,6 +50,14 @@ public class RolePermission extends Model<RolePermission> {
         return this.rid;
     }
 
+    public RolePermission() {
+    }
+
+    public RolePermission(Integer rid, Integer pid) {
+        this.rid = rid;
+        this.pid = pid;
+    }
+
     @Override
     public String toString() {
         return "RolePermissionVo{" +
@@ -55,4 +65,6 @@ public class RolePermission extends Model<RolePermission> {
         ", pid=" + pid +
         "}";
     }
+
+
 }

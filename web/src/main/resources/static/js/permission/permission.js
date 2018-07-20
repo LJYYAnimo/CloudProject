@@ -67,6 +67,7 @@ layui.use(['table', 'layer', 'form'], function () {
             content: $('#permissionEdit')
         });
     }
+
     axios.post('/permission/pager', Qs.stringify(pagerLayui)).then(function (response) {
         $.fn.zTree.init($("#treeDemo"), setting, response.data.rows);
     }).catch(function (error) {
@@ -77,14 +78,14 @@ layui.use(['table', 'layer', 'form'], function () {
     form.on('submit(formDemo)', function(data){
         axios.post('/permission/update', Qs.stringify(data.field)).then(function (response) {
             if(response.data.code==0){
-                layer.msg(response.data.message);
+                layer.msg(response.data.message,{icon:6});
                 layer.closeAll();
-                location.reload(true);
+                return location.reload();
             }
+            layer.msg(response.data.message);
         }).catch(function (error) {
             layer.msg(error);
         });
         return false;
     });
-
 });

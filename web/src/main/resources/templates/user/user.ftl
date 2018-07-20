@@ -10,7 +10,7 @@
     <ul class="layui-tab-title" id="">
         <#list userTypeList as item>
             <#if item_index==0>
-                <li class="layui-this">${item.name}<input class="input_user" hidden value="${item.id}"/></li>
+                <li class="layui-this">${item.name}</li>
                 <#continue>
             </#if>
             <li>${item.name}</li>
@@ -19,6 +19,7 @@
 
     <div class="layui-tab-content"><table id="xinkai" lay-filter="demo"></table></div>
 </div>
+
 <#list userTypeList as item>
     <input hidden class="xinkai_frist" value="${item.name}">
     <#break>

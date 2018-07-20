@@ -7,8 +7,7 @@ layui.use(['table', 'element', 'form'], function () {
     tableData($(".xinkai_frist").val());
 
     element.on('tab(docDemoTabBrief)', function(data){
-        var type = this.textContent;
-        tableData(type);
+        tableData(this.textContent);
     });
 
     function tableData(value){

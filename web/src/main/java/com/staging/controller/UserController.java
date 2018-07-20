@@ -91,7 +91,7 @@ public class UserController {
     }
 
     /**
-     * 用户注册
+     * 用户注册 TODO 用户注册判断注册类型默认赋值角色权限
      * @param user
      * @return
      */
@@ -141,6 +141,11 @@ public class UserController {
 
     @GetMapping("home")
     public String home(ModelMap map){
+        map.addAttribute("permissionVo",getPermission().getData());
+        return "home";
+    }
+
+    private ServerResponse getPermission(){
         Session session = ShiroUtils.getSession();
         User user = (User) session.getAttribute(ShiroConstant.USER);
         UserRole userRole = userRoleService.selectOne(new EntityWrapper<UserRole>().eq("uid",user.getId()));
@@ -157,7 +162,7 @@ public class UserController {
         if(user.getUserName().equals(ShiroConstant.ROLE )||role.getRole().equals(ShiroConstant.MAXROLE)) {
             permissionVo.setRoles(roleService.selectList(new EntityWrapper<>()));
             permissionVo.setPermissionVoList(ShiroUtils.getPermissionVo(permissionService.selectList(new EntityWrapper<>())));
-            map.addAttribute("permissionVo",permissionVo);
+            return ServerResponse.createBySuccess(permissionVo);
         }else {
             //这里只考虑了一个用户的情况下 如果多用户需要改sql
             List<Role> roles = new ArrayList<>();
@@ -169,9 +174,8 @@ public class UserController {
                 permissions.add(permissionService.selectById(rolePermission.getPid()));
             }
             permissionVo.setPermissionVoList(ShiroUtils.getPermissionVo(permissions));
-            map.addAttribute("permissionVo", permissionVo);
+            return ServerResponse.createBySuccess(permissionVo);
         }
-        return "home";
     }
 }
 

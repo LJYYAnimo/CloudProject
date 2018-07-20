@@ -1,5 +1,6 @@
 package com.staging.impl;
 
+import com.staging.common.Pager;
 import com.staging.entity.School;
 import com.staging.mapper.SchoolMapper;
 import com.staging.service.SchoolService;
@@ -17,4 +18,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class SchoolServiceImpl extends ServiceImpl<SchoolMapper, School> implements SchoolService {
 
+
+    @Override
+    public Pager selectSchool(Pager pager, School school) {
+        pager.setRows(baseMapper.selectSchool(pager,school));
+        pager.setTotal(baseMapper.count(school));
+        return pager;
+    }
 }

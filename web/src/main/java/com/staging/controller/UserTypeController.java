@@ -59,7 +59,11 @@ public class UserTypeController {
     @PostMapping("save")
     @ResponseBody
     public ServerResponse save(UserType userType){
-        boolean result = userTypeService.insertOrUpdate(userType);
+        int res = userTypeService.selectCount(new EntityWrapper<UserType>().eq("name",userType.getName()));
+        if(res==1){
+            return ServerResponse.createByError("数据重复");
+        }
+        boolean result = userTypeService.insert(userType);
         if(result){
             return ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_SAVE);
         }
