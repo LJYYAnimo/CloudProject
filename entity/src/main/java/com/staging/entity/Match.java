@@ -31,10 +31,12 @@ public class Match extends Model<Match> {
     /**
      * 比赛开始时间
      */
+    @TableField("startTime")
     private Date startTime;
     /**
      * 比赛结束时间
      */
+    @TableField("endTime")
     private Date endTime;
     /**
      * 比赛banner
@@ -51,10 +53,12 @@ public class Match extends Model<Match> {
     /**
      * 新建时间
      */
+    @TableField("createTime")
     private Date createTime;
     /**
      * 修改时间
      */
+    @TableField("updateTime")
     private Date updateTime;
     /**
      * 比赛奖金
@@ -69,6 +73,7 @@ public class Match extends Model<Match> {
     /**
      * 参赛人数
      */
+    @TableField("matcherCount")
     private Integer matcherCount;
     /**
      * 参赛简介

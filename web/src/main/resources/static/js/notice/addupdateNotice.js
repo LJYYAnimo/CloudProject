@@ -24,7 +24,7 @@ layui.use(['table','upload','form','layedit'], function(){
     var layedit = layui.layedit;
     layedit.set({
         uploadImage: {
-            url: '/news/adduploadImg' //富文本插入图片时的接口
+            url: '/notice/adduploadImg' //富文本插入图片时的接口
             ,type: 'post' //默认post
         }
     });
@@ -32,14 +32,12 @@ layui.use(['table','upload','form','layedit'], function(){
 
     var  frameindex= parent.layer.getFrameIndex(window.name);//当此页面被其他页面弹窗时，获取此页面元素
 
-    var path ='/news/addnewupload';
-    console.log(value);
+    var path ='/notice/addNoticeupload';
 
         if(value!=""&&value!=undefined){
             var indexs= layer.load(1, {
                 shade: [0.1,'#fff'] //0.1透明度的白色背景
             });
-
                 $('#imgs').attr('src', value.titleImg); //图片链接（base64
                 form.val('newsForm',{
                     "id":value.id,
@@ -48,18 +46,17 @@ layui.use(['table','upload','form','layedit'], function(){
                     "about":value.about,
                     "dept":value.dept
                 });
-                path ='/news/updateNews';
+                path ='/notice/updateNotice';
                 $("#btnform").removeClass("layui-hide");//没有上传文件就监听并显示这个按钮
                 $("#btn").addClass("layui-hide");//同时隐藏这个按钮
                 layedit.setContent(index,value.content);//把文章内容添加到富文本编辑器里
                 layer.close(indexs);
-
         }
 
 
     $("#btnform").click(function () {//当upload.render没有被使用的时候就用这个提交表单数据
         var data = {"id":$("#ids").val(),
-            "deletImg":value.titleImg,
+            "deletImg":$("#deletImg").val(),
             "title":$("#title").val(),
             "about":$("#about").val(),
             "dept":$("#dept").val(),
@@ -110,26 +107,25 @@ layui.use(['table','upload','form','layedit'], function(){
             ,before: function(obj){
                 //这里是把数据跟图片一起添加到后台
                 this.data = {"id":$("#ids").val()
-                    ,"deletImg":value.titleImg
+                    ,"deletImg":$("#deletImg").val()
                     ,"title":$("#title").val(),
                     "about":$("#about").val(),
                     "dept":$("#dept").val(),
                     "content":layedit.getContent(index)
                 };
             $("#btn").addClass("layui-hide");//提交后就暂时隐藏按钮
-             },done: function(res, indexs, upload){ //上传后的回调
-                if(res.code==0){
-                    tableReload();
-                    parent.layer.close(frameindex);//此页面被其他页面iframe弹窗时，调用此方法进行关闭
-                    parent.layer.msg(res.message, {
-                        time: 1000, icon:6
-                    });
-                }
+             },done: function(res, index, upload){ //上传后的回调
+                    if(res.code==0){
+                        tableReload();
+                        parent.layer.close(frameindex);//此页面被其他页面iframe弹窗时，调用此方法进行关闭
+                        parent.layer.msg(res.message, {
+                            time: 1000, icon:6
+                        });
+                    }
             }
             ,error: function(index, upload){
             layer.msg("上传失败")
            }
        });
-
 });
 },200);

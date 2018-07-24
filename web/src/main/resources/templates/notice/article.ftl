@@ -29,6 +29,6 @@
 <script src="/js/jquery.min.js"></script>
 <script src="/js/qs.js"></script>
 <script src="/xiangcecss/js/baguetteBox.min.js"></script>
-<script src="/js/notice/article.js"></script>
+<script src="/js/news/article.js"></script>
 </body>
 </html>

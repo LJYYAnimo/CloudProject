@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ResourceUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -113,11 +114,11 @@ public class NewsController {
         String fileName = file.getOriginalFilename();
         String value = FileUtils.getExtensionWithoutDot(fileName);
         if(MIMETypeEnum.JPEG.getValue().equals(value) || MIMETypeEnum.JPG.getValue().equals(value)|| MIMETypeEnum.PNG.getValue().equals(value)){
-            String path = FileUtils.uploadPath(request,"editorimg","admin/");//把用户的图片存放到admin用户的editorimg文件夹下
+            String path = FileUtils.uploadPath(request,"editorimgNews","admin/");//把用户的图片存放到admin用户的editorimg文件夹下
             try {
                 String file1 = FileUtils.uploadFile(file, path);
                 layui.setCode(0);
-                layui.setData(new LayEditMsg(request.getContextPath()+"\\upload\\admin\\editorimg\\"+file1,file1));
+                layui.setData(new LayEditMsg(request.getContextPath()+"\\upload\\admin\\editorimgNews\\"+file1,file1));
                 return layui;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -138,11 +139,11 @@ public class NewsController {
         String fileName = file.getOriginalFilename();
         String value = FileUtils.getExtensionWithoutDot(fileName);
         if(MIMETypeEnum.JPEG.getValue().equals(value) || MIMETypeEnum.JPG.getValue().equals(value)|| MIMETypeEnum.PNG.getValue().equals(value)){
-            String path = FileUtils.uploadPath(request,"img","admin/");//把用户的图片存放到adming用户的img下
+            String path = FileUtils.uploadPath(request,"imgNews","admin/");//把用户的图片存放到adming用户的img下
             try {
                 String file1 = FileUtils.uploadFile(file, path);
                 System.out.println("/admin/img/"+file1);
-                news.setTitleImg("/upload/admin/img/"+file1);
+                news.setTitleImg("/upload/admin/imgNews/"+file1);
                 news.setCreateTime(Calendar.getInstance().getTime());
                 newsService.insert(news);
                 return ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_SAVE);
@@ -171,12 +172,14 @@ public class NewsController {
             String fileName = file.getOriginalFilename();
             String value = FileUtils.getExtensionWithoutDot(fileName);
             if(MIMETypeEnum.JPEG.getValue().equals(value) || MIMETypeEnum.JPG.getValue().equals(value)|| MIMETypeEnum.PNG.getValue().equals(value)){
-                String path = FileUtils.uploadPath(request,"img","admin/");//把用户的图片存放到adming用户的img下
+                String path = FileUtils.uploadPath(request,"imgNews","admin/");//把用户的图片存放到adming用户的img下
                 try {
                     if(path!=null){
+                        if(!StringUtils.isEmpty(deletImg)){
+                            DeleteFileUtil.delete(FileUtils.getClasspath()+"static"+deletImg);//删除原来图片
+                        }
                         String file1 = FileUtils.uploadFile(file, path);
-                        news.setTitleImg("/upload/admin/img/"+file1);
-                        DeleteFileUtil.delete(FileUtils.getClasspath()+"static"+deletImg);//删除原来图片
+                        news.setTitleImg("/upload/admin/imgNews/"+file1);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -185,15 +188,21 @@ public class NewsController {
             }
         }
         news.setUpdateTime(Calendar.getInstance().getTime());
-        return  newsService.updateById(news)?ServerResponse.createByError(ServerResponseConstant.SERVERRESPONSE_SUCCESS_UPDATE):ServerResponse.createByError(ServerResponseConstant.SERVERRESPONSE_ERROR_UPDATE);
+        return  newsService.updateById(news)? ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_UPDATE,news):ServerResponse.createByError(1,ServerResponseConstant.SERVERRESPONSE_ERROR_UPDATE);
     }
 
     @PostMapping("deletNew")
     @ApiOperation("删除资讯")
     @ResponseBody
     public ServerResponse<String> deletNew(News news){
-        DeleteFileUtil.delete(FileUtils.getClasspath()+"static"+news.getTitleImg());//删除原来图片
-        return newsService.deleteById(news.getId())?ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_DELET):ServerResponse.createByError(ServerResponseConstant.SERVERRESPONSE_ERROR_DELET);
+        if(StringUtils.isEmpty(news.getTitleImg())){
+            //如果图片路径为空就让DeleteFileUtil.delete删除一个233文件夹，这样就不会出现只删除/static/下的所有文件，而是删除/static/233下的文件夹
+            news.setTitleImg("233");
+        }
+        return newsService.deleteById(news.getId())?
+                DeleteFileUtil.delete(FileUtils.getClasspath()+"static"+news.getTitleImg())?
+                ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_DELET):ServerResponse.createBySuccess("删除图片失败")
+                :ServerResponse.createByError(ServerResponseConstant.SERVERRESPONSE_ERROR_DELET);
     }
 
     @InitBinder
