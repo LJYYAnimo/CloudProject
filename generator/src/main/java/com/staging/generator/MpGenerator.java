@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
-import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.DbType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
@@ -93,7 +92,7 @@ public class MpGenerator {
         // strategy.setCapitalMode(true);// 全局大写命名 ORACLE 注意
         strategy.setTablePrefix(new String[] { "t_"});// 此处可以修改为您的表前缀
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
-        strategy.setInclude(new String[] { "t_user_type"}); // 需要生成的表
+        strategy.setInclude(new String[] { "t_sd_school"}); // 需要生成的表
         // strategy.setExclude(new String[]{"test"}); // 排除生成的表
         // 自定义实体父类
         //strategy.setSuperEntityClass("com.spf.model.Entity");

@@ -1,0 +1,5 @@
+axios.post('/user').then(function (response) {
+console.log(response);
+}).catch(function (error) {
+layer.msg(error,{icon:5});
+});

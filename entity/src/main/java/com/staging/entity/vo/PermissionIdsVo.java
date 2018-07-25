@@ -1,6 +1,4 @@
 package com.staging.entity.vo;
-
-import io.swagger.models.auth.In;
 import lombok.Data;
 
 @Data

@@ -9,7 +9,7 @@
 <body>
 <div class="layui-layout layui-layout-admin kit-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo">SpringBoot-staging</div>
+        <div class="layui-logo">江苏省创客教育云平台</div>
         <div class="layui-nav layui-layout-left kit-nav">
             <div class="layui-nav-item">
                 <!-- 天气信息-->
@@ -100,7 +100,7 @@
     <div class="layui-footer">
         <!-- 底部固定区域 -->
         2018 &copy;
-        <a href="">技术支持：Animo</a>
+        <a href="">技术支持：南京信凯科技有限公司</a>
 
     </div>
 </div>

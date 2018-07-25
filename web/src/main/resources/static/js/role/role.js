@@ -3,6 +3,35 @@ layui.use(['table', 'upload', 'form'], function () {
         upload = layui.upload,
         form = layui.form;
 
+
+    $("#add").click(function () {
+        layer.open({
+            type: 1,
+            title: '角色添加',
+            shadeClose: true,
+            area: ['380px', '300px'],
+            content: $('#addDiv')
+        });
+    });
+
+    //监听提交
+    form.on('submit(role)', function (data) {
+        axios.post('/role/save', Qs.stringify(data.field)).then(function (response) {
+            if (response.data.code == 0) {
+                layer.closeAll();
+                layer.msg(response.data.message, {icon: 6});
+                $('#reset').click();
+                return table.reload("idTest");
+            }
+            layer.msg(response.data.message, {icon: 5});
+        }).catch(function (error) {
+            layer.msg(error);
+        });
+        return false;
+    });
+
+
+
     table.render({
         elem: '#xinkai'
         , url: '/role/pager'
@@ -53,6 +82,9 @@ layui.use(['table', 'upload', 'form'], function () {
     table.on('tool(demo)', function (obj) {
         var data = obj.data;
         if (obj.event === 'distribution') {
+            if(data.role == '超级管理员'){
+                return layer.msg('无需分配',{icon:6});
+            }
             layer.open({
                 type: 1,
                 title: '授权',
@@ -86,6 +118,9 @@ layui.use(['table', 'upload', 'form'], function () {
                     var ztree = $.fn.zTree.getZTreeObj("treeDemo");
                      nodes=ztree.getCheckedNodes(true),
                      v="";
+                     if(nodes.length == 0){
+                         return layer.msg("请选择授权信息",{icon:5});
+                     }
                     for(var i=0;i<nodes.length;i++){
                         if(i==nodes.length-1){
                             v+=nodes[i].id
@@ -109,7 +144,18 @@ layui.use(['table', 'upload', 'form'], function () {
                 }
             });
         } else if (obj.event === 'delete') {
-            layer.msg("删除");
+            if(data.role == '超级管理员'){
+                return layer.msg("不可删除",{icon:5});
+            }
+            axios.post('/role/delete',Qs.stringify(data)).then(function (response) {
+                if(response.data.code == 0){
+                    table.reload("idTest");
+                    return layer.msg(response.data.message,{icon:6});
+                }
+                layer.msg(response.data.message,{icon:5});
+                }).catch(function (error) {
+                    layer.msg(error,{icon:5});
+                });
         }
 
     });

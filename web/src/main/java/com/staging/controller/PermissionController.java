@@ -91,7 +91,7 @@ public class PermissionController {
     @ResponseBody
     public ServerResponse getPermission(Role role){
         List<RolePermission> rolePermissions = rolePermissionService.selectList(new EntityWrapper<RolePermission>().eq("rid",role.getId()));
-        if(StringUtils.isEmpty(rolePermissions)){
+        if(rolePermissions.size()==0){
             return ServerResponse.createByError();
         }
         List<Integer> list = new ArrayList<>();

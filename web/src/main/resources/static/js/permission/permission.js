@@ -5,11 +5,11 @@ layui.use(['table', 'layer', 'form'], function () {
 
     var setting = {
         check: {
-            enable: true,
-            chkboxType: {
-                Y: 'ps',
-                N: 'ps'
-            }
+            enable: true
+            // chkboxType: {
+            //     Y: 'ps',
+            //     N: 'ps'
+            // }
         },
         data: {
             simpleData: {

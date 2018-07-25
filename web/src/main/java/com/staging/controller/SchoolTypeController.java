@@ -18,6 +18,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * <p>
  *  前端控制器
@@ -85,6 +87,13 @@ public class SchoolTypeController {
         p.setRows(page.getRecords());
         p.setTotal(page.getTotal());
         return p;
+    }
+
+    @PostMapping("list")
+    @ResponseBody
+    public ServerResponse list(){
+        List<SchoolType> schoolTypes = schoolTypeService.selectList(new EntityWrapper<>());
+        return schoolTypes.size()>0?ServerResponse.createBySuccess(schoolTypes):ServerResponse.createByError("暂无学校类型");
     }
 
     @GetMapping("page")

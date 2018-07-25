@@ -59,13 +59,6 @@ public class SchoolController {
     public Pager pager(PagerLayui pager, SchoolType schoolType, School school){
         SchoolType sct = schoolTypeService.selectOne(new EntityWrapper<SchoolType>().eq("name",schoolType.getName()));
         school.setSchoolType(sct.getId());
-//        if(StringUtils.isEmpty(school.getId())){
-//            Object object = ShiroUtils.getSession().getAttribute(ShiroConstant.USER);
-//            if(!StringUtils.isEmpty(object)){
-//                User user =(User)object;
-//                school.setId(user.getSchool());
-//            }
-//        }
         return schoolService.selectSchool(new Pager(pager.getPage(),pager.getLimit()), school);
     }
 

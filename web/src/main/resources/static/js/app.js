@@ -39,7 +39,7 @@ layui.define(['element', 'nprogress', 'form', 'table', 'loader', 'tab', 'navbar'
                     function success(data) {
                         switch (data.name) {
                             case 'table':
-                                loader.getScript(_componentPath + 'table/table.js', function () {
+                                loader.getScript(_componentPath + 'table/common.js', function () {
                                     var tableIns = table.render(moduleTable.config);
                                     moduleTable.extend({
                                         currTable: tableIns,

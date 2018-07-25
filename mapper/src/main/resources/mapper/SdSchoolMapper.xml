@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.staging.mapper.SdSchoolMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.staging.entity.SdSchool">
+        <id column="id" property="id"/>
+        <result column="school_name" property="schoolName"/>
+        <result column="school_loge" property="schoolLoge"/>
+        <result column="school_typeid" property="schoolTypeid"/>
+        <result column="school_province" property="schoolProvince"/>
+        <result column="school_city" property="schoolCity"/>
+        <result column="school_area" property="schoolArea"/>
+        <result column="detailed_address" property="detailedAddress"/>
+        <result column="school_website" property="schoolWebsite"/>
+        <result column="school_about" property="schoolAbout"/>
+        <result column="audit_status" property="auditStatus"/>
+        <result column="school_creatTime" property="schoolCreattime"/>
+        <result column="school_cover" property="schoolCover"/>
+        <result column="area_id" property="areaId"/>
+        <result column="city_id" property="cityId"/>
+        <result column="directly_states" property="directlyStates"/>
+    </resultMap>
+
+    <sql id="select_columns">
+        sd.school_name as schoolName,
+        sd.school_loge as schoolLoge,
+        sd.school_typeid as schoolTypeid,
+        sd.school_province as schoolProvince,
+        sd.school_city as schoolCity,
+        sd.school_area as schoolArea,
+        sd.detailed_address as detailedAddress,
+        sd.school_website as schoolWebsite,
+        sd.school_about as schoolAbout,
+        sd.audit_status as auditStatus,
+        sd.school_creatTime as schoolCreattime,
+        sd.school_cover as schoolCover,
+        sd.area_id as areaId,
+        sd.city_id as cityId,
+        sd.directly_states as directlyStates
+    </sql>
+
+    <sql id="query_not_null">
+        <if test="sdSchool.schoolTypeid!=null">
+            sd.school_typeid = #{sdSchool.schoolTypeid}
+        </if>
+    </sql>
+
+    <select id="selectSdSchoolVoPager" resultType="com.staging.entity.vo.SdSchoolVo">
+        select <include refid="select_columns"></include>,st.name as schoolTypeName from  t_sd_school as sd left join t_school_type as st
+        on sd.school_typeid = st.id
+        where <include refid="query_not_null"></include>
+        limit #{pager.beginIndex},#{pager.pageSize}
+    </select>
+
+    <select id="countSdSchoolVo" resultType="java.lang.Long">
+        select count(sd.id) from t_sd_school as sd where <include refid="query_not_null"></include>
+    </select>
+
+</mapper>
