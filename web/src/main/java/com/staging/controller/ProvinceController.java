@@ -3,6 +3,7 @@ package com.staging.controller;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.staging.common.PagerLayui;
+import com.staging.entity.Province;
 import com.staging.service.ProvinceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * <p>
@@ -39,6 +42,12 @@ public class ProvinceController {
         p.setRows(page.getRecords());
         p.setTotal(page.getTotal());
         return p;
+    }
+    
+    @PostMapping("list")
+    @ResponseBody
+    public List<Province> list(){
+        return provinceService.selectList(null);
     }
 
     @GetMapping("page")

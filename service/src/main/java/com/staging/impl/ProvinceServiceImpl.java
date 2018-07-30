@@ -17,4 +17,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProvinceServiceImpl extends ServiceImpl<ProvinceMapper, Province> implements ProvinceService {
 
+
+    @Override
+    public Province selectById(Integer id) {
+        return baseMapper.selectById(id);
+    }
+
+    @Override
+    public Province selectByProvinceName(String provinceName) {
+        return baseMapper.selectByProvinceName(provinceName);
+    }
 }

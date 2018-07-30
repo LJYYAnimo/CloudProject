@@ -20,4 +20,18 @@ public interface CityService extends IService<City> {
 
     List<CityVo> queryPage(Pager pager);
 
+    /**
+     * 根据Id来查询名称
+     * @param id
+     * @return
+     */
+    City selectById(Integer id);
+
+    /**
+     * 根据名称来查询Id
+     * @param cname
+     * @return
+     */
+    City selectByCityName(String cname);
+
 }

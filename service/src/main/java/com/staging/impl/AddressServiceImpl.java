@@ -17,4 +17,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class AddressServiceImpl extends ServiceImpl<AddressMapper, Address> implements AddressService {
 
+    @Override
+    public Address selectById(Integer id) {
+        return baseMapper.selectById(id);
+    }
+
+    @Override
+    public Address selectByAddressName(String addressName) {
+        return baseMapper.selectByAddressName(addressName);
+    }
 }

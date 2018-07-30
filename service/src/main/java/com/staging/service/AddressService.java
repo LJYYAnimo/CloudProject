@@ -13,4 +13,18 @@ import com.baomidou.mybatisplus.service.IService;
  */
 public interface AddressService extends IService<Address> {
 
+    /**
+     * 根据Id来查询名称
+     * @param id
+     * @return
+     */
+    Address selectById(Integer id);
+
+    /**
+     * 根据名称来查询Id
+     * @param addressName
+     * @return
+     */
+    Address selectByAddressName(String addressName);
+
 }

@@ -18,16 +18,21 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.omg.PortableInterceptor.USER_EXCEPTION;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -46,23 +51,56 @@ public class UserController {
 
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
+    /**
+     * 用户Service
+     */
     @Autowired
     private UserService userService;
 
+    /**
+     * 角色Service
+     */
     @Autowired
     private RoleService roleService;
 
+    /**
+     * 权限Service
+     */
     @Autowired
     private PermissionService permissionService;
 
+    /**
+     * 用户角色Service
+     */
     @Autowired
     private UserRoleService userRoleService;
 
+    /**
+     * 角色权限Service
+     */
     @Autowired
     private RolePermissionService rolePermissionService;
 
+    /**
+     * 用户类型Service
+     */
     @Autowired
     private UserTypeService userTypeService;
+
+    /**
+     * 省Service
+     */
+    private ProvinceService provinceService;
+
+    /**
+     * 市Service
+     */
+    private CityService cityService;
+
+    /**
+     * 区Service
+     */
+    private AddressService addressService;
 
     /**
      * 用户登录
@@ -104,6 +142,22 @@ public class UserController {
         if(userResult!=null){
             return ServerResponse.createByError("账号已存在");
         }
+        //前台添加单个学生用户的情况下
+        if(!StringUtils.isEmpty(user.getProvinceId())){
+            if(!StringUtils.isEmpty(user.getProvince())){
+                 user.setProvince(provinceService.selectById(user.getProvinceId()).getProvinceName());
+            }
+        }
+        if(!StringUtils.isEmpty(user.getCityId())){
+            if(!StringUtils.isEmpty(user.getCity())){
+                user.setCity(cityService.selectById(user.getCityId()).getCname());
+            }
+        }
+        if(!StringUtils.isEmpty(user.getAreaId())){
+            if(!StringUtils.isEmpty(user.getAddress())){
+                user.setAddress(addressService.selectById(user.getAreaId()).getAddressName());
+            }
+        }
         //加密密码
         user.setCreatTime(Calendar.getInstance().getTime());
         user.setSalt(ShiroUtils.md5(user.getUserName(),user.getUserPassword()));
@@ -130,6 +184,14 @@ public class UserController {
         p.setRows(pageEntity.getRecords());
         p.setTotal(pageEntity.getTotal());
         return p;
+    }
+
+    @PostMapping("reset")
+    @ResponseBody
+    public ServerResponse reset(User user){
+        String newPassword = ShiroUtils.md5("123456",user.getSalt());
+        user.setUserPassword(newPassword);
+        return userService.updateById(user)?ServerResponse.createBySuccess("重置密码：123456"):ServerResponse.createByError("重置失败");
     }
 
     @GetMapping("page")
@@ -176,6 +238,14 @@ public class UserController {
             permissionVo.setPermissionVoList(ShiroUtils.getPermissionVo(permissions));
             return ServerResponse.createBySuccess(permissionVo);
         }
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+//        System.out.println("============处理所有@RequestMapping注解方法，在其执行之前初始化数据绑定器");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        dateFormat.setLenient(false);//这句一个不要存在，不然还是处理不了时间转换
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 }
 

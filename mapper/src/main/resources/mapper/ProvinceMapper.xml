@@ -10,4 +10,13 @@
         <result column="province_logo" property="provinceLogo" />
     </resultMap>
 
+    <select id="selectById" resultType="com.staging.entity.Province">
+        select province_name from t_province where id = #{id}
+    </select>
+
+
+    <select id="selectByProvinceName" resultType="com.staging.entity.Province">
+        select id from t_province where province_name = #{provinceName}
+    </select>
+
 </mapper>

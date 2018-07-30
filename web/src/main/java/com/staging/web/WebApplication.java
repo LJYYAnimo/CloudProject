@@ -20,7 +20,6 @@ public class WebApplication {
         SpringApplication.run(WebApplication.class, args);
     }
 
-
     /**
      * 文件上传配置
      * @return

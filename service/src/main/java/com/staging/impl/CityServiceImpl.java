@@ -26,4 +26,14 @@ public class CityServiceImpl extends ServiceImpl<CityMapper, City> implements Ci
     public List<CityVo> queryPage(Pager pager) {
         return baseMapper.queryPage(pager);
     }
+
+    @Override
+    public City selectById(Integer id) {
+        return baseMapper.selectById(id);
+    }
+
+    @Override
+    public City selectByCityName(String cname) {
+        return baseMapper.selectByCityName(cname);
+    }
 }
