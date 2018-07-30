@@ -5,25 +5,30 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.staging.common.LayuiUploadMsg;
 import com.staging.common.PagerLayui;
+import com.staging.common.ServerResponse;
+import com.staging.common.constant.ServerResponseConstant;
 import com.staging.common.enums.MIMETypeEnum;
 import com.staging.common.utils.FileUtils;
 import com.staging.entity.Match;
+import com.staging.entity.News;
 import com.staging.entity.Notice;
 import com.staging.entity.vo.LayEditMsg;
 import com.staging.service.MatchService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * <p>
@@ -100,6 +105,28 @@ public class MatchController {
         layui.setCode(1);
         layui.setMsg("你上传的图片格式不对");
         return layui;
+    }
+
+    @PostMapping("addMatch")
+    @ApiOperation("添加大赛")
+    @ResponseBody
+    public ServerResponse<Match> addMatch(Match match){
+        try {
+            match.setCreateTime(Calendar.getInstance().getTime());
+            matchService.insert(match);
+            return  ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_SAVE);
+        }catch (Exception e){
+
+        }
+       return ServerResponse.createByError(ServerResponseConstant.SERVERRESPONSE_ERROR_SAVE);
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+//        System.out.println("============处理所有@RequestMapping注解方法，在其执行之前初始化数据绑定器");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        dateFormat.setLenient(false);//这句一个不要存在，不然还是处理不了时间转换
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
 }

@@ -13,6 +13,8 @@ layui.use(['table','upload','form','laydate','element','layedit'], function(){
     });
 
 
+
+
     table.render({
         elem: '#xinkai'
         ,url: '/match/pager'
@@ -65,28 +67,47 @@ layui.use(['table','upload','form','laydate','element','layedit'], function(){
         });
     }
 
+    var index1 ;//content1表示把富文本编辑器的数据暂时保存起来，这样让用户弹出窗口的时候数据还会在窗口里
+    var index2 ;
+    var index3 ;
+    var index4 ;
+
+    $('#reset').click(function () {
+        layedit.setContent(index1,'');//重置编辑器内容
+        layedit.setContent(index2,'');//重置编辑器内容
+        layedit.setContent(index3,'');//重置编辑器内容
+    });
+
     //监听提交
     form.on('submit(addMatche)', function (data) {
-        // layedit.getContent(index1)
-        // layedit.getContent(index2)
-        // layedit.getContent(index3)
-        console.log(data);
         axios.post('/match/addMatch', Qs.stringify(data.field)).then(function (response) {
             if (response.data.code == 0) {
-                layer.closeAll();
                 layer.msg(response.data.message, {icon: 6});
                 $('#reset').click();
+                layer.close(index4);
                 return table.reload("idTest");
             }
-            layer.msg(response.data.message, {icon: 5});
         }).catch(function (error) {
             layer.msg(error);
         });
         return false;
     });
 
+    //自定义验证规则
+    form.verify({
+        content1: function(value){
+            layedit.sync(index1);
+        },
+        content2: function(value){
+            layedit.sync(index2);
+        },
+        content3: function(value){
+            layedit.sync(index3);
+        }
+    });
+
     function openNews(data,title) {
-        layer.open({
+        index4 = layer.open({
             type: 1,
             title: '添加比赛',
             shadeClose: true,
@@ -94,9 +115,10 @@ layui.use(['table','upload','form','laydate','element','layedit'], function(){
             content: $('#Setting')
             ,success: function(layero, index){  //层弹出后的成功回调方法
                 //开始时间选择器
-                var index1 = layedit.build('demo1',{ height: 350,with:750 }); //建立编辑器
-                var index2 = layedit.build('demo2',{ height: 350,with:750 }); //建立编辑器
-                var index3 = layedit.build('demo3',{ height: 350,with:750 }); //建立编辑器
+
+                index1 = layedit.build('demo1',{ height: 350}); //建立编辑器
+                index2 = layedit.build('demo2',{ height: 350}); //建立编辑器
+                index3 = layedit.build('demo3',{ height: 350}); //建立编辑器
                 laydate.render({
                     elem: '#startTime'
                     ,calendar: 'true'
@@ -112,6 +134,8 @@ layui.use(['table','upload','form','laydate','element','layedit'], function(){
                         console.log(value)
                     }
                 });
+            },end:function(index){
+
             }
         });
 

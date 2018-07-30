@@ -71,28 +71,28 @@
                             <input type="text" name="matchType" id="matchType" lay-verify="title" autocomplete="off" placeholder="请输入类型" class="layui-input">
                         </div>
                     </div>
-                    <input id="commend" name="commend" type="hidden"/>
-                    <input id="matchIntroduction" name="matchIntroduction" type="hidden"/>
-                    <input id="matchRules" name="matchRules" type="hidden"/>
+                    <#--<input id="commend" name="commend" type="hidden"/>-->
+                    <#--<input id="matchIntroduction" name="matchIntroduction" type="hidden"/>-->
+                    <#--<input id="matchRules" name="matchRules" type="hidden"/>-->
                 </div>
                 <div class="layui-tab-item">
                     <div class="layui-form-item layui-form-text layui-col-xs12 layui-col-sm12 layui-col-md12">
                         <div >
-                            <textarea id="demo1" style="display: none;"></textarea>
+                            <textarea id="demo1"  name="commend" lay-verify="content1" style="display: none;"></textarea>
                         </div>
                     </div>
                 </div>
                 <div class="layui-tab-item">
                     <div class="layui-form-item layui-form-text layui-col-xs12 layui-col-sm12 layui-col-md12">
                         <div >
-                            <textarea id="demo2" style="display: none;"></textarea>
+                            <textarea id="demo2" name="matchIntroduction" lay-verify="content2" style="display: none;"></textarea>
                         </div>
                     </div>
                 </div>
                 <div class="layui-tab-item">
                     <div class="layui-form-item layui-form-text layui-col-xs12 layui-col-sm12 layui-col-md12">
                         <div >
-                            <textarea id="demo3" style="display: none;"></textarea>
+                            <textarea id="demo3" name="matchRules" lay-verify="content3" style="display: none;"></textarea>
                         </div>
                     </div>
                 </div>
@@ -100,7 +100,7 @@
         </div>
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn" lay-submit  lay-filter="addMatche">立即提交</button>
+                <button class="layui-btn" lay-submit=""  lay-filter="addMatche">立即提交</button>
                 <button id="reset" type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>

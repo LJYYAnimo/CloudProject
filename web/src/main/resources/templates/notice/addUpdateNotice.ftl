@@ -35,6 +35,36 @@
         </div>
     </div>
 
+    <#--<div >-->
+        <#--<div class="banner" >-->
+            <#--<span style="font-size:12px; color:#616161; margin-left:10px">欢迎访问南京林业大学人事处</span>-->
+            <#--<div class="login-regist-quit">-->
+
+            <#--<#if frontuser != null>-->
+                <#--<div class="login-item">-->
+                    <#--<div class="login-image"><img src="/DFS//template/183//images/small-user.png" /></div>-->
+                    <#--<div class="login-buttom"><a class="buttom-name" onclick="showIportal(${frontuser.iid});">${frontuser.realName}</a></div>-->
+                <#--</div>-->
+                <#--<div class="login-gap"><img src="/DFS//template/183//images/gap.png" /></div>-->
+                <#--<div class="login-item">-->
+                    <#--<div class="login-image"><img src="/DFS//template/183//images/small-quit.png" /></div>-->
+                    <#--<div class="login-buttom"><a class="buttom-name" id="quit">退出</a></div>-->
+                <#--</div>-->
+            <#--<#else>-->
+                <#--<div class="login-item">-->
+                    <#--<div class="login-image"><img src="/DFS//template/183//images/small-user.png" /></div>-->
+                    <#--<div class="login-buttom"><a class="buttom-name" id="login">登录</a></div>-->
+                <#--</div>-->
+                <#--<div class="login-gap"><img src="/DFS//template/183//images/gap.png" /></div>-->
+                <#--<div class="login-item">-->
+                    <#--<div class="login-image"><img src="/DFS//template/183//images/small-regist.png" /></div>-->
+                    <#--<div class="login-buttom"><a class="buttom-name" id="regist">注册</a></div>-->
+                <#--</div>-->
+                <#--<div style="clear:both;"></div>-->
+            <#--</#if>-->
+            <#--</div>-->
+        <#--</div>-->
+    <#--</div>-->
 
     <div class="layui-form-item layui-form-text layui-col-xs10 layui-col-sm12 layui-col-md11">
         <label class="layui-form-label">公告来源</label>
