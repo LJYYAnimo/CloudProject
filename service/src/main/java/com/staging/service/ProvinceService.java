@@ -13,4 +13,18 @@ import com.baomidou.mybatisplus.service.IService;
  */
 public interface ProvinceService extends IService<Province> {
 
+    /**
+     * 根据Id来查询名称
+     * @param id
+     * @return
+     */
+    Province selectById(Integer id);
+
+    /**
+     * 根据名称来查询Id
+     * @param provinceName
+     * @return
+     */
+    Province selectByProvinceName(String provinceName);
+
 }

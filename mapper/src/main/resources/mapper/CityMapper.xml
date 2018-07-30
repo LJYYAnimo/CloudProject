@@ -16,4 +16,11 @@
         LEFT JOIN t_province AS p on c.pid = p.id limit #{beginIndex},#{pageSize}
     </select>
 
+    <select id="selectById" resultType="com.staging.entity.City">
+        select cname from t_city where id = #{id}
+    </select>
+    <select id="selectByCityName" resultType="com.staging.entity.City">
+        select id from t_city where cname = #{cname}
+    </select>
+
 </mapper>

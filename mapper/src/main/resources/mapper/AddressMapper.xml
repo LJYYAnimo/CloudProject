@@ -5,10 +5,16 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.staging.entity.Address">
         <id column="id" property="id" />
-        <result column="school_address" property="schoolAddress" />
+        <result column="address_name" property="addressName" />
         <result column="cid" property="cid" />
         <result column="address_banner" property="addressBanner" />
         <result column="address_logo" property="addressLogo" />
     </resultMap>
+    <select id="selectById" resultType="com.staging.entity.Address">
+        select address_name from t_address where id = #{id}
+    </select>
+    <select id="selectByAddressName" resultType="com.staging.entity.Address">
+        select id from t_address where address_name = #{addressName}
+    </select>
 
 </mapper>

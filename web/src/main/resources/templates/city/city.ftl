@@ -21,4 +21,21 @@
 <script src="/xiangcecss/js/baguetteBox.min.js"></script>
 <script src="/js/city/city.js"></script>
 </body>
+<#--格式化LOGO图片-->
+<script type="text/html" id="city_city_banner">
+    {{# if(d.city_banner == '' || d.city_banner == null){ }}
+    <span style="color: red;">暂无图片</span>
+    {{# }else{ }}
+    <div><a class="" href="{{d.city_banner}}"  alt="{{ d.city_banner }}"><img src="{{ d.city_banner }}" style="width: 150px;height: 50px" alt="40x20" class="img-rounded"></a></div>
+    {{# } }}
+</script>
+
+<#--格式化封面图片-->
+<script type="text/html" id="city_city_logo">
+    {{# if(d.city_logo == '' || d.city_logo == null){ }}
+    <span style="color: red;">暂无图片</span>
+    {{# }else{ }}
+    <div><a class="" href="{{ d.city_logo }}"  alt="{{ d.city_logo }}"><img src="{{ d.city_logo }}" style="width: 150px;height: 50px" alt="40x20" class="img-rounded"></a></div>
+    {{# } }}
+</script>
 </html>

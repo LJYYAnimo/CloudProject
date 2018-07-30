@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
+import java.util.List;
+
 /**
  * <p>
  *  前端控制器
@@ -88,6 +90,13 @@ public class CityController {
         p.setRows(cityService.queryPage(p));
         p.setTotal(Long.valueOf(cityService.selectCount(new EntityWrapper<>())));
         return p;
+    }
+
+
+    @PostMapping("list")
+    @ResponseBody
+    public List<City> list(){
+        return cityService.selectList(null);
     }
 
     @GetMapping("page")

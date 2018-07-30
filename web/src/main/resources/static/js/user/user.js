@@ -29,24 +29,53 @@ layui.use(['table', 'element', 'form'], function () {
                 {checkbox: true, fixed: true}
                 , {field: 'id', title: '序号', type: 'numbers'}
                 , {field: 'userName', title: '账号', align: 'center'}
-                , {field: 'creatTime', title: '创建时间', align: 'center'}
-                , {field: 'email', title: '邮箱', align: 'center'}
+                , {field: 'creatTime', title: '创建时间', align: 'center',width:120}
+                , {field: 'email', title: '邮箱', align: 'center',width:190}
                 , {field: 'grade', title: '年级', align: 'center'}
-                , {field: 'phone', title: '手机号码', align: 'center'}
+                , {field: 'phone', title: '手机号码', align: 'center',width:120}
                 , {field: 'school', title: '学校', align: 'center'}
-                , {field: 'sex', title: '性别', align: 'center'}
-                , {field: 'brithday', title: '生日', align: 'center'}
+                , {field: 'sex', title: '性别', align: 'center',templet:'#userGender'}
+                , {field: 'brithday', title: '生日', align: 'center',width:120}
                 , {field: 'realName', title: '姓名', align: 'center'}
                 , {field: 'des', title: '个性签名', align: 'center'}
                 , {field: 'province', title: '省', align: 'center'}
                 , {field: 'city', title: '市', align: 'center'}
-                , {field: 'county', title: '县', align: 'center'}
+                , {field: 'address', title: '区/县', align: 'center'}
                 , {field: 'betterAddress', title: '详细地址', align: 'center'}
-                , {field: 'caozuo', width: 150, title: '操作', toolbar: '#barDemo', fixed: 'right'}
+                , {field: 'caozuo', width: 250, title: '操作', toolbar: '#barDemo', fixed: 'right'}
             ]]
             , id: 'idTest'
             , page: true
         });
     }
+
+    //监听工具条
+    table.on('tool(demo)', function (obj) {
+        var data = obj.data;
+        if (obj.event === 'details') {
+            layer.msg("详情");
+        } else if (obj.event === 'reset') {
+            layer.msg('确定重置？', {
+                time: 0 //不自动关闭
+                , btn: ['重置', '取消']
+                , yes: function (index) {
+                    axios.post('/user/reset',Qs.stringify(data)).then(function (response) {
+                        if(response.data.code == 0){
+                            layer.alert(response.data.message, {
+                                skin: 'layui-layer-molv' //样式类名
+                                ,closeBtn: 0
+                            })
+                        }else {
+                            layer.msg(response.data.message,{icon:5});
+                        }
+                    }).catch(function (error) {
+                        layer.msg(error,{icon:5});
+                    });
+                }
+            });
+        } else if(obj.event === 'allot'){
+            layer.msg("分配权限");
+        }
+    });
 
 });

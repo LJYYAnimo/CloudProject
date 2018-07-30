@@ -13,4 +13,18 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  */
 public interface ProvinceMapper extends BaseMapper<Province> {
 
+    /**
+     * 根据Id来查询名称
+     * @param id
+     * @return
+     */
+    Province selectById(Integer id);
+
+    /**
+     * 根据名称来查询Id
+     * @param provinceName
+     * @return
+     */
+    Province selectByProvinceName(String provinceName);
+
 }

@@ -25,15 +25,25 @@
     <#break>
 </#list>
 
-
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn layui-btn-xs" lay-event="query">查看用户</a>
+    <a class="layui-btn layui-btn layui-btn-xs" lay-event="details">详情</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="reset">重置密码</a>
+    <a class="layui-btn layui-btn layui-btn-xs" lay-event="allot">分配权限</a>
 </script>
 
 <script src="/js/jquery.min.js"></script>
 <script type="text/javascript" src="/layui/layui.js"></script>
 <script src="/js/public.js"></script>
+<script src="/js/axios.min.js"></script>
 <script src="/js/qs.js"></script>
 <script src="/js/user/user.js"></script>
 </body>
+<#--格式化性别-->
+<script type="text/html" id="userGender">
+    {{# if(d.sex == 0){ }}
+        女
+    {{# }else if(d.sex == 1){ }}
+        男
+    {{# } }}
+</script>
 </html>

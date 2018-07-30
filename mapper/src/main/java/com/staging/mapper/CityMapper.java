@@ -4,6 +4,7 @@ import com.staging.common.Pager;
 import com.staging.common.PagerLayui;
 import com.staging.entity.City;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.staging.entity.Province;
 import com.staging.entity.vo.CityVo;
 
 import java.util.List;
@@ -19,5 +20,19 @@ import java.util.List;
 public interface CityMapper extends BaseMapper<City> {
 
     List<CityVo> queryPage(Pager pager);
+
+    /**
+     * 根据Id来查询名称
+     * @param id
+     * @return
+     */
+    City selectById(Integer id);
+
+    /**
+     * 根据名称来查询Id
+     * @param cname
+     * @return
+     */
+    City selectByCityName(String cname);
 
 }

@@ -19,7 +19,7 @@
         <result column="des" property="des" />
         <result column="province" property="province" />
         <result column="city" property="city" />
-        <result column="county" property="county" />
+        <result column="address" property="address" />
         <result column="betterAddress" property="betterAddress" />
         <result column="teacherName" property="teacherName" />
         <result column="teacherEmail" property="teacherEmail" />

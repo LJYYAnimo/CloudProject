@@ -25,8 +25,8 @@ public class Address extends Model<Address> {
     /**
      * 县级
      */
-    @TableField("school_address")
-    private String schoolAddress;
+    @TableField("address_name")
+    private String addressName;
     /**
      * 对应市的id
      */
@@ -51,12 +51,12 @@ public class Address extends Model<Address> {
         this.id = id;
     }
 
-    public String getSchoolAddress() {
-        return schoolAddress;
+    public String getAddressName() {
+        return addressName;
     }
 
-    public void setSchoolAddress(String schoolAddress) {
-        this.schoolAddress = schoolAddress;
+    public void setAddressName(String addressName) {
+        this.addressName = addressName;
     }
 
     public Integer getCid() {
@@ -92,7 +92,7 @@ public class Address extends Model<Address> {
     public String toString() {
         return "Address{" +
         "id=" + id +
-        ", schoolAddress=" + schoolAddress +
+        ", addressName=" + addressName +
         ", cid=" + cid +
         ", addressBanner=" + addressBanner +
         ", addressLogo=" + addressLogo +
