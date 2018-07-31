@@ -25,7 +25,7 @@
 
 
 <div style="display: none;" id="Setting">
-    <form class="layui-form" action="" >
+    <form class="layui-form" action=""  lay-filter="matchForm">
         <div class="layui-tab">
             <ul class="layui-tab-title">
                 <li class="layui-this">大赛基本设置</li>
@@ -34,6 +34,8 @@
                 <li>大赛规则</li>
             </ul>
             <div class="layui-tab-content">
+
+                <input type="hidden" id="matchId" name="id" />
                 <div class="layui-tab-item layui-show">
                     <div class="layui-form-item layui-col-xs10 layui-col-sm12 layui-col-md11">
                         <label class="layui-form-label">比赛标题</label>
@@ -50,13 +52,13 @@
                     <div class="layui-form-item layui-col-xs10 layui-col-sm12 layui-col-md11">
                         <label class="layui-form-label">开始时间</label>
                         <div class="layui-input-block">
-                            <input type="text" name="startTime" id="startTime" lay-verify="date"  placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                            <input type="text" name="startTime" id="startTime" lay-verify="date"  placeholder="请输入开始时间" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item layui-col-xs10 layui-col-sm12 layui-col-md11">
                         <label class="layui-form-label">结束时间</label>
                         <div class="layui-input-block">
-                            <input type="text" name="endTime" id="endTime" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                            <input type="text" name="endTime" id="endTime" lay-verify="date" placeholder="请输入结束时间" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item layui-col-xs10 layui-col-sm12 layui-col-md11">

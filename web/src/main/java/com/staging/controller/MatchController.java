@@ -121,12 +121,39 @@ public class MatchController {
        return ServerResponse.createByError(ServerResponseConstant.SERVERRESPONSE_ERROR_SAVE);
     }
 
+    @PostMapping("updateMatch")
+    @ApiOperation("更新大赛信息")
+    @ResponseBody
+    public ServerResponse<Match> updateMatch(Match match){
+        try {
+            match.setUpdateTime(Calendar.getInstance().getTime());
+            matchService.updateById(match);
+            return  ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_UPDATE);
+        }catch (Exception e){
+
+        }
+       return ServerResponse.createByError(ServerResponseConstant.SERVERRESPONSE_ERROR_UPDATE);
+    }
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
 //        System.out.println("============处理所有@RequestMapping注解方法，在其执行之前初始化数据绑定器");
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 //        dateFormat.setLenient(false);//这句一个不要存在，不然还是处理不了时间转换
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
+
+    @PostMapping("deletMatch")
+    @ApiOperation("更新大赛信息")
+    @ResponseBody
+    public ServerResponse<Match> deletMatch(Match match){
+        try {
+            matchService.deleteById(match);
+            return  ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_DELET);
+        }catch (Exception e){
+
+        }
+        return ServerResponse.createByError(ServerResponseConstant.SERVERRESPONSE_ERROR_DELET);
     }
 
 }

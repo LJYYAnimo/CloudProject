@@ -70,7 +70,10 @@ layui.use(['table','upload','form','laydate','element','layedit'], function(){
     var index1 ;//content1表示把富文本编辑器的数据暂时保存起来，这样让用户弹出窗口的时候数据还会在窗口里
     var index2 ;
     var index3 ;
-    var index4 ;
+
+    var index4 ;//关闭窗口时使用
+
+    var url ='/match/addMatch';//默认是添加比赛
 
     $('#reset').click(function () {
         layedit.setContent(index1,'');//重置编辑器内容
@@ -80,7 +83,7 @@ layui.use(['table','upload','form','laydate','element','layedit'], function(){
 
     //监听提交
     form.on('submit(addMatche)', function (data) {
-        axios.post('/match/addMatch', Qs.stringify(data.field)).then(function (response) {
+        axios.post(url, Qs.stringify(data.field)).then(function (response) {
             if (response.data.code == 0) {
                 layer.msg(response.data.message, {icon: 6});
                 $('#reset').click();
@@ -97,19 +100,30 @@ layui.use(['table','upload','form','laydate','element','layedit'], function(){
     form.verify({
         content1: function(value){
             layedit.sync(index1);
+            if(value.length < 5){
+                return '大赛表彰请最少输入5个字';
+            }
         },
         content2: function(value){
             layedit.sync(index2);
+            if(value.length < 5){
+                return '大赛介绍请最少输入5个字';
+            }
         },
         content3: function(value){
             layedit.sync(index3);
+            if(value.length < 5){
+                return '大赛规则请最少输入5个字';
+            }
         }
     });
+
+
 
     function openNews(data,title) {
         index4 = layer.open({
             type: 1,
-            title: '添加比赛',
+            title: title,
             shadeClose: true,
             area: ['900px', '650px'],
             content: $('#Setting')
@@ -119,9 +133,23 @@ layui.use(['table','upload','form','laydate','element','layedit'], function(){
                 index1 = layedit.build('demo1',{ height: 350}); //建立编辑器
                 index2 = layedit.build('demo2',{ height: 350}); //建立编辑器
                 index3 = layedit.build('demo3',{ height: 350}); //建立编辑器
+
+                if(data!=''&&data!=undefined){
+                    form.val('matchForm',{
+                        "id":data.id,
+                        "title":data.title,
+                        "matchAbout":data.matchAbout,
+                        "matchBonus":data.matchBonus,
+                        "matchType":data.matchType
+                    });
+                    layedit.setContent(index1,data.commend);//把文章内容添加到富文本编辑器里
+                    layedit.setContent(index2,data.matchIntroduction);//把文章内容添加到富文本编辑器里
+                    layedit.setContent(index3,data.matchRules);//把文章内容添加到富文本编辑器里
+                }
                 laydate.render({
                     elem: '#startTime'
                     ,calendar: 'true'
+                    ,value: data!=''?data.startTime:new Date(new Date().getTime())
                     ,done: function(value, date){
                         console.log(value)
                     }
@@ -130,12 +158,15 @@ layui.use(['table','upload','form','laydate','element','layedit'], function(){
                 laydate.render({
                     elem: '#endTime'
                     ,calendar: 'true'
+                    ,value: data!=''?data.endTime:new Date(new Date().getTime()+1000*60*60*24*7)
                     ,done: function(value, date){
                         console.log(value)
                     }
                 });
             },end:function(index){
-
+                if(data!=''&&data!=undefined){
+                    $('#reset').click();
+                }
             }
         });
 
@@ -143,6 +174,7 @@ layui.use(['table','upload','form','laydate','element','layedit'], function(){
     }
 
     $("#add").click(function () {
+        url ='/match/addMatch';//添加比赛时url就会变成这个
         openNews("","添加比赛");
     });
 
@@ -155,8 +187,8 @@ layui.use(['table','upload','form','laydate','element','layedit'], function(){
                 ,btn: ['删除', '取消']
                 ,yes: function(index){
                     layer.close(index);
-                    axios.post('/news/deletNew', Qs.stringify(data)).then(function (response) {
-                        reloads();
+                    axios.post('/match/deletMatch', Qs.stringify(data)).then(function (response) {
+                        table.reload("idTest");
                         return layer.msg(response.data.message,{icon:6});
                     }).catch(function (error) {
                         layer.msg(error);
@@ -167,11 +199,11 @@ layui.use(['table','upload','form','laydate','element','layedit'], function(){
             if(data!=null&&data!=undefined){
                 layer.open({
                     type: 2,
-                    title: '资讯详情',
+                    title: '大赛详情',
                     area: ['1000px', '730px'],
                     fixed: false, //不固定
                     maxmin: true,
-                    content: '/news/article',
+                    content: '/match/article',
                     success: function (layero, index) {
                         // 向子页面传递参数
                         var iframe = window['layui-layer-iframe' + index];
@@ -183,6 +215,8 @@ layui.use(['table','upload','form','laydate','element','layedit'], function(){
             }
 
         }else if(obj.event === 'update'){
+            url ='/match/updateMatch';//添加比赛时url就会变成这个
+            $("#matchId").val(data.id);
             openNews(data,"更新资讯");
         }
     });

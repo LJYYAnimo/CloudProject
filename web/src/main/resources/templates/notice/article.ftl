@@ -21,7 +21,6 @@
         </div>
     </div>
 </fieldset>
-<p id="content"></p>
 
 
 <script type="text/javascript" src="/layui/layui.js"></script>
