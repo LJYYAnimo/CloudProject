@@ -25,4 +25,42 @@
         <result column="stl" property="stl" />
     </resultMap>
 
+    <sql id="select_columns">
+       t_works.id,t_works.works_title as worksTitle,t_works.works_typeid as worksTypeid, t_works.works_label as worksLabel,t_works.works_teacher as worksTeacher,
+       t_works.works_about as worksAbout,t_works.works_address as worksAddress,t_works.works_photoAddress as worksPhotoaddress,
+       t_works.works_date as worksDate,t_works.user_id as userId,t_works.works_audit as worksAudit,t_works.audit_date as auditDate,t_works.school_typeid as schoolTypeid,
+       t_works.no_checked_reason as noCheckedReason,t_works.area_id as areaId ,t_works.city_id as cityId ,t_works.province_id as provinceId, t_works.works_integral as worksIntegral,t_works.stl as stl,
+       t_works_type.works_type as worksTypeidName,t_user.userName as userName,t_sd_school.school_name as schoolName
+    </sql>
+
+
+    <sql id="query_where_clause">
+
+        t_works.works_typeid = t_works_type.id  and t_works.user_id = t_user.id and t_works.school_typeid = t_sd_school.id
+        <if test="worksVo != null and worksVo.worksTitle != null and worksVo.worksTitle != ''">
+            and t_works.works_title like concat('%', #{worksVo.worksTitle}, '%')
+        </if>
+        <if test="worksVo != null and worksVo.userName != null and worksVo.userName != ''">
+            and t_user.userName like concat('%', #{worksVo.userName}, '%')
+        </if>
+        <if test="worksVo != null and worksVo.worksAudit != null and worksVo.worksAudit != ''">
+            and t_works.works_audit = #{worksVo.worksAudit}
+        </if>
+        <if test="worksVo != null and worksVo.worksTypeid != null and worksVo.worksTypeid != ''">
+            and t_works.works_typeid = #{worksVo.worksTypeid}
+        </if>
+
+
+    </sql>
+
+    <select id="queryPageWorks" resultType="com.staging.entity.vo.WorksVo">
+        select
+        <include refid="select_columns"/>
+        from  t_works,t_works_type,t_user,t_sd_school
+        <where>
+        <include refid="query_where_clause"/>
+        </where>
+        limit #{pager.beginIndex},#{pager.pageSize}
+    </select>
+
 </mapper>

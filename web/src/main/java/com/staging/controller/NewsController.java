@@ -10,8 +10,10 @@ import com.staging.common.enums.MIMETypeEnum;
 import com.staging.common.utils.DeleteFileUtil;
 import com.staging.common.utils.FileUtils;
 import com.staging.entity.News;
+import com.staging.entity.User;
 import com.staging.entity.vo.LayEditMsg;
 import com.staging.impl.NewsServiceImpl;
+import com.staging.shiro.config.utils.ShiroUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -45,7 +47,7 @@ import java.util.Date;
 @Api(tags = "1.0", description = "所有资讯", value = "所有资讯")
 public class NewsController {
 
-    private final Logger logger = LoggerFactory.getLogger(SchoolController.class);
+    private final Logger logger = LoggerFactory.getLogger(NewsController.class);
 
     @Autowired
     private NewsServiceImpl newsService;
@@ -97,7 +99,7 @@ public class NewsController {
     public Pager pager(Integer page, Integer limit, News news, EntityWrapper<News> entityWrapper){
         logger.info("进入资讯分页查询:"+news.toString());
         Pager p = new Pager(page,limit);
-        if(!"".equals(news.getTitle())&&null!=news.getTitle()){
+        if(!StringUtils.isEmpty(news.getTitle())){
             entityWrapper.like("title",news.getTitle());
         }
         p.setRows(newsService.queryPageTitle(p,news));
@@ -114,7 +116,8 @@ public class NewsController {
         String fileName = file.getOriginalFilename();
         String value = FileUtils.getExtensionWithoutDot(fileName);
         if(MIMETypeEnum.JPEG.getValue().equals(value) || MIMETypeEnum.JPG.getValue().equals(value)|| MIMETypeEnum.PNG.getValue().equals(value)){
-            String path = FileUtils.uploadPath(request,"editorimgNews","admin/");//把用户的图片存放到admin用户的editorimg文件夹下
+
+            String path = FileUtils.uploadPath(request,"editorimgWorks","admin/");//把用户的图片存放到admin用户的editorimg文件夹下
             try {
                 String file1 = FileUtils.uploadFile(file, path);
                 layui.setCode(0);
@@ -201,7 +204,7 @@ public class NewsController {
         }
         return newsService.deleteById(news.getId())?
                 DeleteFileUtil.delete(FileUtils.getClasspath()+"static"+news.getTitleImg())?
-                ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_DELET):ServerResponse.createBySuccess("删除图片失败")
+                ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_DELET):ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_DELET)
                 :ServerResponse.createByError(ServerResponseConstant.SERVERRESPONSE_ERROR_DELET);
     }
 

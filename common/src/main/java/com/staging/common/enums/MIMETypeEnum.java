@@ -19,7 +19,8 @@ public enum MIMETypeEnum {
     XLS("xls", ".xls", "application/vnd.ms-excel"),
     XLSX("xlsx", ".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"),
     ZIP("zip", ".zip", "application/zip"),
-    RAR("rar", ".rar", "application/x-rar-compressed");
+    RAR("rar", ".rar", "application/x-rar-compressed"),
+    STL("stl", ".stl", "application/vnd.ms-pkistl");
 
     private String value;
     private String ext;

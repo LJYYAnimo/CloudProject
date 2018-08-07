@@ -176,11 +176,11 @@ public class NoticeController {
     public ServerResponse<String> deletNew(Notice notice){
         if(StringUtils.isEmpty(notice.getTitleImg())){
             //如果图片路径为空就让DeleteFileUtil.delete删除一个233文件夹，这样就不会出现只删除/static/下的所有文件，而是删除/static/233下的文件夹
-            notice.setTitleImg("233");
+            notice.setTitleImg("null");
         }
-        return notice.deleteById(notice.getId())?
+        return notice.deleteById()?
                 DeleteFileUtil.delete(FileUtils.getClasspath()+"static"+notice.getTitleImg())?
-                        ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_DELET):ServerResponse.createBySuccess("删除图片失败")
+                        ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_DELET):ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_DELET)
                 :ServerResponse.createByError(ServerResponseConstant.SERVERRESPONSE_ERROR_DELET);
     }
 

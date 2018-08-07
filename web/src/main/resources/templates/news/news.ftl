@@ -30,4 +30,12 @@
 <script src="/xiangcecss/js/baguetteBox.min.js"></script>
 <script src="/js/news/news.js"></script>
 </body>
+<#--格式化LOGO图片-->
+<script type="text/html" id="sdTitleImg">
+    {{# if(d.titleImg == '' || d.titleImg == null){ }}
+    <span style="color: red;">暂无图片</span>
+    {{# }else{ }}
+    <div><a class="" href="{{d.titleImg}}"  alt="{{ d.titleImg }}"><img src="{{ d.titleImg }}" style="width: 150px;height: 50px" alt="40x20" class="img-rounded"></a></div>
+    {{# } }}
+</script>
 </html>

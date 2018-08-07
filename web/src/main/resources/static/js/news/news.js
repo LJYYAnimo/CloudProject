@@ -27,8 +27,7 @@ layui.use(['table','upload','form'], function(){
             ,{field:'editor', title:'作者',align: 'center'}
             ,{field:'createTime', title:'创建时间',align: 'center'}
             ,{field:'updateTime', title:'更新时间',align: 'center'}
-            ,{field:'titleImg',width:170, title:'标题封面',align: 'center',templet:'<div><a class="" href="{{ d.titleImg }}"  alt="{{ d.titleImg }}">' +
-            '<img src="{{ d.titleImg }}" style="width: 150px;height: 50px" alt="40x20" class="img-rounded"></a></div>'}
+            ,{field:'titleImg',width:170, title:'标题封面',align: 'center',templet:'#sdTitleImg'}
             ,{field:'about', title:'简介',align: 'center'}
             ,{field:'caozuo',width:200,title: '操作',toolbar: '#barDemo',fixed: 'right'}
         ]]
@@ -60,6 +59,7 @@ layui.use(['table','upload','form'], function(){
             area: ['1000px', '730px'],
             fixed: false, //不固定
             maxmin: true,
+            shadeClose: true,
             content: '/news/addUpdateNews',
             success: function (layero, index) {
                 // 向子页面传递参数
@@ -100,6 +100,7 @@ layui.use(['table','upload','form'], function(){
                     area: ['1000px', '730px'],
                     fixed: false, //不固定
                     maxmin: true,
+                    shadeClose: true,
                     content: '/news/article',
                     success: function (layero, index) {
                         // 向子页面传递参数

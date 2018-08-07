@@ -32,7 +32,7 @@ public class CaseFile extends Model<CaseFile> {
      */
     private String img;
     /**
-     * 课程简介
+     * 课程介绍
      */
     private String des;
     /**

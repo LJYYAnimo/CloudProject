@@ -203,6 +203,7 @@ layui.use(['table','upload','form','laydate','element','layedit'], function(){
                     area: ['1000px', '730px'],
                     fixed: false, //不固定
                     maxmin: true,
+                    shadeClose: true,
                     content: '/match/article',
                     success: function (layero, index) {
                         // 向子页面传递参数

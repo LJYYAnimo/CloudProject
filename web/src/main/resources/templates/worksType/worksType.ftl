@@ -8,7 +8,7 @@
 <body style="padding-top: 20px">
 
 <fieldset class="layui-elem-field site-demo-button" >
-    <legend>学校类型</legend>
+    <legend>作品类型</legend>
     <div>
         <button class="layui-btn" id="add">添加</button>
     </div>
@@ -18,11 +18,12 @@
 
 <#--学校类型添加-->
 <div id="addDiv" style="display: none;padding-top: 20px">
-    <form id="schoolType" class="layui-form">
-        <div class="layui-form-item layui-col-xs12 layui-col-sm10 layui-col-md8">
-            <label class="layui-form-label">学校类型</label>
+    <form id="schoolType" class="layui-form" lay-filter="worksTypeForm">
+        <input type="hidden" name="id"   class="layui-input">
+        <div class="layui-form-item">
+            <label class="layui-form-label">作品类型</label>
             <div class="layui-input-inline">
-                <input type="text" name="name" required lay-verify="required" placeholder="请输入学校类型" autocomplete="off"
+                <input type="text" name="worksType" required lay-verify="required" placeholder="请输入学校类型" autocomplete="off"
                        class="layui-input">
             </div>
         </div>
@@ -37,6 +38,7 @@
 
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <#--<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="update">更新</a>-->
 </script>
 
 <script src="/js/jquery.min.js"></script>
@@ -44,6 +46,6 @@
 <script src="/js/public.js"></script>
 <script src="/js/axios.min.js"></script>
 <script src="/js/qs.js"></script>
-<script src="/js/school/schoolType.js"></script>
+<script src="/js/worksType/worksType.js"></script>
 </body>
 </html>

@@ -42,4 +42,13 @@ public class ServerResponseConstant {
 
     public static final String SERVERRESPONSE_ERROR_DELET = "删除失败";
 
+    public static final String SERVERRESPONSE_SUCCESS_STATUS = "审核成功";
+
+    public static final String SERVERRESPONSE_ERROR_STATUS = "审核失败";
+
+    public static final String SERVERRESPONSE_SUCCESS_FREEZE = "冻结成功";
+
+    public static final String SERVERRESPONSE_ERROR_FREEZE = "冻结失败";
+
+
 }

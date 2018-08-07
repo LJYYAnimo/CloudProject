@@ -2,6 +2,7 @@ package com.staging.shiro.config.utils;
 
 import com.staging.entity.Permission;
 import com.staging.entity.Role;
+import com.staging.entity.User;
 import com.staging.entity.vo.PermissionVo;
 import com.staging.shiro.config.constant.ShiroConstant;
 import org.apache.shiro.SecurityUtils;
@@ -10,6 +11,8 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -73,6 +76,18 @@ public class ShiroUtils {
             permissionSet.add(permission.getJurPer());
         }
         return permissionSet;
+    }
+    
+    /**
+     * @Author: 95DBC
+     * @Date: 2018/7/31 11:18
+     * @Description:返回Session数据
+     *
+     */
+    
+    public static User getUserSession(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        return session.getAttribute(ShiroConstant.USER)!=null?(User) session.getAttribute(ShiroConstant.USER):null;
     }
 
     /**
