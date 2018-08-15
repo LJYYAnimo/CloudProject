@@ -30,4 +30,9 @@ public class WorksServiceImpl extends ServiceImpl<WorksMapper, Works> implements
     public List<WorksVo> queryPageWorks(Pager pager, WorksVo worksVo) {
         return worksMapper.queryPageWorks(pager,worksVo);
     }
+
+    @Override
+    public int queryPageCount(WorksVo worksVo) {
+        return worksMapper.queryPageCount(worksVo);
+    }
 }

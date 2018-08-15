@@ -50,5 +50,9 @@ public class ServerResponseConstant {
 
     public static final String SERVERRESPONSE_ERROR_FREEZE = "冻结失败";
 
+    public static final String SERVERRESPONSE_SUCCESS_ACTIVATE = "激活成功";
+
+    public static final String SERVERRESPONSE_ERROR_ACTIVATE = "激活失败";
+
 
 }

@@ -5,7 +5,7 @@
     <title>省</title>
     <link rel="stylesheet" href="/layui/css/layui.css" media="all"/>
     <link rel="stylesheet" href="/xiangcecss/css/baguetteBox.min.css" media="all"/>
-    <link rel="stylesheet" href="/layui/css/button.css" />
+
 </head>
 <body style="padding-top: 20px">
 <fieldset class="layui-elem-field site-demo-button" >
@@ -19,7 +19,7 @@
 
                 <div class="layui-inline">
                     <div class="layui-input-inline">
-                        <input type="text" id="worksTitle" name="worksTitle" autocomplete="off" class="layui-input" placeholder="   输入作品标题">
+                        <input type="text" id="title" name="title" autocomplete="off" class="layui-input" placeholder="   输入作品标题">
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <select name="worksAudit" id="worksAudit" lay-filter="worksAudit">
+                    <select name="caseAudit" id="caseAudit" >
                         <option value="">请选择审核状态</option>
                         <option value="1">未审核</option>
                         <option value="2">审核通过</option>
@@ -36,7 +36,7 @@
                     </select>
                 </div>
                 <div class="layui-inline">
-                    <select name="worksType" id="worksType" lay-filter="worksType">
+                    <select name="seriesid" id="typeId" >
                         <option value="">选择作品类型</option>
                     </select>
                 </div>
@@ -70,11 +70,11 @@
 </div>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-    {{# if(d.worksAudit == 1 ){ }}
+    {{# if(d.caseAudit == 1 ){ }}
     <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="status">审核</a>
-    {{# }else if(d.worksAudit == 2 ){ }}
+    {{# }else if(d.caseAudit == 2 ){ }}
     <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="status">冻结</a>
-    {{# }else if(d.worksAudit == 3 ){ }}
+    {{# }else if(d.caseAudit == 3 ){ }}
     <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="status">重新审核</a>
     {{# }  }}
     <a class="layui-btn layui-btn-xs" lay-event="query">查看详情</a>
@@ -88,14 +88,14 @@
 <script type="text/javascript" src="/js/axios.min.js"></script>
 <script src="/js/qs.js"></script>
 <script src="/xiangcecss/js/baguetteBox.min.js"></script>
-<script src="/js/works/works.js"></script>
+<script src="/js/caseFile/caseFile.js"></script>
 </body>
 <#--格式化LOGO图片-->
-<script type="text/html" id="worksPhotoaddressURL">
-    {{# if(d.worksPhotoaddress == '' || d.worksPhotoaddress == null){ }}
+<script type="text/html" id="imgURL">
+    {{# if(d.img == '' || d.img == null){ }}
     <span style="color: red;">暂无图片</span>
     {{# }else{ }}
-    <div><a class="" href="{{d.worksPhotoaddress}}"  alt="{{ d.worksPhotoaddress }}"><img src="{{ d.worksPhotoaddress }}" style="width: 150px;height: 50px" alt="40x20" class="img-rounded"></a></div>
+    <div><a class="" href="{{d.img}}"  alt="{{ d.img }}"><img src="{{ d.img }}" style="width: 150px;height: 50px" alt="40x20" class="img-rounded"></a></div>
     {{# } }}
 </script>
 <script type="text/html" id="stlURL">
@@ -106,19 +106,19 @@
     <#--<a class="layui-btn layui-btn-xs" href="{{d.stl}}"  alt="{{ d.stl }}">下载3d文件</a>-->
     {{# } }}
 </script>
-<script type="text/html" id="worksAddressURL">
-    {{# if(d.worksAddress == '' || d.worksAddress == null ){ }}
+<script type="text/html" id="fileadressURL">
+    {{# if(d.fileadress == '' || d.fileadress == null ){ }}
     <span style="color: red;">暂无附件</span>
     {{# }else{ }}
-    <a class="layui-btn layui-btn-normal layui-btn-xs"   href="{{d.worksAddress}}"  alt="{{ d.worksAddress }}">下载附件</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs"   href="{{d.fileadress}}"  alt="{{ d.fileadress }}">下载附件</a>
     {{# } }}
 </script>
 <script type="text/html" id="status">
-    {{# if(d.worksAudit == 1 ){ }}
+    {{# if(d.caseAudit === 1 ){ }}
     <span style="color: red;">未审核</span>
-    {{# }else if(d.worksAudit == 2 ){ }}
+    {{# }else if(d.caseAudit === 2 ){ }}
     <span style="color: #74ff66;">审核通过</span>
-    {{# }else if (d.worksAudit == 3 ) { }}
+    {{# }else if (d.caseAudit === 3 ) { }}
     <span style="color: #4590ff;">审核未通过</span>
     {{# } }}
 </script>

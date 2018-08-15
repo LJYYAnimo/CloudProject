@@ -20,4 +20,6 @@ public interface WorksService extends IService<Works> {
 
 
     List<WorksVo> queryPageWorks(Pager pager, WorksVo worksVo);
+
+    int queryPageCount( WorksVo worksVo);
 }

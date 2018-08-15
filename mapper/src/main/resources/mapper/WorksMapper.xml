@@ -53,12 +53,22 @@
 
     </sql>
 
+    <select id="queryPageCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  t_works,t_works_type,t_user,t_sd_school
+        <where>
+        <include refid="query_where_clause"/>
+        </where>
+    </select>
+
+
     <select id="queryPageWorks" resultType="com.staging.entity.vo.WorksVo">
         select
         <include refid="select_columns"/>
         from  t_works,t_works_type,t_user,t_sd_school
         <where>
-        <include refid="query_where_clause"/>
+            <include refid="query_where_clause"/>
         </where>
         limit #{pager.beginIndex},#{pager.pageSize}
     </select>

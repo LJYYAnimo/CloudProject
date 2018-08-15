@@ -101,14 +101,11 @@ public class WorksController {
     @PostMapping("pager")
     @ApiOperation("分页查询")
     @ResponseBody
-    public Pager pager(Integer page, Integer limit, WorksVo worksVo, EntityWrapper<Works> entityWrapper){
+    public Pager pager(Integer page, Integer limit, WorksVo worksVo){
         logger.info("进入作品分页查询:"+worksVo.toString());
         Pager p = new Pager(page,limit);
-        if(!StringUtils.isEmpty(worksVo.getWorksTitle())){
-            entityWrapper.like("works_title",worksVo.getWorksTitle());
-        }
         p.setRows(worksService.queryPageWorks(p,worksVo));
-        p.setTotal(Long.valueOf(worksService.selectCount(entityWrapper)));
+        p.setTotal(Long.valueOf(worksService.queryPageCount(worksVo)));
         return p;
     }
 
@@ -204,10 +201,19 @@ public class WorksController {
     @ResponseBody
     public ServerResponse<Works> deletWorks(Works works){
         if(StringUtils.isEmpty(works.getWorksPhotoaddress())){
-            //如果图片路径为空就让DeleteFileUtil.delete删除一个233文件夹，这样就不会出现只删除/static/下的所有文件，而是删除/static/233下的文件夹
+            //如果图片路径为空就让DeleteFileUtil.delete删除一个名为null文件夹，这样就不会出现只删除/static/下的所有文件，而是删除/static/null下的文件夹
             works.setWorksPhotoaddress("null");
         }
-        return works.deleteById()? DeleteFileUtil.delete(FileUtils.getClasspath()+"static"+works.getWorksPhotoaddress())?
+        if(StringUtils.isEmpty(works.getStl())){
+            works.setStl("null");
+        }
+        if(StringUtils.isEmpty(works.getWorksAddress())){
+            works.setWorksAddress("null");
+
+        }
+        return works.deleteById()? DeleteFileUtil.delete(FileUtils.getClasspath()+"static"+works.getWorksPhotoaddress())&&
+                DeleteFileUtil.delete(FileUtils.getClasspath()+"static"+works.getStl())&&
+                DeleteFileUtil.delete(FileUtils.getClasspath()+"static"+works.getWorksAddress())?
                 ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_DELET):
                 ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_DELET)
                 :ServerResponse.createByError(ServerResponseConstant.SERVERRESPONSE_ERROR_DELET);

@@ -16,57 +16,65 @@ function tableReload() {
     });
 }
 setTimeout(function() {
-layui.use(['table','upload','form'], function(){
+layui.use(['table','upload','form','layedit'], function(){
     var table = layui.table,
         upload = layui.upload,
         upload1 = layui.upload,
         upload2 = layui.upload,
         form = layui.form;
     var $ = layui.$;
-
+    var layedit = layui.layedit;
+    layedit.set({
+        uploadImage: {
+            url: '/caseFile/adduploadImg' //富文本插入图片时的接口
+            ,type: 'post' //默认post
+        }
+    });
+    var index = layedit.build('demo'); //建立编辑器
 
     var  frameindex= parent.layer.getFrameIndex(window.name);//当此页面被其他页面弹窗时，获取此页面元素
 
-    var path ='/works/addworksupload';
+    var path ='/caseFile/addCaseupload';
     console.log(value);
 
-    if(value!=""&&value.worksPhotoaddress!=undefined){
+    if(value!=""&&value.img!=undefined){
         var indexs= layer.load(1, {
             shade: [0.1,'#fff'] //0.1透明度的白色背景
         });
 
-            $('#imgs').attr('src', value.worksPhotoaddress); //图片链接（base64
+            $('#imgs').attr('src', value.img); //图片链接（base64
             form.val('newsForm',{
                 "id":value.id,
-                "deletImg":value.worksPhotoaddress,
-                "worksTitle":value.worksTitle,
-                "worksAbout":value.worksAbout,
+                "deletImg":value.img,
+                "title":value.title,
+                "about":value.about,
                 "deletfileStl":value.stl,
-                "deletfileZIP":value.worksAddress
+                "deletfileZIP":value.fileadress
             });
-            path ='/works/updateWorks';
-            $("#worksIntegral").val(value.worksIntegral);
+            path ='/caseFile/updateCase';
+            $("#caseFileIntegral").val(value.caseFileIntegral);
             $("#btnform").removeClass("layui-hide");//没有上传文件就监听并显示这个按钮
             $("#btn").addClass("layui-hide");//同时隐藏这个按钮
+            layedit.setContent(index,value.des);//把文章内容添加到富文本编辑器里
 
             var stls = value.stl.split('/');
             $('#stltext').text(stls[stls.length-1]);
-            var zips = value.worksAddress.split('/');
+            var zips = value.fileadress.split('/');
             $('#ziptext').html(zips[zips.length-1]);
             layer.close(indexs);
 
     }
-    if(value.worksTypeList!=undefined) {
-        for (var i = 0; i < value.worksTypeList.length; i++) {
+    if(value.typeIdList!=undefined) {
+        for (var i = 0; i < value.typeIdList.length; i++) {
 
-            $('#worksType').append("<option value=" + value.worksTypeList[i].id + ">" + value.worksTypeList[i].worksType + "</option>");
+            $('#typeId').append("<option value=" + value.typeIdList[i].id + ">" + value.typeIdList[i].typeName + "</option>");
 
         }
         form.render();
 
-        if(value.worksTypeid!=undefined){
+        if(value.typeId!=undefined){
 
-            $('#worksType').val(value.worksTypeid);
+            $('#typeId').val(value.typeId);
             form.render();
         }
 
@@ -93,18 +101,21 @@ layui.use(['table','upload','form'], function(){
         var formdata1=new FormData();// 创建form对象
         formdata1.append('id',$("#ids").val());// 通过append向form对象添加数据,可以通过append继续添加数据
         formdata1.append('deletImg',$("#deletImg").val());
-        formdata1.append('worksTitle',$("#worksTitle").val());
-        formdata1.append('worksTypeid',$("#worksType").val());
-        formdata1.append('worksAbout',$("#worksAbout").val());
-        formdata1.append('worksIntegral',$("#worksIntegral").val());
+        formdata1.append('title',$("#title").val());
+        formdata1.append('about',$("#about").val());
+        formdata1.append('seriesid',$("#typeId").val());
+        formdata1.append('des',layedit.getContent(index));
+        formdata1.append('caseFileIntegral',$("#caseFileIntegral").val());
         formdata1.append('deletfileStl',value.stl!=undefined?value.stl:null);
-        formdata1.append('deletfileZIP',value.worksAddress!=undefined?value.worksAddress:null);
+        formdata1.append('deletfileZIP',value.fileadress!=undefined?value.fileadress:null);
         if(fileZIP!=null){
             formdata1.append('fileZIP',fileZIP,fileZIP.name);
         }
         if(fileStl!=null){
             formdata1.append('fileStl',fileStl,fileStl.name);
         }
+
+
         $("#btnform").addClass("layui-hide");//提交后就暂时隐藏按钮
         var config = {
             headers: {'Content-Type': 'multipart/form-data'}
@@ -154,14 +165,16 @@ layui.use(['table','upload','form'], function(){
                 //这里是把数据跟图片一起添加到后台
                 this.data = {"id":$("#ids").val()
                     ,"deletImg":$("#deletImg").val()
-                    ,"worksTitle":$("#worksTitle").val(),
-                    "worksTypeid":$("#worksType").val(),
+                    ,"title":$("#title").val(),
+                    "seriesid":$("#typeId").val(),
                     "worksAbout":$("#worksAbout").val(),
-                    "worksIntegral":$("#worksIntegral").val(),
+                    "about":$("#about").val(),
+                    "des":layedit.getContent(index),
+                    "caseFileIntegral":$("#caseFileIntegral").val(),
                     "fileStl":fileStl,
                     "fileZIP":fileZIP,
                     "deletfileStl":value.stl!=undefined?value.stl:null,
-                    "deletfileZIP":value.worksAddress!=undefined?value.worksAddress:null
+                    "deletfileZIP":value.fileadress!=undefined?value.fileadress:null
                 };
             $("#btn").addClass("layui-hide");//提交后就暂时隐藏按钮
              },done: function(res, indexs, upload){ //上传后的回调
@@ -216,7 +229,7 @@ layui.use(['table','upload','form'], function(){
     });
 
     upload2.render({
-        elem: '#worksAddress'
+        elem: '#fileadress'
         ,url: path
         ,auto: false
         ,size: 71200

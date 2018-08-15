@@ -117,7 +117,7 @@ public class NewsController {
         String value = FileUtils.getExtensionWithoutDot(fileName);
         if(MIMETypeEnum.JPEG.getValue().equals(value) || MIMETypeEnum.JPG.getValue().equals(value)|| MIMETypeEnum.PNG.getValue().equals(value)){
 
-            String path = FileUtils.uploadPath(request,"editorimgWorks","admin/");//把用户的图片存放到admin用户的editorimg文件夹下
+            String path = FileUtils.uploadPath(request,"editorimgNews","admin/");//把用户的图片存放到admin用户的editorimg文件夹下
             try {
                 String file1 = FileUtils.uploadFile(file, path);
                 layui.setCode(0);
@@ -191,7 +191,7 @@ public class NewsController {
             }
         }
         news.setUpdateTime(Calendar.getInstance().getTime());
-        return  newsService.updateById(news)? ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_UPDATE,news):ServerResponse.createByError(1,ServerResponseConstant.SERVERRESPONSE_ERROR_UPDATE);
+        return  newsService.updateById(news)? ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_UPDATE):ServerResponse.createByError(1,ServerResponseConstant.SERVERRESPONSE_ERROR_UPDATE);
     }
 
     @PostMapping("deletNew")

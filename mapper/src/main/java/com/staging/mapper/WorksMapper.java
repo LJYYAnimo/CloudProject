@@ -21,4 +21,5 @@ public interface WorksMapper extends BaseMapper<Works> {
 
     List<WorksVo> queryPageWorks(@Param("pager")Pager pager, @Param("worksVo") WorksVo worksVo);
 
+    int queryPageCount(@Param("worksVo") WorksVo worksVo);
 }

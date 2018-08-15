@@ -79,15 +79,14 @@
             <textarea id="demo" style="display: none;"></textarea>
         </div>
     </div>
-    <div class="layui-form-item layui-col-md-offset4 layui-col-xs4 ">
-        <div class="layui-input-block">
-            <button id="btn" class="layui-btn " lay-submit="" lay-filter="demo1">立即提交</button>
-            <button id="btnform" class="layui-btn layui-hide" lay-submit="" lay-filter="demo1">立即提交</button>
-        </div>
-    </div>
 </form>
 
-
+<div class="layui-form-item layui-col-md-offset4 layui-col-xs4 ">
+    <div class="layui-input-block">
+        <button id="btn" class="layui-btn " lay-submit="" lay-filter="demo1">立即提交</button>
+        <button id="btnform" class="layui-btn layui-hide" lay-submit="" lay-filter="demo1">立即提交</button>
+    </div>
+</div>
 <script type="text/javascript" src="/layui/layui.js"></script>
 <script src="/js/public.js"></script>
 <script src="/js/jquery.min.js"></script>

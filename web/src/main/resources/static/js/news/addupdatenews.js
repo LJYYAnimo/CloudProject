@@ -33,13 +33,11 @@ layui.use(['table','upload','form','layedit'], function(){
     var  frameindex= parent.layer.getFrameIndex(window.name);//当此页面被其他页面弹窗时，获取此页面元素
 
     var path ='/news/addnewupload';
-    console.log(value);
 
         if(value!=""&&value!=undefined){
             var indexs= layer.load(1, {
                 shade: [0.1,'#fff'] //0.1透明度的白色背景
             });
-
                 $('#imgs').attr('src', value.titleImg); //图片链接（base64
                 form.val('newsForm',{
                     "id":value.id,
@@ -53,7 +51,6 @@ layui.use(['table','upload','form','layedit'], function(){
                 $("#btn").addClass("layui-hide");//同时隐藏这个按钮
                 layedit.setContent(index,value.content);//把文章内容添加到富文本编辑器里
                 layer.close(indexs);
-
         }
 
 
@@ -73,6 +70,10 @@ layui.use(['table','upload','form','layedit'], function(){
                 parent.layer.close(frameindex);//此页面被其他页面iframe弹窗时，调用此方法进行关闭
                 parent.layer.msg(response.data.message, {
                     time: 1000, icon:6
+                });
+            }else {
+                parent.layer.msg(response.data.message, {
+                    time: 1000, icon:5
                 });
             }
         }).catch(function (error) {
@@ -104,7 +105,7 @@ layui.use(['table','upload','form','layedit'], function(){
             ,before: function(obj){
                 //这里是把数据跟图片一起添加到后台
                 this.data = {"id":$("#ids").val()
-                    ,"deletImg":value.titleImg
+                    ,"deletImg":$("#deletImg").val()
                     ,"title":$("#title").val(),
                     "about":$("#about").val(),
                     "dept":$("#dept").val(),
@@ -128,6 +129,5 @@ layui.use(['table','upload','form','layedit'], function(){
             layer.msg("上传失败")
            }
        });
-
 });
 },200);

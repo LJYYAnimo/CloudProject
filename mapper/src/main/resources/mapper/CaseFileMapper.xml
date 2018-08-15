@@ -22,8 +22,56 @@
         <result column="area_id" property="areaId" />
         <result column="city_id" property="cityId" />
         <result column="province_id" property="provinceId" />
-        <result column="caseFileIntegral" property="caseFileIntegral" />
+        <result column="case_file_integral" property="caseFileIntegral" />
         <result column="stl" property="stl" />
     </resultMap>
 
+
+    <sql id="select_columns">
+       t_case_file.id as id ,t_case_file.title as title,t_case_file.img as img,t_case_file.des as des,
+       t_case_file.downloadnum as downloadnum,t_case_file.fileadress as fileadress,
+        t_case_file.authorid as authorid,t_case_file.viewnum as viewnum,t_case_file.createtime as createtime,
+        t_case_file.updatetime as updatetime,t_case_file.about as about,t_case_file.case_audit as caseAudit,
+        t_case_file.case_unreason as caseUnreason ,t_case_file.audit_date as auditDate,t_case_file.area_id as areaId,
+        t_case_file.city_id as cityId,t_case_file.province_id as provinceId ,t_case_file.case_file_integral as caseFileIntegral,
+        t_case_file.stl as stl,t_user.userName as userName,t_case_type.type_name as typeName,t_case_type.id as typeId,t_case_type.status as status
+    </sql>
+
+    <sql id="query_where_clause">
+
+        t_case_file.authorid = t_user.id and t_case_file.seriesid = t_case_type.id
+        <if test="caseFileVo != null and caseFileVo.title != null and caseFileVo.title != ''">
+            and t_case_file.title like concat('%', #{caseFileVo.title}, '%')
+        </if>
+        <if test="caseFileVo != null and caseFileVo.userName != null and caseFileVo.userName != ''">
+            and t_user.userName like concat('%', #{caseFileVo.userName}, '%')
+        </if>
+        <if test="caseFileVo != null and caseFileVo.caseAudit != null and caseFileVo.caseAudit != ''">
+            and t_case_file.case_audit = #{caseFileVo.caseAudit}
+        </if>
+        <if test="caseFileVo != null and caseFileVo.typeId != null and caseFileVo.typeId != ''">
+            and t_case_type.id = #{caseFileVo.typeId}
+        </if>
+
+
+    </sql>
+
+    <select id="queryPageCase" resultType="com.staging.entity.vo.CaseFileVo">
+        select
+        <include refid="select_columns"/>
+        from  t_case_file,t_user,t_case_type
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        limit #{pager.beginIndex},#{pager.pageSize}
+    </select>
+
+    <select id="queryPageCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  t_case_file,t_user,t_case_type
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+    </select>
 </mapper>

@@ -84,7 +84,7 @@ public class MpGenerator {
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("root");
         dsc.setPassword("Root@123456");
-        dsc.setUrl("jdbc:mysql://47.104.241.36:3306/cloudplatform?characterEncoding=utf-8&useSSL=false");
+        dsc.setUrl("jdbc:mysql://106.14.118.171:3306/cloudplatform?characterEncoding=utf-8&useSSL=false");
         mpg.setDataSource(dsc);
 
         // 策略配置
@@ -92,7 +92,7 @@ public class MpGenerator {
         // strategy.setCapitalMode(true);// 全局大写命名 ORACLE 注意
         strategy.setTablePrefix(new String[] { "t_"});// 此处可以修改为您的表前缀
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
-        strategy.setInclude(new String[] { "t_sd_school"}); // 需要生成的表
+        strategy.setInclude(new String[] { "t_case_type"}); // 需要生成的表
         // strategy.setExclude(new String[]{"test"}); // 排除生成的表
         // 自定义实体父类
         //strategy.setSuperEntityClass("com.spf.model.Entity");

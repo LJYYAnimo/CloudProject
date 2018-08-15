@@ -1,146 +1,26 @@
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-    <title>导航菜单</title>
-    <style type="text/css">
-        *{
-            margin:0;
-            padding:0;
-        }
-        ul{
-            list-style:none;
-        }
-        .nav{
-            font-size:16px;
-            font-family:"微软雅黑";
-            font-weight:bold;
-            margin:20px 50px;
-        }
-        .nav li{
-            float:left;
-            margin-right:1px;
-        }
-        .nav li a{
-            text-decoration:none;
-            line-height:30px;
-            background-color:#EEEEEE;
-            color:#000000;
-            display:block;
-            width:120px;
-            text-align:center;
-        }
-        .nav li a:hover{
-            background-color:#FF6600;
-            color:#FFFFFF;
-        }
-        .nav li ul{
-            display:none;
-        }
-        .nav li ul li{
-            margin-top:1px;
-            position:relative;
-        }
-        /*鼠标移到相应元素上显示二级菜单*/
-        .nav li:hover ul{
-            display:block;
-            width:120px;
-        }
-        .nav li:hover ul li ul{
-            display:none;
-        }
-        .nav li:hover ul li ul li{
-            margin-left:1px;
-        }
-        /*鼠标移到相应二级菜单元素上显示三级菜单*/
-        .nav li ul li:hover ul{
-            display:block;
-            position:absolute;
-            top:0px;
-            left:120px;
-            color: #f9f9d9;
-        }
-
-
-        a:link,a:visited{text-decoration: none;color:#000000;}
-        .menu{margin:0px auto;width:600px;height:30px;}
-        .menu ul{margin:0px;padding:0px;}
-        .menu ul li{position:relative;float:left;list-style:none;
-            font-size:14px;width:100px;text-align: center;line-height:30px;
-            margin-right:1px;background:#999999; }
-        .menu ul li .bccolor{color:red; font-weight:bold;}
-        .menu ul li ul{display:none;}
-        .menu ul li ul li{margin-top:1px}
-        .menu ul li:hover{background:red;}
-        .menu ul li a:hover{color:#fff;}
-        .menu ul li:hover ul{display:block;position: absolute; left: 0px; top: 30px;}
-    </style>
-</head>
-
-<body>
-
-<div class="menu">
-    <ul>
-        <li><a href="#" class="bccolor">首页</a></li>
-        <li><a href="#">关于我们</a>
-            <ul>
-                <li><a href="#">公司简介</a></li>
-                <li><a href="#">人才招聘</a></li>
-                <li><a href="#">联系我们</a></li>
-            </ul>
-        </li>
-        <li><a href="#">新闻中心</a>
-            <ul>
-                <li><a href="#">最新资讯</a></li>
-                <li><a href="#">行业新闻</a></li>
-                <li><a href="#">公司公告</a></li>
-            </ul>
-        </li>
-        <li><a href="#">联系我们</a></li>
-    </ul>
+<div frag="面板2">
+    <div frag="窗口2" portletmode="simpleColumnName">
+        <h3> ${channel.name}</h3>
+    </div>
 </div>
 
-<ul class="nav">
-    <li><a href="#">首页</a></li>
-    <li><a href="#">课程大厅+</a>
+
+<div frag="面板3">
+    <div frag="窗口3" portletmode="simpleColumnList">
+
+        <!--[ColumnStructBegin]-->
         <ul>
-            <li><a href="#">视频课程+</a>
-                <ul>
-                    <li><a href="#">Java</a>
-                    <li><a href="#">PHP</a>
-                    <li><a href="#">C语言</a>
-                </ul>
-            </li>
-            <li><a href="#">案例学习+</a>
-                <ul>
-                    <li><a href="#">编程练习</a>
-                    <li><a href="#">实例操作</a>
-                    <li><a href="#">答案解析</a>
-                </ul>
-            </li>
-            <li><a href="#">交流学习</a></li>
+
+            <li class=""><a href="http://sec.njust.edu.cn/8605/list.htm">组织架构</a></li>
+
+            <li class=""><a href="http://sec.njust.edu.cn/8606/list.htm">制度体系</a></li>
+
+            <li class=""><a href="http://sec.njust.edu.cn/8607/list.htm">流程机制</a></li>
+
+            <li class=""><a href="http://sec.njust.edu.cn/8608/list.htm">日常工作</a></li>
+
         </ul>
-    </li>
-    <li><a href="#">学习中心+</a>
-        <ul>
-            <li><a href="#">前端课程+</a>
-                <ul>
-                    <li><a href="#">HTML/CSS</a>
-                    <li><a href="#">JavaScript</a>
-                    <li><a href="#">jQuery</a>
-                </ul>
-            </li>
-            <li><a href="#">手机开发+</a>
-                <ul>
-                    <li><a href="#">IOS开发</a>
-                    <li><a href="#">WP开发</a>
-                    <li><a href="#">安卓开发</a>
-                </ul>
-            </li>
-            <li><a href="#">后台编程</a></li>
-        </ul>
-    </li>
-    <li><a href="#">关于我们</a></li>
-</ul>
-</body>
-</html>
+        <!--[ColumnStructBegin]-->
+
+    </div>
+</div>

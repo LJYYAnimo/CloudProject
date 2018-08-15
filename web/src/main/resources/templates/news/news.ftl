@@ -5,7 +5,7 @@
     <title>省</title>
     <link rel="stylesheet" href="/layui/css/layui.css" media="all"/>
     <link rel="stylesheet" href="/xiangcecss/css/baguetteBox.min.css" media="all"/>
-    <link rel="stylesheet" href="/layui/css/button.css" />
+
 </head>
 <body style="padding-top: 20px">
 <fieldset class="layui-elem-field site-demo-button" >

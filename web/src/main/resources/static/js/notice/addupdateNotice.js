@@ -56,7 +56,7 @@ layui.use(['table','upload','form','layedit'], function(){
 
     $("#btnform").click(function () {//当upload.render没有被使用的时候就用这个提交表单数据
         var data = {"id":$("#ids").val(),
-            "deletImg":$("#deletImg").val(),
+            "deletImg":value.titleImg,
             "title":$("#title").val(),
             "about":$("#about").val(),
             "dept":$("#dept").val(),
@@ -64,20 +64,17 @@ layui.use(['table','upload','form','layedit'], function(){
         }
         $("#btnform").addClass("layui-hide");//提交后就暂时隐藏按钮
         axios.post(path, Qs.stringify(data)).then(function (response) {
-            layer.msg(response.data.message, {
-                time: 0 //不自动关闭
-                ,btn: ['继续编辑', '不了']
-                ,yes: function(index){
-                    //这里调用父页面的表格进行重载
-                    layer.close(index);
-                    $("#btnform").removeClass("layui-hide");
-                    tableReload();
-                },btn2:function (index) {
-                    parent.layer.close(frameindex);//此页面被其他页面iframe弹窗时，调用此方法进行关闭
-                    //这里调用父页面的表格进行重载
-                    tableReload();
-                }
-            });
+            if(response.data.code==0){
+                tableReload();
+                parent.layer.close(frameindex);//此页面被其他页面iframe弹窗时，调用此方法进行关闭
+                parent.layer.msg(response.data.message, {
+                    time: 1000, icon:6
+                });
+            }else {
+                parent.layer.msg(response.data.message, {
+                    time: 1000, icon:5
+                });
+            }
         }).catch(function (error) {
             layer.msg(error);
         });
@@ -114,14 +111,18 @@ layui.use(['table','upload','form','layedit'], function(){
                     "content":layedit.getContent(index)
                 };
             $("#btn").addClass("layui-hide");//提交后就暂时隐藏按钮
-             },done: function(res, index, upload){ //上传后的回调
-                    if(res.code==0){
-                        tableReload();
-                        parent.layer.close(frameindex);//此页面被其他页面iframe弹窗时，调用此方法进行关闭
-                        parent.layer.msg(res.message, {
-                            time: 1000, icon:6
-                        });
-                    }
+             },done: function(res, indexs, upload){ //上传后的回调
+                if(res.code==0){
+                    tableReload();
+                    parent.layer.close(frameindex);//此页面被其他页面iframe弹窗时，调用此方法进行关闭
+                    parent.layer.msg(res.message, {
+                        time: 1000, icon:6
+                    });
+                }else {
+                    parent.layer.msg(res.message, {
+                        time: 1000, icon:5
+                    });
+                }
             }
             ,error: function(index, upload){
             layer.msg("上传失败")

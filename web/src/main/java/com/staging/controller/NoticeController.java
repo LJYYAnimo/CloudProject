@@ -13,7 +13,10 @@ import com.staging.common.utils.FileUtils;
 import com.staging.entity.Notice;
 import com.staging.entity.vo.LayEditMsg;
 import com.staging.service.NoticeService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.util.StringUtils;
@@ -39,7 +42,10 @@ import java.util.Date;
  */
 @Controller
 @RequestMapping("/notice")
+@Api(tags = "1.0", description = "所有公告", value = "所有公告")
 public class NoticeController {
+
+    private final Logger logger = LoggerFactory.getLogger(NoticeController.class);
 
     @Autowired
     private NoticeService noticeService;
@@ -167,7 +173,9 @@ public class NoticeController {
             }
         }
         notice.setUpdateTime(Calendar.getInstance().getTime());
-        return  noticeService.updateById(notice)? ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_UPDATE,notice):ServerResponse.createByError(1,ServerResponseConstant.SERVERRESPONSE_ERROR_UPDATE);
+        notice.setAuthor("admin");
+        return  noticeService.updateById(notice)? ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_UPDATE):ServerResponse.createByError(1,ServerResponseConstant.SERVERRESPONSE_ERROR_UPDATE);
+
     }
 
     @PostMapping("deletNotice")
