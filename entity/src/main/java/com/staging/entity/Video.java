@@ -21,16 +21,17 @@ public class Video extends Model<Video> {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
     /**
      * 视频标题
      */
     private String title;
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
     /**
      * 分类
      */
-    private String classz;
+    @TableField("classz_id")
+    private String classzId;
     /**
      * 用户id
      */
@@ -79,7 +80,7 @@ public class Video extends Model<Video> {
     /**
      * 审核状态 1未审核，2审核通过，3审核未通过
      */
-    private String ischecked;
+    private Integer ischecked;
     /**
      * 点赞
      */
@@ -105,7 +106,19 @@ public class Video extends Model<Video> {
      */
     @TableField("city_id")
     private Integer cityId;
+    /**
+     * 省id
+     */
+    @TableField("province_id")
+    private Integer provinceId;
 
+    public Integer getProvinceId() {
+        return provinceId;
+    }
+
+    public void setProvinceId(Integer provinceId) {
+        this.provinceId = provinceId;
+    }
 
     public String getTitle() {
         return title;
@@ -123,12 +136,12 @@ public class Video extends Model<Video> {
         this.id = id;
     }
 
-    public String getClassz() {
-        return classz;
+    public String getClasszId() {
+        return classzId;
     }
 
-    public void setClassz(String classz) {
-        this.classz = classz;
+    public void setClasszId(String classzId) {
+        this.classzId = classzId;
     }
 
     public Integer getUid() {
@@ -211,11 +224,11 @@ public class Video extends Model<Video> {
         this.imgPath = imgPath;
     }
 
-    public String getIschecked() {
+    public Integer getIschecked() {
         return ischecked;
     }
 
-    public void setIschecked(String ischecked) {
+    public void setIschecked(Integer ischecked) {
         this.ischecked = ischecked;
     }
 
@@ -269,7 +282,7 @@ public class Video extends Model<Video> {
         return "Video{" +
         "title=" + title +
         ", id=" + id +
-        ", classz=" + classz +
+        ", classzId=" + classzId +
         ", uid=" + uid +
         ", upDate=" + upDate +
         ", downDate=" + downDate +
@@ -286,6 +299,8 @@ public class Video extends Model<Video> {
         ", checkDate=" + checkDate +
         ", areaId=" + areaId +
         ", cityId=" + cityId +
+        ", provinceId=" + provinceId +
         "}";
     }
+
 }

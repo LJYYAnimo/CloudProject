@@ -6,7 +6,7 @@
     <resultMap id="BaseResultMap" type="com.staging.entity.Video">
         <id column="id" property="id" />
         <result column="title" property="title" />
-        <result column="classz" property="classz" />
+        <result column="classz_id" property="classzId" />
         <result column="uid" property="uid" />
         <result column="up_date" property="upDate" />
         <result column="down_date" property="downDate" />
@@ -24,5 +24,67 @@
         <result column="area_id" property="areaId" />
         <result column="city_id" property="cityId" />
     </resultMap>
+
+    <sql id="select_columns">
+        t_video.id as id
+        ,t_video.title as title
+        ,t_video.classz_id as classzId
+        ,t_video.uid as uid
+        ,t_video.up_date as 'upDate'
+        ,t_video.down_date as downDate
+        ,t_video.dcount as dcount
+        ,t_video.watchcount as watchcount
+        ,t_video.synopsis as synopsis
+        ,t_video.video_format as videoFormat
+        ,t_video.size as size
+        ,t_video.video_path as videoPath
+        ,t_video.img_path as imgPath
+        ,t_video.ischecked as ischecked
+        ,t_video.video_like as videoLike
+        ,t_video.not_des as notDes
+        ,t_video.check_date as checkDate
+        ,t_video.area_id as areaId
+        ,t_video.province_id as provinceId
+        ,t_video.city_id as cityId
+        ,t_user.userName as userName
+        ,t_video_classz.name as classzName
+    </sql>
+
+    <sql id="query_where_clause">
+        t_video.uid = t_user.id and t_video.classz_id = t_video_classz.id
+        <if test="videoVo != null and videoVo.title != null and videoVo.title != ''">
+            and t_video.title like concat('%', #{videoVo.title}, '%')
+        </if>
+        <if test="videoVo != null and videoVo.userName != null and videoVo.userName != ''">
+            and t_user.userName like concat('%', #{videoVo.userName}, '%')
+        </if>
+        <if test="videoVo != null and videoVo.classzId != null and videoVo.classzId != ''">
+            and t_video.classz_id = #{videoVo.classzId}
+        </if>
+        <if test="videoVo != null and videoVo.ischecked != null and videoVo.ischecked != ''">
+            and t_video.ischecked = #{videoVo.ischecked}
+        </if>
+
+
+    </sql>
+
+    <select id="queryPageVideo" resultType="com.staging.entity.vo.VideoVo">
+        select
+        <include refid="select_columns"/>
+        from  t_video,t_user,t_video_classz
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        limit #{pager.beginIndex},#{pager.pageSize}
+    </select>
+
+    <select id="queryPageCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from   t_video,t_user,t_video_classz
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+    </select>
 
 </mapper>

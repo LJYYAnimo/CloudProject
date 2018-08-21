@@ -214,8 +214,8 @@ public class FileUtils {
      * @throws IOException
      */
     public static String uploadFile(MultipartFile file, String path) throws IOException {
-
-        String fileName = new Date().getTime()+file.getOriginalFilename();//已当前时间戳来命名文件
+        String exts = FileUtils.getExtensionWithoutDot(file.getOriginalFilename());
+        String fileName = new Date().getTime()+"."+exts;//已当前时间戳来命名文件
         File tempFile = new File(path, fileName);
         if (!tempFile.getParentFile().exists()){
             tempFile.getParentFile().mkdir();

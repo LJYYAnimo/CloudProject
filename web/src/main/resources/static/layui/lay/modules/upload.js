@@ -130,7 +130,7 @@
                 t[e] = i, o.upload(t)
             }, pushFile: function () {
                 return o.files = o.files || {}, layui.each(o.chooseFiles, function (e, i) {
-                    o.files[e] = i
+                    o.files[0] = i
                 }), o.files
             }, resetFile: function (e, i, t) {
                 var n = new File([i], t);

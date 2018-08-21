@@ -20,7 +20,10 @@ public enum MIMETypeEnum {
     XLSX("xlsx", ".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"),
     ZIP("zip", ".zip", "application/zip"),
     RAR("rar", ".rar", "application/x-rar-compressed"),
-    STL("stl", ".stl", "application/vnd.ms-pkistl");
+    STL("stl", ".stl", "application/vnd.ms-pkistl"),
+    MP4("mp4", ".mp4", "video/mp4"),
+    WebM("webm", ".webm", "video/webm"),
+    Ogg("ogg", ".ogg", "video/ogg");
 
     private String value;
     private String ext;

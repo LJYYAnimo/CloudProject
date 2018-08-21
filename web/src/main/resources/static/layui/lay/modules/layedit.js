@@ -150,8 +150,8 @@
                         done: function (e) {
                             0 == e.code ? (e.data = e.data || {}, v.call(t, "img", {
                                 src: e.data.src,
-                                alt: e.data.title,
-                                style:"width:700px"
+                                alt: e.data.title
+                                // style:"width:700px"
                             }, a)) : i.msg(e.msg || "上传失败")
                         }
                     })

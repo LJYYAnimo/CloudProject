@@ -51,7 +51,7 @@ public class CaseFileController {
 
     /**
      * @Author: 95DBC
-     * @Date: 2018/7/11 16:39
+     * @Date: 2018/8/11 16:39
      * @Description:跳转课件管理的页面
      *
      */
@@ -62,7 +62,7 @@ public class CaseFileController {
 
     /**
      * @Author: 95DBC
-     * @Date: 2018/7/11 16:40
+     * @Date: 2018/8/11 16:40
      * @Description:添加课件管理的页面
      *
      */
@@ -73,7 +73,7 @@ public class CaseFileController {
 
     /**
      * @Author: 95DBC
-     * @Date: 2018/7/19 14:29
+     * @Date: 2018/8/11 14:29
      * @Description: 查看课件详情的页面跳转
      *
      */
@@ -97,11 +97,11 @@ public class CaseFileController {
         String value = FileUtils.getExtensionWithoutDot(fileName);
         if(MIMETypeEnum.JPEG.getValue().equals(value) || MIMETypeEnum.JPG.getValue().equals(value)|| MIMETypeEnum.PNG.getValue().equals(value)){
 
-            String path = FileUtils.uploadPath(request,"editorimgCase",user.getId()+"/");//把用户的图片存放到admin用户的editorimg文件夹下
+            String path = FileUtils.uploadPath(request,"editorimgCase",user.getUserName()+"/");//把用户的图片存放到admin用户的editorimg文件夹下
             try {
                 String file1 = FileUtils.uploadFile(file, path);
                 layui.setCode(0);
-                layui.setData(new LayEditMsg(request.getContextPath()+"\\upload\\"+user.getId()+"\\editorimgCaseFile\\"+file1,file1));
+                layui.setData(new LayEditMsg(request.getContextPath()+"\\upload\\"+user.getUserName()+"\\editorimgCase\\"+file1,file1));
                 return layui;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -149,18 +149,18 @@ public class CaseFileController {
             String zip = FileUtils.getExtensionWithoutDot(fileZIP.getOriginalFilename());
             if((MIMETypeEnum.JPEG.getValue().equals(img) || MIMETypeEnum.JPG.getValue().equals(img)|| MIMETypeEnum.PNG.getValue().equals(img))&&
                     MIMETypeEnum.STL.getValue().equals(stl)&&MIMETypeEnum.ZIP.getValue().equals(zip)){
-                String pathImg = FileUtils.uploadPath(request,"imgCase",user.getId()+"/");//把用户的图片存放到用户的imgCase文件夹下
-                String pathStl = FileUtils.uploadPath(request,"StlCase",user.getId()+"/");//把用户的3d文件存放到用户的StlCase文件夹下
-                String pathZIP = FileUtils.uploadPath(request,"ZIPCase",user.getId()+"/");//把用户的zip附件存放到用户的ZIPCase文件夹下
+                String pathImg = FileUtils.uploadPath(request,"imgCase",user.getUserName()+"/");//把用户的图片存放到用户的imgCase文件夹下
+                String pathStl = FileUtils.uploadPath(request,"StlCase",user.getUserName()+"/");//把用户的3d文件存放到用户的StlCase文件夹下
+                String pathZIP = FileUtils.uploadPath(request,"ZIPCase",user.getUserName()+"/");//把用户的zip附件存放到用户的ZIPCase文件夹下
                 try {
                     String imgName = FileUtils.uploadFile(fileImg, pathImg);
-                    caseFile.setImg("/upload/"+user.getId()+"/imgCase/"+imgName);
+                    caseFile.setImg("/upload/"+user.getUserName()+"/imgCase/"+imgName);
 
                     String stlName = FileUtils.uploadFile(fileStl, pathStl);
-                    caseFile.setStl("/upload/"+user.getId()+"/StlCase/"+stlName);
+                    caseFile.setStl("/upload/"+user.getUserName()+"/StlCase/"+stlName);
 
                     String zipName = FileUtils.uploadFile(fileZIP, pathZIP);
-                    caseFile.setFileadress("/upload/"+user.getId()+"/ZIPCase/"+zipName);
+                    caseFile.setFileadress("/upload/"+user.getUserName()+"/ZIPCase/"+zipName);
                 } catch (IOException e) {
                     e.printStackTrace();
                     return ServerResponse.createByError("你上传的图片格式不正确");
@@ -208,6 +208,7 @@ public class CaseFileController {
             e.printStackTrace();
             return ServerResponse.createByError("上传错误");
         }
+        caseFile.setCaseAudit(1);
         caseFileService.updateById(caseFile);
         return ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_UPDATE);
     }
@@ -260,9 +261,9 @@ public class CaseFileController {
                 if(!StringUtils.isEmpty(deletfileZIP)){
                     DeleteFileUtil.delete(FileUtils.getClasspath()+"static"+deletfileZIP);//删除原来图片
                 }
-                String pathZIP = FileUtils.uploadPath(request,"ZIPCase",user.getId()+"/");//把用户的zip附件存放到用户的ZIPCase文件夹下
+                String pathZIP = FileUtils.uploadPath(request,"ZIPCase",user.getUserName()+"/");//把用户的zip附件存放到用户的ZIPCase文件夹下
                 String zipName = FileUtils.uploadFile(fileZIP, pathZIP);
-                caseFile.setFileadress("/upload/"+user.getId()+"/ZIPCase/"+zipName);
+                caseFile.setFileadress("/upload/"+user.getUserName()+"/ZIPCase/"+zipName);
             }
         }
     }
@@ -275,9 +276,9 @@ public class CaseFileController {
                 if(!StringUtils.isEmpty(deletfileStl)){
                     DeleteFileUtil.delete(FileUtils.getClasspath()+"static"+deletfileStl);//删除原来图片
                 }
-                String pathStl = FileUtils.uploadPath(request,"StlCase",user.getId()+"/");//把用户的3d文件存放到用户的StlCase文件夹下
+                String pathStl = FileUtils.uploadPath(request,"StlCase",user.getUserName()+"/");//把用户的3d文件存放到用户的StlCase文件夹下
                 String stlName = FileUtils.uploadFile(fileStl, pathStl);
-                caseFile.setStl("/upload/"+user.getId()+"/StlCase/"+stlName);
+                caseFile.setStl("/upload/"+user.getUserName()+"/StlCase/"+stlName);
             }
         }
     }
@@ -289,9 +290,9 @@ public class CaseFileController {
                 if(!StringUtils.isEmpty(deletImg)){
                     DeleteFileUtil.delete(FileUtils.getClasspath()+"static"+deletImg);//删除原来图片
                 }
-                String pathImg = FileUtils.uploadPath(request,"imgCase",user.getId()+"/");//把用户的图片存放到用户的imgCase文件夹下
+                String pathImg = FileUtils.uploadPath(request,"imgCase",user.getUserName()+"/");//把用户的图片存放到用户的imgCase文件夹下
                 String imgName = FileUtils.uploadFile(fileImg, pathImg);
-                caseFile.setImg("/upload/"+user.getId()+"/imgCase/"+imgName);
+                caseFile.setImg("/upload/"+user.getUserName()+"/imgCase/"+imgName);
             }
         }
     }

@@ -133,18 +133,18 @@ public class WorksController {
             String zip = FileUtils.getExtensionWithoutDot(fileZIP.getOriginalFilename());
             if((MIMETypeEnum.JPEG.getValue().equals(img) || MIMETypeEnum.JPG.getValue().equals(img)|| MIMETypeEnum.PNG.getValue().equals(img))&&
                     MIMETypeEnum.STL.getValue().equals(stl)&&MIMETypeEnum.ZIP.getValue().equals(zip)){
-                String pathImg = FileUtils.uploadPath(request,"imgWorks",user.getId()+"/");//把用户的图片存放到用户的imgWorks文件夹下
-                String pathStl = FileUtils.uploadPath(request,"StlWorks",user.getId()+"/");//把用户的3d文件存放到用户的StlWorks文件夹下
-                String pathZIP = FileUtils.uploadPath(request,"ZIPWorks",user.getId()+"/");//把用户的zip附件存放到用户的ZIPWorks文件夹下
+                String pathImg = FileUtils.uploadPath(request,"imgWorks",user.getUserName()+"/");//把用户的图片存放到用户的imgWorks文件夹下
+                String pathStl = FileUtils.uploadPath(request,"StlWorks",user.getUserName()+"/");//把用户的3d文件存放到用户的StlWorks文件夹下
+                String pathZIP = FileUtils.uploadPath(request,"ZIPWorks",user.getUserName()+"/");//把用户的zip附件存放到用户的ZIPWorks文件夹下
                 try {
                     String imgName = FileUtils.uploadFile(fileImg, pathImg);
-                    works.setWorksPhotoaddress("/upload/"+user.getId()+"/imgWorks/"+imgName);
+                    works.setWorksPhotoaddress("/upload/"+user.getUserName()+"/imgWorks/"+imgName);
 
                     String stlName = FileUtils.uploadFile(fileStl, pathStl);
-                    works.setStl("/upload/"+user.getId()+"/StlWorks/"+stlName);
+                    works.setStl("/upload/"+user.getUserName()+"/StlWorks/"+stlName);
 
                     String zipName = FileUtils.uploadFile(fileZIP, pathZIP);
-                    works.setWorksAddress("/upload/"+user.getId()+"/ZIPWorks/"+zipName);
+                    works.setWorksAddress("/upload/"+user.getUserName()+"/ZIPWorks/"+zipName);
                 } catch (IOException e) {
                     e.printStackTrace();
                     return ServerResponse.createByError("你上传的图片格式不正确");
@@ -245,9 +245,9 @@ public class WorksController {
                 if(!StringUtils.isEmpty(deletfileZIP)){
                     DeleteFileUtil.delete(FileUtils.getClasspath()+"static"+deletfileZIP);//删除原来图片
                 }
-                String pathZIP = FileUtils.uploadPath(request,"ZIPWorks",user.getId()+"/");//把用户的zip附件存放到用户的ZIPWorks文件夹下
+                String pathZIP = FileUtils.uploadPath(request,"ZIPWorks",user.getUserName()+"/");//把用户的zip附件存放到用户的ZIPWorks文件夹下
                 String zipName = FileUtils.uploadFile(fileZIP, pathZIP);
-                works.setWorksAddress("/upload/"+user.getId()+"/ZIPWorks/"+zipName);
+                works.setWorksAddress("/upload/"+user.getUserName()+"/ZIPWorks/"+zipName);
             }
         }
     }
@@ -260,9 +260,9 @@ public class WorksController {
                 if(!StringUtils.isEmpty(deletfileStl)){
                     DeleteFileUtil.delete(FileUtils.getClasspath()+"static"+deletfileStl);//删除原来图片
                 }
-                String pathStl = FileUtils.uploadPath(request,"StlWorks",user.getId()+"/");//把用户的3d文件存放到用户的StlWorks文件夹下
+                String pathStl = FileUtils.uploadPath(request,"StlWorks",user.getUserName()+"/");//把用户的3d文件存放到用户的StlWorks文件夹下
                 String stlName = FileUtils.uploadFile(fileStl, pathStl);
-                works.setStl("/upload/"+user.getId()+"/StlWorks/"+stlName);
+                works.setStl("/upload/"+user.getUserName()+"/StlWorks/"+stlName);
             }
         }
     }
@@ -274,9 +274,9 @@ public class WorksController {
                 if(!StringUtils.isEmpty(deletImg)){
                     DeleteFileUtil.delete(FileUtils.getClasspath()+"static"+deletImg);//删除原来图片
                 }
-                String pathImg = FileUtils.uploadPath(request,"imgWorks",user.getId()+"/");//把用户的图片存放到用户的imgWorks文件夹下
+                String pathImg = FileUtils.uploadPath(request,"imgWorks",user.getUserName()+"/");//把用户的图片存放到用户的imgWorks文件夹下
                 String imgName = FileUtils.uploadFile(fileImg, pathImg);
-                works.setWorksPhotoaddress("/upload/"+user.getId()+"/imgWorks/"+imgName);
+                works.setWorksPhotoaddress("/upload/"+user.getUserName()+"/imgWorks/"+imgName);
             }
         }
     }

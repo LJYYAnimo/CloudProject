@@ -9,26 +9,26 @@
 </head>
 <body style="padding-top: 20px">
 <fieldset class="layui-elem-field site-demo-button" >
-    <legend>作品管理</legend>
+    <legend>教学视频管理</legend>
 
         <form class="layui-form">
             <div class="layui-form-item">
                 <div class="layui-inline">
-                    <input type="button" class="layui-btn" id="add" value="添加作品">
+                    <input type="button" class="layui-btn" id="add" value="添加视频">
                 </div>
 
                 <div class="layui-inline">
                     <div class="layui-input-inline">
-                        <input type="text" id="title" name="title" autocomplete="off" class="layui-input" placeholder="   输入作品标题">
+                        <input type="text" id="title" name="title" autocomplete="off" class="layui-input" placeholder="   输入视频标题">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <div class="layui-input-inline">
-                        <input type="text" id="userName" name="userName" autocomplete="off" class="layui-input" placeholder="输入作品发布人名称">
+                        <input type="text" id="userName" name="userName" autocomplete="off" class="layui-input" placeholder="输入上传者名称">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <select name="caseAudit" id="caseAudit" >
+                    <select name="ischecked" id="ischecked" >
                         <option value="">请选择审核状态</option>
                         <option value="1">未审核</option>
                         <option value="2">审核通过</option>
@@ -36,8 +36,8 @@
                     </select>
                 </div>
                 <div class="layui-inline">
-                    <select name="seriesid" id="typeId" >
-                        <option value="">选择作品类型</option>
+                    <select name="classzId" id="classzId" >
+                        <option value="">选择视频类型</option>
                     </select>
                 </div>
                 <button class="layui-btn" lay-submit="" lay-filter="search">搜索</button>
@@ -48,14 +48,14 @@
 
 </fieldset>
 <table id="xinkai"  lay-filter="demo"></table>
-<#--学校类型添加-->
+
 <div id="addDiv" style="display: none;padding-top: 20px">
     <form id="schoolType" class="layui-form">
         <input type="hidden" id="id" name="id" />
         <div class="layui-form-item layui-col-xs10 layui-col-sm12 layui-col-md11 ">
             <label class="layui-form-label " style="width: 120px" id="statustext">审核不通过原因</label>
             <div class="layui-col-xs8">
-                <textarea name="noCheckedReason" id="noCheckedReason" lay-verify="noCheckedReason" placeholder="请输入内容"  class="layui-textarea"></textarea>
+                <textarea name="notDes" id="notDes" lay-verify="noCheckedReason" placeholder="请输入内容"  class="layui-textarea"></textarea>
             </div>
         </div>
         <div class="layui-form-item ">
@@ -69,11 +69,11 @@
 </div>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-    {{# if(d.caseAudit == 1 ){ }}
+    {{# if(d.ischecked == 1 ){ }}
     <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="status">审核</a>
-    {{# }else if(d.caseAudit == 2 ){ }}
+    {{# }else if(d.ischecked == 2 ){ }}
     <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="status">冻结</a>
-    {{# }else if(d.caseAudit == 3 ){ }}
+    {{# }else if(d.ischecked == 3 ){ }}
     <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="status">重新审核</a>
     {{# }  }}
     <a class="layui-btn layui-btn-xs" lay-event="query">查看详情</a>
@@ -87,37 +87,30 @@
 <script type="text/javascript" src="/js/axios.min.js"></script>
 <script src="/js/qs.js"></script>
 <script src="/xiangcecss/js/baguetteBox.min.js"></script>
-<script src="/js/caseFile/caseFile.js"></script>
+<script src="/js/video/video.js"></script>
 </body>
 <#--格式化LOGO图片-->
 <script type="text/html" id="imgURL">
-    {{# if(d.img == '' || d.img == null){ }}
+    {{# if(d.imgPath == '' || d.imgPath == null){ }}
     <span style="color: red;">暂无图片</span>
     {{# }else{ }}
-    <div><a class="" href="{{d.img}}"  alt="{{ d.img }}"><img src="{{ d.img }}" style="width: 150px;height: 50px" alt="40x20" class="img-rounded"></a></div>
+    <div><a class="" href="{{d.imgPath}}"  alt="{{ d.imgPath }}"><img src="{{ d.imgPath }}" style="width: 150px;height: 50px" alt="40x20" class="img-rounded"></a></div>
     {{# } }}
 </script>
-<script type="text/html" id="stlURL">
-    {{# if(d.stl == '' || d.stl == null ){ }}
+<script type="text/html" id="videoPath">
+    {{# if(d.videoPath == '' || d.videoPath == null ){ }}
     <span style="color: red;">暂无文件</span>
     {{# }else{ }}
-    <a class="layui-btn layui-btn-xs">预览3d文件</a>
+    <a class="layui-btn layui-btn-xs">查看视频</a>
     <#--<a class="layui-btn layui-btn-xs" href="{{d.stl}}"  alt="{{ d.stl }}">下载3d文件</a>-->
     {{# } }}
 </script>
-<script type="text/html" id="fileadressURL">
-    {{# if(d.fileadress == '' || d.fileadress == null ){ }}
-    <span style="color: red;">暂无附件</span>
-    {{# }else{ }}
-    <a class="layui-btn layui-btn-normal layui-btn-xs"   href="{{d.fileadress}}"  alt="{{ d.fileadress }}">下载附件</a>
-    {{# } }}
-</script>
 <script type="text/html" id="status">
-    {{# if(d.caseAudit === 1 ){ }}
+    {{# if(d.ischecked === 1 ){ }}
     <span style="color: red;">未审核</span>
-    {{# }else if(d.caseAudit === 2 ){ }}
+    {{# }else if(d.ischecked === 2 ){ }}
     <span style="color: #74ff66;">审核通过</span>
-    {{# }else if (d.caseAudit === 3 ) { }}
+    {{# }else if (d.ischecked === 3 ) { }}
     <span style="color: #4590ff;">审核未通过</span>
     {{# } }}
 </script>

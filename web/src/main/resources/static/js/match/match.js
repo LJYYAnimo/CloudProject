@@ -218,7 +218,7 @@ layui.use(['table','upload','form','laydate','element','layedit'], function(){
         }else if(obj.event === 'update'){
             url ='/match/updateMatch';//添加比赛时url就会变成这个
             $("#matchId").val(data.id);
-            openNews(data,"更新资讯");
+            openNews(data,"更新大赛信息");
         }
     });
 

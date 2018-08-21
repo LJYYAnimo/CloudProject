@@ -1,7 +1,13 @@
 package com.staging.mapper;
 
+import com.staging.common.Pager;
 import com.staging.entity.Video;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.staging.entity.vo.VideoVo;
+import com.staging.entity.vo.WorksVo;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +19,7 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  */
 public interface VideoMapper extends BaseMapper<Video> {
 
+    List<VideoVo> queryPageVideo(@Param("pager")Pager pager, @Param("videoVo") VideoVo videoVo);
+
+    int queryPageCount(@Param("videoVo") VideoVo videoVo);
 }
