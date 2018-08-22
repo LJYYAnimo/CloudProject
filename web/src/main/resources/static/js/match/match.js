@@ -84,12 +84,10 @@ layui.use(['table','upload','form','laydate','element','layedit'], function(){
     //监听提交
     form.on('submit(addMatche)', function (data) {
         axios.post(url, Qs.stringify(data.field)).then(function (response) {
-            if (response.data.code == 0) {
-                layer.msg(response.data.message, {icon: 6});
-                $('#reset').click();
-                layer.close(index4);
-                return table.reload("idTest");
-            }
+            layer.msg(response.data.message, {icon: response.data.code == 0?6:5});
+            $('#reset').click();
+            layer.close(index4);
+            return table.reload("idTest");
         }).catch(function (error) {
             layer.msg(error);
         });

@@ -32,7 +32,7 @@ public class Book extends Model<Book> {
      */
     private String des;
     /**
-     * 跳转链接
+     * 下载链接
      */
     private String url;
     /**

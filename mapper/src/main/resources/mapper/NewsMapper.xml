@@ -70,4 +70,14 @@
         limit #{pager.beginIndex},#{pager.pageSize}
     </select>
 
+    <!--<select id="queryPageCount" resultType="com.staging.entity.News">-->
+        <!--select-->
+        <!--<include refid="select_columns"/>-->
+        <!--from t_news-->
+        <!--&lt;!&ndash;<where>&ndash;&gt;-->
+        <!--&lt;!&ndash;<include refid="query_where_clause"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;</where>&ndash;&gt;-->
+        <!--limit #{pager.beginIndex},#{pager.pageSize}-->
+    <!--</select>-->
+
 </mapper>

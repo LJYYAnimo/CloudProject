@@ -121,17 +121,11 @@ layui.use(['table','upload','form','layedit'], function(){
             headers: {'Content-Type': 'multipart/form-data'}
         }
         axios.post(path, formdata1,config).then(function (response) {
-            if(response.data.code==0){
-                tableReload();
-                parent.layer.close(frameindex);//此页面被其他页面iframe弹窗时，调用此方法进行关闭
-                parent.layer.msg(response.data.message, {
-                    time: 1000, icon:6
-                });
-            }else {
-                parent.layer.msg(response.data.message, {
-                    time: 2000, icon:5
-                });
-            }
+            tableReload();
+            parent.layer.close(frameindex);//此页面被其他页面iframe弹窗时，调用此方法进行关闭
+            parent.layer.msg(response.data.message, {
+                time: 1000, icon:response.data.code==0?6:5
+            });
         }).catch(function (error) {
             layer.msg(error);
         });
@@ -178,17 +172,11 @@ layui.use(['table','upload','form','layedit'], function(){
                 };
             $("#btn").addClass("layui-hide");//提交后就暂时隐藏按钮
              },done: function(res, indexs, upload){ //上传后的回调
-                if(res.code==0){
-                    tableReload();
-                    parent.layer.close(frameindex);//此页面被其他页面iframe弹窗时，调用此方法进行关闭
-                    parent.layer.msg(res.message, {
-                        time: 1000, icon:6
-                    });
-                }else {
-                    parent.layer.msg(res.message, {
-                        time: 2000, icon:5
-                    });
-                }
+                tableReload();
+                parent.layer.close(frameindex);//此页面被其他页面iframe弹窗时，调用此方法进行关闭
+                parent.layer.msg(res.message, {
+                    time: 1000, icon:res.code==0?6:5
+                });
 
             }
             ,error: function(index, upload){
@@ -236,8 +224,8 @@ layui.use(['table','upload','form','layedit'], function(){
         ,title: '只能上传jpg,png,jpeg后缀的文件'
         ,field:'fileZIP' //后台接收默认字段名
         ,accept: 'file '
-        ,acceptMime:  '.zip'
-        ,exts: 'zip'
+        ,acceptMime:  '.zip,.rar'
+        ,exts: 'zip|rar'
         ,choose: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
             //将每次选择的文件追加到文件队列
 

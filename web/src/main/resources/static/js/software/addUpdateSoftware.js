@@ -16,95 +16,78 @@ function tableReload() {
     });
 }
 setTimeout(function() {
-layui.use(['table','upload','form'], function(){
+layui.use(['table','upload','form','layedit'], function(){
     var table = layui.table,
         upload = layui.upload,
         upload1 = layui.upload,
         upload2 = layui.upload,
         form = layui.form;
     var $ = layui.$;
-
+    var layedit = layui.layedit;
+    layedit.set({
+        uploadImage: {
+            url: '/software/adduploadImg' //富文本插入图片时的接口
+            ,type: 'post' //默认post
+        }
+    });
+    var index = layedit.build('demo'); //建立编辑器
 
     var  frameindex= parent.layer.getFrameIndex(window.name);//当此页面被其他页面弹窗时，获取此页面元素
 
-    var path ='/works/addworksupload';
+    var path ='/software/addSoftwareUpload';
     console.log(value);
 
-    if(value!=""&&value.worksPhotoaddress!=undefined){
+    if(value!=undefined&&value!=""){
         var indexs= layer.load(1, {
             shade: [0.1,'#fff'] //0.1透明度的白色背景
         });
 
-            $('#imgs').attr('src', value.worksPhotoaddress); //图片链接（base64
+            $('#imgs').attr('src', value.softwareImg); //图片链接（base64
             form.val('newsForm',{
                 "id":value.id,
-                "deletImg":value.worksPhotoaddress,
-                "worksTitle":value.worksTitle,
-                "worksAbout":value.worksAbout,
-                "deletfileStl":value.stl,
-                "deletfileZIP":value.worksAddress
+                "deletImg":value.softwareImg,
+                "softwareName":value.softwareName,
+                "softwareApply":value.softwareApply,
+                "softwareModel":value.softwareModel,
+                "deletfile32":value.software32,
+                "deletfile64":value.software64
             });
-            path ='/works/updateWorks';
-            $("#worksIntegral").val(value.worksIntegral);
+            path ='/software/updateSoftware';
+            // $("#softwareModel").val(value.softwareModel);
             $("#btnform").removeClass("layui-hide");//没有上传文件就监听并显示这个按钮
             $("#btn").addClass("layui-hide");//同时隐藏这个按钮
+            layedit.setContent(index,value.softwareAbout);//把文章内容添加到富文本编辑器里
 
-            var stls = value.stl.split('/');
-            $('#stltext').text(stls[stls.length-1]);
-            var zips = value.worksAddress.split('/');
-            $('#ziptext').html(zips[zips.length-1]);
+            var stls = value.software32.split('/');
+            $('#software32text').text(stls[stls.length-1]);
+            var zips = value.software64.split('/');
+            $('#software64text').html(zips[zips.length-1]);
             layer.close(indexs);
 
     }
-    if(value.worksTypeList!=undefined) {
-        for (var i = 0; i < value.worksTypeList.length; i++) {
 
-            $('#worksType').append("<option value=" + value.worksTypeList[i].id + ">" + value.worksTypeList[i].worksType + "</option>");
-
-        }
-        form.render();
-
-        if(value.worksTypeid!=undefined){
-
-            $('#worksType').val(value.worksTypeid);
-            form.render();
-        }
-
-
-
-
-    }
-    // $.ajax({
-    //     url: "/worksType/pager",
-    //     data: {"page":1,"limit":100},
-    //     type: "POST",
-    //     dataType: "json",
-    //     success: function (response) {
-    //
-    //     },error:function (response) {
-    //         alert("接口请求异常")
-    //     }
-    // });
-    var fileStl =null;
-    var fileZIP =null;
+    var file32 =null;
+    var file64 =null;
 
     $("#btnform").click(function () {//当upload.render没有被使用的时候就用这个提交表单数据
 
         var formdata1=new FormData();// 创建form对象
         formdata1.append('id',$("#ids").val());// 通过append向form对象添加数据,可以通过append继续添加数据
         formdata1.append('deletImg',$("#deletImg").val());
-        formdata1.append('worksTitle',$("#worksTitle").val());
-        formdata1.append('worksTypeid',$("#worksType").val());
-        formdata1.append('worksAbout',$("#worksAbout").val());
-        formdata1.append('worksIntegral',$("#worksIntegral").val());
-        formdata1.append('deletfileStl',value.stl!=undefined?value.stl:null);
-        formdata1.append('deletfileZIP',value.worksAddress!=undefined?value.worksAddress:null);
-        if(fileZIP!=null){
-            formdata1.append('fileZIP',fileZIP,fileZIP.name);
+        formdata1.append('softwareName',$("#softwareName").val());
+        formdata1.append('softwareModel',$("#softwareModel").val());
+        formdata1.append('softwareApply',$("#softwareApply").val());
+        formdata1.append('softwareAbout',layedit.getContent(index));
+        formdata1.append('deletfile32',value.software32!=undefined?value.software32:null);
+        formdata1.append('deletfile64',value.software64!=undefined?value.software64:null);
+        if(file64!=null){
+            formdata1.append('file64',file64,file64.name);
         }
-        if(fileStl!=null){
-            formdata1.append('fileStl',fileStl,fileStl.name);
+        if(file32!=null){
+            formdata1.append('file32',file32,file32.name);
         }
+
+
         $("#btnform").addClass("layui-hide");//提交后就暂时隐藏按钮
         var config = {
             headers: {'Content-Type': 'multipart/form-data'}
@@ -148,14 +131,14 @@ layui.use(['table','upload','form'], function(){
                 //这里是把数据跟图片一起添加到后台
                 this.data = {"id":$("#ids").val()
                     ,"deletImg":$("#deletImg").val()
-                    ,"worksTitle":$("#worksTitle").val(),
-                    "worksTypeid":$("#worksType").val(),
-                    "worksAbout":$("#worksAbout").val(),
-                    "worksIntegral":$("#worksIntegral").val(),
-                    "fileStl":fileStl,
-                    "fileZIP":fileZIP,
-                    "deletfileStl":value.stl!=undefined?value.stl:null,
-                    "deletfileZIP":value.worksAddress!=undefined?value.worksAddress:null
+                    ,"softwareName":$("#softwareName").val(),
+                    "softwareModel":$("#softwareModel").val(),
+                    "softwareApply":$("#softwareApply").val(),
+                    "softwareAbout":layedit.getContent(index),
+                    "file32":file32,
+                    "file64":file64,
+                    "deletfile32":value.software32!=undefined?value.software32:null,
+                    "deletfile64":value.software64!=undefined?value.software64:null
                 };
             $("#btn").addClass("layui-hide");//提交后就暂时隐藏按钮
              },done: function(res, indexs, upload){ //上传后的回调
@@ -164,6 +147,7 @@ layui.use(['table','upload','form'], function(){
                 parent.layer.msg(res.message, {
                     time: 1000, icon:res.code==0?6:5
                 });
+
             }
             ,error: function(index, upload){
             layer.msg("上传失败")
@@ -171,23 +155,23 @@ layui.use(['table','upload','form'], function(){
        });
 
     upload1.render({
-        elem: '#stl'
+        elem: '#software32'
         ,url: path
         ,auto: false
-        ,size: 51200
+        ,size: 71200
         ,title: '只能上传stl后缀的文件'
-        ,field:'fileStl' //后台接收默认字段名
+        ,field:'file32' //后台接收默认字段名
         //,multiple: test9
         ,accept: 'file '
-        ,acceptMime: '.stl'
-        ,exts: 'stl'
+        ,acceptMime:  '.zip,.rar'
+        ,exts: 'zip|rar'
         ,choose: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
             //将每次选择的文件追加到文件队列
             var files = obj.pushFile();
             //预读本地文件，如果是多文件，则会遍历。(不支持ie8/9)
             obj.preview(function(index, file, result){
-                $('#stltext').text(file.name);
-                fileStl=file;
+                $('#software32text').text(file.name);
+                file32=file;
             });
         }
         ,done: function(res){
@@ -203,12 +187,12 @@ layui.use(['table','upload','form'], function(){
     });
 
     upload2.render({
-        elem: '#worksAddress'
+        elem: '#software64'
         ,url: path
         ,auto: false
         ,size: 71200
         ,title: '只能上传jpg,png,jpeg后缀的文件'
-        ,field:'fileZIP' //后台接收默认字段名
+        ,field:'file64' //后台接收默认字段名
         ,accept: 'file '
         ,acceptMime:  '.zip,.rar'
         ,exts: 'zip|rar'
@@ -218,8 +202,8 @@ layui.use(['table','upload','form'], function(){
             //预读本地文件，如果是多文件，则会遍历。(不支持ie8/9)
             obj.preview(function(index, file, result){
                 // $("#ziptext").html(file.name)
-                $('#ziptext').html(file.name);
-                fileZIP=file;
+                $('#software64text').html(file.name);
+                file64=file;
 
             });
         }

@@ -37,7 +37,7 @@ public class Software extends Model<Software> {
     @TableField("software_apply")
     private String softwareApply;
     /**
-     * 软件简绍
+     * 软件介绍
      */
     @TableField("software_about")
     private String softwareAbout;
@@ -57,7 +57,7 @@ public class Software extends Model<Software> {
     @TableField("software_64")
     private String software64;
     /**
-     * 软件模式
+     * 软件类型
      */
     @TableField("software_model")
     private String softwareModel;
@@ -72,11 +72,11 @@ public class Software extends Model<Software> {
     @TableField("about_head")
     private String aboutHead;
     /**
-     * 文章创建时间
+     * 软件创建时间
      */
     private Date creatTime;
     /**
-     * 文章修改时间
+     * 软件更新时间
      */
     private Date updateCreatTime;
     /**

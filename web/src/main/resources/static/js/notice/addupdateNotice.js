@@ -64,17 +64,11 @@ layui.use(['table','upload','form','layedit'], function(){
         }
         $("#btnform").addClass("layui-hide");//提交后就暂时隐藏按钮
         axios.post(path, Qs.stringify(data)).then(function (response) {
-            if(response.data.code==0){
-                tableReload();
-                parent.layer.close(frameindex);//此页面被其他页面iframe弹窗时，调用此方法进行关闭
-                parent.layer.msg(response.data.message, {
-                    time: 1000, icon:6
-                });
-            }else {
-                parent.layer.msg(response.data.message, {
-                    time: 1000, icon:5
-                });
-            }
+            tableReload();
+            parent.layer.close(frameindex);//此页面被其他页面iframe弹窗时，调用此方法进行关闭
+            parent.layer.msg(response.data.message, {
+                time: 1000, icon:response.data.code==0?6:5
+            });
         }).catch(function (error) {
             layer.msg(error);
         });

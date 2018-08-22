@@ -158,8 +158,8 @@ public class VideoController {
             return ServerResponse.createByError("你的登入信息已过期请刷新页面重写登入");
         }
         try {
-            addImg(fileImg, video, deletImg, request, user);
-            addVideo(fileVideo, video, deletfileVideo, request, user);
+            updateImg(fileImg, video, deletImg, request, user);
+            updateVideo(fileVideo, video, deletfileVideo, request, user);
         } catch (IOException e) {
             e.printStackTrace();
             return ServerResponse.createByError("上传错误");
@@ -198,7 +198,7 @@ public class VideoController {
                 ServerResponse.createByError("操作失败");
     }
 
-    private void addVideo(MultipartFile fileVideo, Video video, String deletfileVideo, HttpServletRequest request, User user) throws IOException {
+    private void updateVideo(MultipartFile fileVideo, Video video, String deletfileVideo, HttpServletRequest request, User user) throws IOException {
         if(!StringUtils.isEmpty(fileVideo)){
             String vid = FileUtils.getExtensionWithoutDot(fileVideo.getOriginalFilename());
             if(MIMETypeEnum.MP4.getValue().equals(vid)|| MIMETypeEnum.WebM.getValue().equals(vid)|| MIMETypeEnum.Ogg.getValue().equals(vid)){
@@ -216,7 +216,7 @@ public class VideoController {
         }
     }
 
-    private void addImg(MultipartFile fileImg, Video video, String deletImg, HttpServletRequest request, User user) throws IOException {
+    private void updateImg(MultipartFile fileImg, Video video, String deletImg, HttpServletRequest request, User user) throws IOException {
         if(!StringUtils.isEmpty(fileImg)){
             String img = FileUtils.getExtensionWithoutDot(fileImg.getOriginalFilename());
             if(MIMETypeEnum.JPEG.getValue().equals(img) || MIMETypeEnum.JPG.getValue().equals(img)|| MIMETypeEnum.PNG.getValue().equals(img)){
