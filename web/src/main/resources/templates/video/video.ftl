@@ -19,7 +19,7 @@
 
                 <div class="layui-inline">
                     <div class="layui-input-inline">
-                        <input type="text" id="title" name="title" autocomplete="off" class="layui-input" placeholder="   输入视频标题">
+                        <input type="text" id="title" name="title" autocomplete="off" class="layui-input" placeholder=" 输入视频标题">
                     </div>
                 </div>
                 <div class="layui-inline">

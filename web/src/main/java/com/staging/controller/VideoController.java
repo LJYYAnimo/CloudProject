@@ -127,6 +127,15 @@ public class VideoController {
                     String stlName = FileUtils.uploadFile(fileVideo, pathVideo);
                     video.setVideoPath("/upload/"+user.getUserName()+"/Video/"+stlName);
 
+                    int size = (int) fileVideo.getSize();
+                    video.setSize(size+"");
+                    video.setVideoFormat(vid);
+                    video.setUid(user.getId());
+                    video.setUpDate(Calendar.getInstance().getTime());
+
+                    video.setIschecked(1);
+                    videoService.insert(video);
+                    return ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_SAVE);
                 } catch (IOException e) {
                     e.printStackTrace();
                     return ServerResponse.createByError("你上传的文件格式不正确");
@@ -134,17 +143,7 @@ public class VideoController {
             }else {
                 return ServerResponse.createByError("请上传正确的文件");
             }
-            int size = (int) fileVideo.getSize();
-            video.setSize(size+"");
-            video.setVideoFormat(vid);
-            video.setUid(user.getId());
-            video.setUpDate(Calendar.getInstance().getTime());
-
-            video.setIschecked(1);
-            videoService.insert(video);
-            return ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_SAVE);
         }
-
         return ServerResponse.createByError(ServerResponseConstant.SERVERRESPONSE_ERROR_SAVE);
     }
 

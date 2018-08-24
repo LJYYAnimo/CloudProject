@@ -2,13 +2,12 @@
 
 layui.use(['table','upload','form'], function(){
     var table = layui.table,
-        upload = layui.upload,
         form = layui.form;
     var $ = layui.$;
     var worksTypeList;
     table.render({
         elem: '#xinkai'
-        ,url: '/works/pager'
+        ,url: '/book/pager'
         ,cellMinWidth: 100 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
         // ,contentType: "application/json"
         ,method:'post'
@@ -22,20 +21,18 @@ layui.use(['table','upload','form'], function(){
         ,cols: [[
             {checkbox: true, fixed: true}
             ,{field:'id', title:'序号',type:'numbers'}
-            ,{field:'worksTitle', title:'作品标题',align: 'center'}
-            ,{field:'worksTypeidName', title:'作品类型',align: 'center'}
-            ,{field:'worksLabel', title:'作品标签',align: 'center'}
-            ,{field:'worksTeacher', title:'作品指导老师',align: 'center'}
-            ,{field:'worksAbout', title:'作品简介',align: 'center'}
-            ,{field:'worksDate', title:'作品创建时间',align: 'center'}
-            ,{field:'worksAddress', title:'作品下载链接',align: 'center',templet:'#worksAddressURL'}
-            ,{field:'stl',width:200, title:'预览3D文件',align: 'center',templet:'#stlURL', event: 'queryStl'}
-            ,{field:'worksPhotoaddress',width:170, title:'作品封面',align: 'center',templet:'#worksPhotoaddressURL'}
-            ,{field:'userName', title:'作品发布人',align: 'center'}
-            ,{field:'worksAudit', title:'审核状态',align: 'center',templet:'#status'}
-            ,{field:'auditDate', title:'审核时间',align: 'center'}
-            ,{field:'noCheckedReason', title:'审核不通过原因',align: 'center'}
-            ,{field:'worksIntegral', title:'作品所需积分',align: 'center'}
+            ,{field:'title', title:'书名',align: 'center'}
+            ,{field:'type', title:'是否出版',align: 'center',templet:'#type'}
+            ,{field:'bookType', title:'书籍类型',align: 'center',templet:'#bookType'}
+            ,{field:'des', title:'简介',align: 'center',templet:'#bookType'}
+            ,{field:'url', title:'下载链接',align: 'center',templet:'#urlURL'}
+            ,{field:'img',width:170, title:'作品封面',align: 'center',templet:'#imgURL'}
+            ,{field:'userName', title:'上传者',align: 'center'}
+            ,{field:'bookAudit', title:'审核状态',align: 'center',templet:'#status'}
+            ,{field:'auditTime', title:'审核时间',align: 'center'}
+            ,{field:'bookUnreason', title:'审核不通过原因',align: 'center'}
+            ,{field:'updateTime', title:'最近更新时间',align: 'center'}
+            ,{field:'createTime', title:'创建时间',align: 'center'}
             ,{field:'provinceId', title:'省',align: 'center'}
             ,{field:'cityId', title:'市',align: 'center'}
             ,{field:'areaId', title:'区',align: 'center'}
@@ -62,31 +59,14 @@ layui.use(['table','upload','form'], function(){
                 curr: 1
             }
             ,where: {
-                worksTitle: $("#worksTitle").val()
-                ,userName: $("#userName").val()
-                ,worksAudit: $('#worksAudit').val()
-                ,worksTypeid: $("#worksType").val()
+                title: $("#title").val()
+                ,type: $("#type").val()
+                ,bookType: $('#bookType').val()
+                ,bookAudit: $("#bookAudit").val()
             }
         });
     }
 
-    $.ajax({
-        url: "/worksType/pager",
-        data: {"page":1,"limit":100},
-        type: "POST",
-        dataType: "json",
-        success: function (response) {
-            worksTypeList =response.rows;
-            for (var i=0;i<response.rows.length;i++){
-
-                $('#worksType').append("<option value="+response.rows[i].id+">"+response.rows[i].worksType+"</option>");
-
-            }
-            form.render();
-        },error:function (response) {
-            alert("接口请求异常")
-        }
-    });
 
 
     function reloads() {
@@ -105,7 +85,7 @@ layui.use(['table','upload','form'], function(){
             fixed: false, //不固定
             maxmin: true,
             shadeClose: true,
-            content: '/works/addUpdateWorks',
+            content: '/book/addUpdateBook',
             success: function (layero, index) {
                 // 向子页面传递参数
                 var iframe = window['layui-layer-iframe' + index];
@@ -142,7 +122,7 @@ layui.use(['table','upload','form'], function(){
         //         }
         //     }
         // });
-        var text =$("#noCheckedReason").val();
+        var text =$("#bookUnreason").val();
         if(text<=2){
             layer.close(index);
             return layer.msg("请输入原因", {icon: 5});
@@ -152,8 +132,8 @@ layui.use(['table','upload','form'], function(){
     });
 
     function statusform(data,stats) {
-        data.field.worksAudit=stats;
-        axios.post('/works/updateStatus', Qs.stringify(data.field)).then(function (response) {
+        data.field.bookAudit=stats;
+        axios.post('/book/updateStatus', Qs.stringify(data.field)).then(function (response) {
             if (response.data.code == 0) {
                 layer.closeAll();
                 layer.msg(response.data.message, {icon: 6});
@@ -170,7 +150,7 @@ layui.use(['table','upload','form'], function(){
 
     $("#add").click(function () {
         var data={};
-        openNews(data,"添加资讯");
+        openNews(data,"添加书籍");
     });
     // table.on('tool(demo)', function(obj){
     //监听工具条
@@ -182,7 +162,7 @@ layui.use(['table','upload','form'], function(){
                 ,btn: ['删除', '取消']
                 ,yes: function(index){
                     layer.close(index);
-                    axios.post('/works/deletWorks', Qs.stringify(data)).then(function (response) {
+                    axios.post('/book/deletBook', Qs.stringify(data)).then(function (response) {
                         reloads();
                         return layer.msg(response.data.message,{icon:6});
                     }).catch(function (error) {
@@ -199,7 +179,7 @@ layui.use(['table','upload','form'], function(){
                     fixed: false, //不固定
                     maxmin: true,
                     shadeClose: true,
-                    content: '/works/article',
+                    content: '/book/article',
                     success: function (layero, index) {
                         // 向子页面传递参数
                         var iframe = window['layui-layer-iframe' + index];
@@ -211,7 +191,7 @@ layui.use(['table','upload','form'], function(){
             }
 
         }else if(obj.event === 'update'){
-            openNews(data,"更新作品");
+            openNews(data,"更新书籍");
         }else if(obj.event === 'queryStl'){
             layer.open({
                 type: 2,
@@ -238,11 +218,11 @@ layui.use(['table','upload','form'], function(){
                 content: $('#addDiv')
             });
             $("#id").val(data.id);
-            if(data.worksAudit==2){
+            if(data.bookAudit==2){
                 $("#statustext").html("冻结原因");
                 $("#statusYse").addClass("layui-hide");
                 $("#statusNo").val("冻结");
-            }else if(data.worksAudit==3){
+            }else if(data.bookAudit==3){
                 $("#statustext").html("审核不通过原因");
                 $("#statusYse").removeClass("layui-hide");
                 $("#statusNo").val("不通过");

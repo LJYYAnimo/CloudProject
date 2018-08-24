@@ -148,7 +148,7 @@ public class CaseFileController {
             String stl = FileUtils.getExtensionWithoutDot(fileStl.getOriginalFilename());
             String zip = FileUtils.getExtensionWithoutDot(fileZIP.getOriginalFilename());
             if((MIMETypeEnum.JPEG.getValue().equals(img) || MIMETypeEnum.JPG.getValue().equals(img)|| MIMETypeEnum.PNG.getValue().equals(img))&&
-                    MIMETypeEnum.STL.getValue().equals(stl)&&MIMETypeEnum.ZIP.getValue().equals(zip)){
+                    MIMETypeEnum.STL.getValue().equals(stl)&&(MIMETypeEnum.RAR.getValue().equals(zip)||MIMETypeEnum.ZIP.getValue().equals(zip))){
                 String pathImg = FileUtils.uploadPath(request,"imgCase",user.getUserName()+"/");//把用户的图片存放到用户的imgCase文件夹下
                 String pathStl = FileUtils.uploadPath(request,"StlCase",user.getUserName()+"/");//把用户的3d文件存放到用户的StlCase文件夹下
                 String pathZIP = FileUtils.uploadPath(request,"ZIPCase",user.getUserName()+"/");//把用户的zip附件存放到用户的ZIPCase文件夹下
@@ -256,8 +256,7 @@ public class CaseFileController {
     private void addZIP(MultipartFile fileZIP, CaseFile caseFile, String deletfileZIP, HttpServletRequest request, User user) throws IOException {
         if(!StringUtils.isEmpty(fileZIP)){
             String zip = FileUtils.getExtensionWithoutDot(fileZIP.getOriginalFilename());
-            if(MIMETypeEnum.ZIP.getValue().equals(zip)){
-
+            if(MIMETypeEnum.RAR.getValue().equals(zip)||MIMETypeEnum.ZIP.getValue().equals(zip)){
                 if(!StringUtils.isEmpty(deletfileZIP)){
                     DeleteFileUtil.delete(FileUtils.getClasspath()+"static"+deletfileZIP);//删除原来图片
                 }

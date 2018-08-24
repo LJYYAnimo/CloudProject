@@ -22,4 +22,63 @@
         <result column="province_id" property="provinceId" />
     </resultMap>
 
+    <sql id="select_columns">
+        t_book.id as id
+        ,t_book.title as title
+        ,t_book.des as des
+        ,t_book.url as url
+        ,t_book.type as 'type'
+        ,t_book.img as img
+        ,t_book.create_time as createTime
+        ,t_book.update_time as updateTime
+        ,t_book.book_audit as bookAudit
+        ,t_book.book_unreason as bookUnreason
+        ,t_book.audit_time as auditTime
+        ,t_book.book_type as bookType
+        ,t_book.user_id as userId
+        ,t_book.area_id as areaId
+        ,t_book.province_id as provinceId
+        ,t_book.city_id as cityId
+        ,t_user.userName as userName
+    </sql>
+
+    <sql id="query_where_clause">
+        t_book.user_id = t_user.id
+        <if test="bookVo != null and bookVo.title != null and bookVo.title != ''">
+            and t_book.title like concat('%', #{bookVo.title}, '%')
+        </if>
+        <if test="bookVo != null and bookVo.userName != null and bookVo.userName != ''">
+            and t_user.userName like concat('%', #{bookVo.userName}, '%')
+        </if>
+        <if test="bookVo != null and bookVo.type != null and bookVo.type != ''">
+            and t_book.type = #{bookVo.type}
+        </if>
+        <if test="bookVo != null and bookVo.bookAudit != null and bookVo.bookAudit != ''">
+            and t_book.book_audit = #{bookVo.bookAudit}
+        </if>
+        <if test="bookVo != null and bookVo.bookType != null and bookVo.bookType != ''">
+            and t_book.book_type = #{bookVo.bookType}
+        </if>
+
+
+    </sql>
+
+    <select id="queryPageBook" resultType="com.staging.entity.vo.BookVo">
+        select
+        <include refid="select_columns"/>
+        from  t_book,t_user
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        limit #{pager.beginIndex},#{pager.pageSize}
+    </select>
+
+    <select id="queryPageCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from   t_book,t_user
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+    </select>
 </mapper>

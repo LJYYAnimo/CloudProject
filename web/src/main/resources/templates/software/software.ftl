@@ -9,7 +9,7 @@
 </head>
 <body style="padding-top: 20px">
 <fieldset class="layui-elem-field site-demo-button" >
-    <legend>作品管理</legend>
+    <legend>软件管理</legend>
 
         <form class="layui-form">
             <div class="layui-form-item">
@@ -19,7 +19,7 @@
 
                 <div class="layui-inline">
                     <div class="layui-input-inline">
-                        <input type="text" id="softwareName" name="softwareName" autocomplete="off" class="layui-input" placeholder="输入内容">
+                        <input type="text" id="softwareName" name="softwareName" autocomplete="off" class="layui-input" placeholder="输入软件名称">
                     </div>
                 </div>
                 <div class="layui-inline">

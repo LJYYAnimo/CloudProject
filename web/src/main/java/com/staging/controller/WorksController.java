@@ -132,7 +132,7 @@ public class WorksController {
             String stl = FileUtils.getExtensionWithoutDot(fileStl.getOriginalFilename());
             String zip = FileUtils.getExtensionWithoutDot(fileZIP.getOriginalFilename());
             if((MIMETypeEnum.JPEG.getValue().equals(img) || MIMETypeEnum.JPG.getValue().equals(img)|| MIMETypeEnum.PNG.getValue().equals(img))&&
-                    MIMETypeEnum.STL.getValue().equals(stl)&&MIMETypeEnum.ZIP.getValue().equals(zip)){
+                    MIMETypeEnum.STL.getValue().equals(stl)&&(MIMETypeEnum.RAR.getValue().equals(zip)||MIMETypeEnum.ZIP.getValue().equals(zip))){
                 String pathImg = FileUtils.uploadPath(request,"imgWorks",user.getUserName()+"/");//把用户的图片存放到用户的imgWorks文件夹下
                 String pathStl = FileUtils.uploadPath(request,"StlWorks",user.getUserName()+"/");//把用户的3d文件存放到用户的StlWorks文件夹下
                 String pathZIP = FileUtils.uploadPath(request,"ZIPWorks",user.getUserName()+"/");//把用户的zip附件存放到用户的ZIPWorks文件夹下
@@ -240,7 +240,7 @@ public class WorksController {
     private void addZIP(MultipartFile fileZIP, Works works, String deletfileZIP, HttpServletRequest request, User user) throws IOException {
         if(!StringUtils.isEmpty(fileZIP)){
             String zip = FileUtils.getExtensionWithoutDot(fileZIP.getOriginalFilename());
-            if(MIMETypeEnum.ZIP.getValue().equals(zip)){
+            if(MIMETypeEnum.RAR.getValue().equals(zip)||MIMETypeEnum.ZIP.getValue().equals(zip)){
 
                 if(!StringUtils.isEmpty(deletfileZIP)){
                     DeleteFileUtil.delete(FileUtils.getClasspath()+"static"+deletfileZIP);//删除原来图片

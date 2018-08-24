@@ -15,13 +15,23 @@ layui.use(['form'], function(){
     });
     setTimeout(function() {
 
-        $("#worksTitle").val(value.worksTitle);
-        $("#worksType").val(value.worksTypeidName);
-        $("#worksIntegral").val(value.worksIntegral);
-        $("#worksAbout").html(value.worksAbout);
-        $("#imgs").attr("src",value.worksPhotoaddress);
-        $("#stl").attr("href",value.stl);
-        $("#worksAddress").attr("href",value.worksAddress);
+        $("#title").val(value.title);
+        if(value.type ==0){
+            $("#type").val("已出版");
+        }else if(value.type ==1){
+            $("#type").val("未出版");
+        }
+
+        if(value.bookType==0){
+            $("#bookType").val("免费");
+        }else if(value.bookType==1){
+            $("#bookType").val("收费");
+        }
+
+
+        $("#des").html(value.des);
+        $("#imgs").attr("src",value.img);
+        $("#url").attr("href",value.url);
         layer.close(index);
     },200);//这里加定时器是为了解决数据加载顺序错误，导致取不到value的值
 });
