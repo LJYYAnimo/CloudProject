@@ -22,9 +22,9 @@ layui.use(['table','upload','form'], function(){
             {checkbox: true, fixed: true}
             ,{field:'id', title:'序号',type:'numbers'}
             ,{field:'title', title:'书名',align: 'center'}
-            ,{field:'type', title:'是否出版',align: 'center',templet:'#type'}
-            ,{field:'bookType', title:'书籍类型',align: 'center',templet:'#bookType'}
-            ,{field:'des', title:'简介',align: 'center',templet:'#bookType'}
+            ,{field:'type', title:'是否出版',align: 'center',templet:'#Type'}
+            ,{field:'bookType', title:'书籍类型',align: 'center',templet:'#BookType'}
+            ,{field:'des', title:'简介',align: 'center'}
             ,{field:'url', title:'下载链接',align: 'center',templet:'#urlURL'}
             ,{field:'img',width:170, title:'作品封面',align: 'center',templet:'#imgURL'}
             ,{field:'userName', title:'上传者',align: 'center'}

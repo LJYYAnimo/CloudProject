@@ -123,7 +123,7 @@
     <span style="color: #4590ff;">审核未通过</span>
     {{# } }}
 </script>
-<script type="text/html" id="type">
+<script type="text/html" id="Type">
     {{# if(d.type == 0 ){ }}
     <span style="color: red;">已出版</span>
     {{# }else if(d.type == 1 ){ }}
@@ -131,7 +131,7 @@
     {{# } }}
 
 </script>
-<script type="text/html" id="bookType">
+<script type="text/html" id="BookType">
     {{# if(d.bookType == 0 ){ }}
     <span style="color: red;">免费</span>
     {{# }else if(d.bookType == 1 ){ }}
