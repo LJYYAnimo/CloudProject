@@ -145,7 +145,7 @@ public class NewsController {
             String path = FileUtils.uploadPath(request,"imgNews","admin/");//把用户的图片存放到adming用户的img下
             try {
                 String file1 = FileUtils.uploadFile(file, path);
-                System.out.println("/admin/img/"+file1);
+
                 news.setTitleImg("/upload/admin/imgNews/"+file1);
                 news.setCreateTime(Calendar.getInstance().getTime());
                 newsService.insert(news);

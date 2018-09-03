@@ -56,7 +56,7 @@ layui.use(['table','upload','form'], function(){
         layer.open({
             type: 2,
             title: title,
-            area: ['1000px', '730px'],
+            area: ['70%', '730px'],
             fixed: false, //不固定
             maxmin: true,
             shadeClose: true,
@@ -97,7 +97,7 @@ layui.use(['table','upload','form'], function(){
                 layer.open({
                     type: 2,
                     title: '资讯详情',
-                    area: ['1000px', '730px'],
+                    area: ['70%', '730px'],
                     fixed: false, //不固定
                     maxmin: true,
                     shadeClose: true,

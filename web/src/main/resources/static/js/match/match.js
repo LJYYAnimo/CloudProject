@@ -123,7 +123,7 @@ layui.use(['table','upload','form','laydate','element','layedit'], function(){
             type: 1,
             title: title,
             shadeClose: true,
-            area: ['900px', '650px'],
+            area: ['65%', '650px'],
             content: $('#Setting')
             ,success: function(layero, index){  //层弹出后的成功回调方法
                 //开始时间选择器
@@ -198,7 +198,7 @@ layui.use(['table','upload','form','laydate','element','layedit'], function(){
                 layer.open({
                     type: 2,
                     title: '大赛详情',
-                    area: ['1000px', '730px'],
+                    area: ['70%', '730px'],
                     fixed: false, //不固定
                     maxmin: true,
                     shadeClose: true,

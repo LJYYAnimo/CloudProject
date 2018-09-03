@@ -18,4 +18,53 @@
         <result column="sign" property="sign" />
     </resultMap>
 
+    <sql id="select_columns">
+        t_entity.id as id
+        ,t_entity.userId as userId
+        ,t_user.userName as userName
+        ,t_entity.entityName as entityName
+        ,t_entity.theIntegral as theIntegral
+        ,t_entity.entityNum as entityNum
+        ,t_entity.entityCover as entityCover
+        ,t_entity.entityIntro as entityIntro
+        ,t_entity.entityStartTime as entityStartTime
+        ,t_entity.entityOverTime as entityOverTime
+        ,t_entity.openOrNot as openOrNot
+        ,t_entity.creatTime as creatTime
+        ,t_entity.sign as sign
+    </sql>
+
+
+    <sql id="query_where_clause">
+        t_entity.userId = t_user.id
+        <if test="entityVo != null and entityVo.entityName != null and entityVo.entityName != ''">
+            and t_entity.entityName like concat('%', #{entityVo.entityName}, '%')
+        </if>
+        <if test="entityVo != null and entityVo.userName != null and entityVo.userName != ''">
+            and t_user.userName like concat('%', #{entityVo.userName}, '%')
+        </if>
+        <if test="entityVo != null and entityVo.openOrNot != null and entityVo.openOrNot != ''">
+            and t_entity.openOrNot = #{entityVo.openOrNot}
+        </if>
+
+    </sql>
+
+    <select id="queryPageEntity" resultType="com.staging.entity.vo.EntityVo">
+        select
+        <include refid="select_columns"/>
+        from  t_entity,t_user
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        limit #{pager.beginIndex},#{pager.pageSize}
+    </select>
+    <select id="queryPageCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from   t_entity,t_user
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+    </select>
+
 </mapper>

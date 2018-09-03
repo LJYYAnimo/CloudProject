@@ -49,7 +49,6 @@ layui.use(['table','upload','form'], function(){
             if(!$(".layui-table").is("tz-gallery")){
                 $(".layui-table").addClass("tz-gallery")
             }
-
             baguetteBox.run('.tz-gallery');
 
         }
@@ -103,7 +102,7 @@ layui.use(['table','upload','form'], function(){
         layer.open({
             type: 2,
             title: title,
-            area: ['1000px', '730px'],
+            area: ['70%', '730px'],
             fixed: false, //不固定
             maxmin: true,
             shadeClose: true,
@@ -169,7 +168,7 @@ layui.use(['table','upload','form'], function(){
 
     $("#add").click(function () {
         var data={};
-        openNews(data,"添加资讯");
+        openNews(data,"添加视频");
     });
     // table.on('tool(demo)', function(obj){
     //监听工具条
@@ -193,8 +192,8 @@ layui.use(['table','upload','form'], function(){
             if(data!=null&&data!=undefined){
                 layer.open({
                     type: 2,
-                    title: '教学详情',
-                    area: ['1000px', '730px'],
+                    title: '教学视频详情',
+                    area: ['70%', '730px'],
                     fixed: false, //不固定
                     maxmin: true,
                     shadeClose: true,
@@ -210,12 +209,14 @@ layui.use(['table','upload','form'], function(){
             }
 
         }else if(obj.event === 'update'){
+            console.log(data);
             openNews(data,"更新视频");
         }else if(obj.event === 'queryVideo'){
+
             layer.open({
                 type: 2,
                 title: '预览效果',
-                area: ['1000px', '630px'],
+                area: ['70%', '630px'],
                 fixed: false, //不固定
                 maxmin: false,
                 closeBtn:1,
@@ -224,6 +225,7 @@ layui.use(['table','upload','form'], function(){
                 success: function (layero, index) {
                     // 向子页面传递参数
                     var iframe = window['layui-layer-iframe' + index];
+
                     iframe.child(data);
                 },end:function(index){
                     // reloads();
@@ -234,7 +236,7 @@ layui.use(['table','upload','form'], function(){
                 type: 1,
                 title: '审核',
                 shadeClose: true,
-                area: ['620px', '275px'],
+                area: ['520px', '275px'],
                 content: $('#addDiv')
             });
             $("#id").val(data.id);

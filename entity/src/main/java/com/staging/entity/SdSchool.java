@@ -78,6 +78,11 @@ public class SdSchool extends Model<SdSchool> {
     @TableField("audit_status")
     private Integer auditStatus;
     /**
+     * 审核未通过原因
+     */
+    @TableField("sc_des")
+    private String scDes;
+    /**
      * 学校入驻申请时间
      */
     @TableField("school_creatTime")
@@ -103,6 +108,13 @@ public class SdSchool extends Model<SdSchool> {
     @TableField("directly_states")
     private Integer directlyStates;
 
+    public String getScDes() {
+        return scDes;
+    }
+
+    public void setScDes(String scDes) {
+        this.scDes = scDes;
+    }
 
     public Integer getId() {
         return id;
@@ -256,6 +268,7 @@ public class SdSchool extends Model<SdSchool> {
         ", areaId=" + areaId +
         ", cityId=" + cityId +
         ", directlyStates=" + directlyStates +
+        ", scDes=" + scDes +
         "}";
     }
 }

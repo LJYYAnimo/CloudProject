@@ -1,12 +1,19 @@
-layui.use(['table','upload','form'], function(){
+layui.use(['table','upload','element'], function(){
     var table = layui.table,
-        upload = layui.upload,
-        form = layui.form;
+        element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
     var $ = layui.$;
+
+
+    element.on('tab(docDemoTabBrief)', function(data){
+        // tableData(null,this.textContent);
+
+
+    });
+
 
     table.render({
         elem: '#xinkai'
-        ,url: '/notice/pager'
+        ,url: '/entity/pager'
         ,cellMinWidth: 100 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
         // ,contentType: "application/json"
         ,method:'post'
@@ -17,25 +24,25 @@ layui.use(['table','upload','form'], function(){
             ,countName: 'total' //数据总数的字段名称，默认：count
             ,dataName: 'rows' //数据列表的字段名称，默认：data
         }
-        ,cols: [[
+        , cols: [[
             {checkbox: true, fixed: true}
-            ,{field:'id', title:'序号',type:'numbers'}
-            ,{field:'title', title:'标题',align: 'center'}
-            ,{field:'editor', title:'编辑人',align: 'center'}
-            ,{field:'dept', title:'来源',align: 'center'}
-            ,{field:'author', title:'作者',align: 'center'}
-            ,{field:'shooter', title:'摄影',align: 'center'}
-            ,{field:'createTime', title:'创建时间',align: 'center'}
-            ,{field:'updateTime', title:'更新时间',align: 'center'}
-            ,{field:'titleImg',width:170, title:'标题封面',align: 'center',templet:'<div><a class="" href="{{ d.titleImg }}"  alt="{{ d.titleImg }}">' +
-            '<img src="{{ d.titleImg }}" style="width: 150px;height: 50px" alt="40x20" class="img-rounded"></a></div>'}
-            ,{field:'about', title:'关于',align: 'center'}
-            ,{field:'caozuo',width:200,title: '操作',toolbar: '#barDemo',fixed: 'right'}
+            , {field: 'id', title: '序号', type: 'numbers'}
+            , {field: 'entityName', title: '物品名称', align: 'center'}
+            , {field: 'userName', title: '物品上传者', align: 'center'}
+            , {field: 'theIntegral', title: '所需积分', align: 'center'}
+            , {field: 'entityNum', title: '实物数量', align: 'center'}
+            , {field: 'entityIntro', title: '简介', align: 'center'}
+            , {field: 'openOrNot', title: '物品状态', align: 'center',templet: '#Status'}
+            , {field: 'entityCover', width: 170, title: '实物封面', align: 'center', templet: '#entityCoverImg'}
+            , {field: 'entityStartTime', title: '实物兑换开始时间', align: 'center'}
+            , {field: 'entityOverTime', title: '实物兑换结束时间', align: 'center'}
+            , {field: 'creatTime', title: '创建时间', align: 'center'}
+            , {field: 'caozuo', width: 250, title: '操作', toolbar: '#barDemo', fixed: 'right'}
         ]]
-        ,id: 'idTest'
-        ,page:true,
-        done: function(res, curr, count){
-            if(!$(".layui-table").is("tz-gallery")){
+        , id: 'idTest'
+        , page: true,
+        done: function (res, curr, count) {
+            if (!$(".layui-table").is("tz-gallery")) {
                 $(".layui-table").addClass("tz-gallery")
             }
 
@@ -43,6 +50,9 @@ layui.use(['table','upload','form'], function(){
 
         }
     });
+
+
+
 
 
     function reloads() {
@@ -61,7 +71,7 @@ layui.use(['table','upload','form'], function(){
             fixed: false, //不固定
             maxmin: true,
             shadeClose: true,
-            content: '/notice/addUpdateNotice',
+            content: '/entity/addUpdateEntity',
             success: function (layero, index) {
                 // 向子页面传递参数
                 var iframe = window['layui-layer-iframe' + index];
@@ -72,8 +82,8 @@ layui.use(['table','upload','form'], function(){
         });
     }
 
-    $("#add").click(function () {
-        openNews("","添加公告");
+    $("#addNews").click(function () {
+        openNews("","添加物品");
     });
 
     //监听工具条
@@ -85,7 +95,7 @@ layui.use(['table','upload','form'], function(){
                 ,btn: ['删除', '取消']
                 ,yes: function(index){
                     layer.close(index);
-                    axios.post('/notice/deletNotice', Qs.stringify(data)).then(function (response) {
+                    axios.post('/entity/deletEntity', Qs.stringify(data)).then(function (response) {
                         reloads();
                         return layer.msg(response.data.message,{icon:6});
                     }).catch(function (error) {
@@ -97,12 +107,12 @@ layui.use(['table','upload','form'], function(){
             if(data!=null&&data!=undefined){
                 layer.open({
                     type: 2,
-                    title: '公告详情',
+                    title: '实物详情',
                     area: ['70%', '730px'],
                     fixed: false, //不固定
                     maxmin: true,
                     shadeClose: true,
-                    content: '/notice/article',
+                    content: '/entity/article',
                     success: function (layero, index) {
                         // 向子页面传递参数
                         var iframe = window['layui-layer-iframe' + index];
@@ -114,7 +124,22 @@ layui.use(['table','upload','form'], function(){
             }
 
         }else if(obj.event === 'update'){
-            openNews(data,"更新公告");
+            openNews(data,"更新实物");
+        }else if(obj.event === 'status'){
+            if(data.openOrNot ===0){
+                data.openOrNot=1;
+            }else if(data.openOrNot ===1){
+                data.openOrNot=0;
+            }
+            axios.post('/entity/updateStatus', Qs.stringify(data)).then(function (response) {
+                reloads();
+                parent.layer.msg(response.data.message, {
+                    time: 1000, icon:response.data.code==0?6:5
+                });
+            }).catch(function (error) {
+                layer.msg(error);
+            });
+
         }
     });
 

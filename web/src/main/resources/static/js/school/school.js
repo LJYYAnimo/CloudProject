@@ -1,40 +1,124 @@
-layui.use(['table', 'element', 'form'], function () {
+layui.use(['table', 'element', 'form','upload'], function () {
     var table = layui.table,
         element = layui.element,
+        upload = layui.upload,
+        upload1 = layui.upload,
         form = layui.form;
     var $ = layui.$;
-
+    var path= null;
     /**
      * 学校添加弹出
      */
     $("#add").click(function () {
+        path= '/sdSchool/save';
+        $('#reset').click();
+        fileLogo=null;
+        fileImg=null;
+        updateAdd();
+    });
+
+    function updateAdd(datas) {
         layer.open({
             type: 1,
             title: '添加学校',
             shadeClose: true,
             maxmin: true,
-            area: ['900px', '450px'],
+            area: ['60%', '650px'],
             content: $('#addDiv'),
-            success:function () {
+            success: function () {
                 axios.post('/schoolType/list').then(function (response) {
-                    if(response.data.code == 0){
+                    if (response.data.code == 0) {
                         var data = response.data.data;
-                        for(var i=0;i<data.length;i++){
-                            $('#schoolTypeid').append("<option value="+data[i].id+">"+data[i].name+"</option>");
+                        for (var i = 0; i < data.length; i++) {
+                            $('#schoolTypeid').append("<option value=" + data[i].id + ">" + data[i].name + "</option>");
                         }
+                        $('#schoolTypeid').val(datas.schoolTypeid);
                         form.render();
                     }
                 }).catch(function (error) {
-                    layer.msg(error,{icon:5});
+                    layer.msg(error, {icon: 5});
                 });
             }
         });
-    });
+    }
+
+    function reloads() {
+        table.reload('idTest', {
+            page: {
+                curr: 1
+            }
+        });
+    }
 
     tableData(null,$(".xinkai_frist").val());
 
     element.on('tab(docDemoTabBrief)', function(data){
         tableData(null,this.textContent);
+    });
+    var fileLogo,fileImg;
+    upload.render({
+        elem: '#uploadImg'
+        ,url: ""
+        ,auto: false
+        ,size: 5120
+        ,title: '只能上传jpg,png,jpeg后缀的文件'
+        ,field:'fileLogo' //后台接收默认字段名
+        //,multiple: true
+        ,acceptMime: 'image/jpg, image/png,image/jpeg'
+        ,ext: 'jpg|png|jpeg'
+        ,choose: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+            //将每次选择的文件追加到文件队列
+
+            var files = obj.pushFile();
+            //预读本地文件，如果是多文件，则会遍历。(不支持ie8/9)
+            //预读本地文件，如果是多文件，则会遍历。(不支持ie8/9)
+            obj.preview(function(index, file, result){
+                $('#imgs').attr('src', result); //图片链接（base64
+                fileLogo=file;
+
+            });
+        }
+        ,before: function(obj){
+
+
+        },done: function(res, indexs, upload){ //上传后的回调
+
+        }
+        ,error: function(index, upload){
+            layer.msg("上传失败");
+        }
+    });
+    upload.render({
+        elem: '#uploadImg1'
+        ,url: ""
+        ,auto: false
+        ,size: 5120
+        ,title: '只能上传jpg,png,jpeg后缀的文件'
+        ,field:'fileImg' //后台接收默认字段名
+        //,multiple: true
+        ,acceptMime: 'image/jpg, image/png,image/jpeg'
+        ,ext: 'jpg|png|jpeg'
+        ,choose: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+            //将每次选择的文件追加到文件队列
+
+            var files = obj.pushFile();
+            //预读本地文件，如果是多文件，则会遍历。(不支持ie8/9)
+            //预读本地文件，如果是多文件，则会遍历。(不支持ie8/9)
+            obj.preview(function(index, file, result){
+                $('#imgs1').attr('src', result); //图片链接（base64
+                fileImg=file;
+
+            });
+        }
+        ,before: function(obj){
+
+
+        },done: function(res, indexs, upload){ //上传后的回调
+
+        }
+        ,error: function(index, upload){
+            layer.msg("上传失败");
+        }
     });
 
     function tableData(id,name){
@@ -63,7 +147,8 @@ layui.use(['table', 'element', 'form'], function () {
                 , {field: 'schoolAbout', title: '简介', align: 'center'}
                 , {field: 'schoolCreattime', title: '创建时间', align: 'center',width:120}
                 , {field: 'auditStatus', title: '状态', align: 'center',templet:'#sdSchoolStatus'}
-                , {field: 'caozuo', width: 150, title: '操作', toolbar: '#barDemo', fixed: 'right'}
+                , {field: 'scDes', title: '审核未通过原因', align: 'center'}
+                , {field: 'caozuo', width: 200, title: '操作', toolbar: '#barDemo', fixed: 'right'}
             ]]
             , id: 'idTest'
             , page: true
@@ -78,20 +163,85 @@ layui.use(['table', 'element', 'form'], function () {
         });
     }
 
+    //监听提交
+    form.on('submit(statusYse)', function (data) {
+        statusform(data,1);
+        return false;
+    });
+
+    form.on('submit(statusNo)', function (data) {
+
+        var text =$("#scDes").val();
+        if(text<=2){
+            return layer.msg("请输入原因", {icon: 5});
+        }
+        statusform(data,2);
+        return false;
+    });
+
+    function statusform(data,stats) {
+        data.field.auditStatus=stats;
+        axios.post('/sdSchool/updateStatus', Qs.stringify(data.field)).then(function (response) {
+            layer.closeAll();
+            layer.msg(response.data.message,{icon:response.data.code == 0?6:5});
+            $('#reset').click();
+            reloads();
+        }).catch(function (error) {
+            layer.msg(error);
+        });
+
+    }
+
     //监听工具条
     table.on('tool(demo)', function (obj) {
         var data = obj.data;
         if (obj.event === 'del') {
             layer.msg('确定删除？', {
                 time: 0 //不自动关闭
-                , btn: ['删除', '取消']
-                , yes: function (index) {
+                ,btn: ['删除', '取消']
+                ,yes: function(index){
                     layer.close(index);
-                    layer.msg("删除成功", {icon: 6});
+                    axios.post('/sdSchool/deletSchool', Qs.stringify(data)).then(function (response) {
+                        reloads();
+                        return layer.msg(response.data.message,{icon:response.data.code==0?6:5});
+                    }).catch(function (error) {
+                        layer.msg(error);
+                    });
                 }
             });
         } else if (obj.event === 'query') {
             layer.msg("查看用户");
+        }else if(obj.event === 'update'){
+            path= '/sdSchool/updateSchool';
+            updateAdd(data);
+            form.val('Form',{
+                "id":data.id,
+                "schoolName":data.schoolName,
+                "detailedAddress":data.detailedAddress,
+                "deletLoge":data.schoolLoge,
+                "deletImg":data.schoolCover,
+                "schoolAbout":data.schoolAbout
+            });
+            $('#imgs').attr('src',data.schoolLoge);
+            $('#imgs1').attr('src',data.schoolCover);
+        }else if(obj.event === 'status'){
+            layer.open({
+                type: 1,
+                title: '审核',
+                shadeClose: true,
+                area: ['520px', '275px'],
+                content: $('#StatusDiv')
+            });
+            $("#id").val(data.id);
+            if(data.auditStatus==1){
+                $("#statustext").html("冻结原因");
+                $("#statusYse").addClass("layui-hide");
+                $("#statusNo").val("冻结");
+            }else if(data.auditStatus==2){
+                $("#statustext").html("审核不通过原因");
+                $("#statusYse").removeClass("layui-hide");
+                $("#statusNo").val("不通过");
+            }
         }
     });
 
@@ -99,7 +249,7 @@ layui.use(['table', 'element', 'form'], function () {
         layer.open({
             type: 2,
             title: "百度地图",
-            area: ['1000px', '690px'],
+            area: ['70%', '690px'],
             fixed: false, //不固定
             maxmin: true,
             content: 'https://map.baidu.com/'
@@ -108,13 +258,28 @@ layui.use(['table', 'element', 'form'], function () {
 
     //监听提交
     form.on('submit(formDemo)',function(data){
-        axios.post('/sdSchool/save',Qs.stringify(data.field)).then(function (response) {
-            if(response.data.code == 0){
-                layer.closeAll();
-                layer.msg(response.data.message,{icon:6});
-                return $("#reset").click();
-            }
-            layer.msg(response.data.message,{icon:5});
+        var datas = data.field;
+        var formdata1=new FormData();// 创建form对象
+        formdata1.append('id',datas.id);
+        formdata1.append('schoolTypeid',datas.schoolTypeid);
+        formdata1.append('schoolName',datas.schoolName);
+        formdata1.append('detailedAddress',datas.detailedAddress);
+        formdata1.append('schoolAbout',datas.schoolAbout);
+        formdata1.append('deletImg',datas.deletImg);
+        formdata1.append('deletLoge',datas.deletLoge);
+        if(fileLogo!=null&&fileLogo!=undefined){
+            formdata1.append('fileLogo',fileLogo,fileLogo.name);
+        }
+        if(fileImg!=null&&fileImg!=undefined){
+            formdata1.append('fileImg',fileImg,fileImg.name);
+        }
+        axios.post(path,formdata1).then(function (response) {
+            layer.closeAll();
+            layer.msg(response.data.message,{icon:response.data.code == 0?6:5});
+            fileLogo=null;
+            fileImg=null;
+            $('#reset').click();
+            reloads();
         }).catch(function (error) {
             layer.msg(error,{icon:5});
         });

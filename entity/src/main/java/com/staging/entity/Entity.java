@@ -1,5 +1,6 @@
 package com.staging.entity;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.enums.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -25,46 +26,57 @@ public class Entity extends Model<Entity> {
     /**
      * 用户id
      */
+    @TableField("userId")
     private Integer userId;
     /**
      * 实物名
      */
+    @TableField("entityName")
     private String entityName;
     /**
      * 所需积分
      */
+    @TableField("theIntegral")
     private Integer theIntegral;
     /**
      * 实物数量
      */
+    @TableField("entityNum")
     private Integer entityNum;
     /**
      * 实物封面
      */
+    @TableField("entityCover")
     private String entityCover;
     /**
      * 实物简介
      */
+    @TableField("entityIntro")
     private String entityIntro;
     /**
      * 实物兑换开始时间
      */
+    @TableField("entityStartTime")
     private Date entityStartTime;
     /**
      * 实物兑换结束时间
      */
+    @TableField("entityOverTime")
     private Date entityOverTime;
     /**
      * 公开与否
      */
+    @TableField("openOrNot")
     private Integer openOrNot;
     /**
      * 创建时间
      */
+    @TableField("creatTime")
     private Date creatTime;
     /**
      * 1-省，2-市，3-区县，4-学校
      */
+    @TableField("sign")
     private String sign;
 
 

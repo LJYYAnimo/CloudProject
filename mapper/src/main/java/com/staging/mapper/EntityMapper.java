@@ -1,7 +1,13 @@
 package com.staging.mapper;
 
+import com.staging.common.Pager;
 import com.staging.entity.Entity;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.staging.entity.vo.CaseFileVo;
+import com.staging.entity.vo.EntityVo;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +19,7 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  */
 public interface EntityMapper extends BaseMapper<Entity> {
 
+    List<EntityVo> queryPageEntity(@Param("pager")Pager pager, @Param("entityVo") EntityVo entityVo);
+
+    int queryPageCount(@Param("entityVo") EntityVo entityVo);
 }

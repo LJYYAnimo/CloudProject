@@ -33,7 +33,7 @@ layui.use(['table', 'upload', 'form'], function () {
             type: 1,
             title: '学校类型添加',
             shadeClose: true,
-            area: ['380px', '175px'],
+            area: ['480px', '175px'],
             content: $('#addDiv')
         });
     });

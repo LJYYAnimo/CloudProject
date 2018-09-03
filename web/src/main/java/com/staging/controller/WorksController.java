@@ -176,7 +176,7 @@ public class WorksController {
      *
      */
     @PostMapping("updateWorks")
-    @ApiOperation("添加作品")
+    @ApiOperation("更新作品")
     @ResponseBody
     public ServerResponse<Works> updateWorks(MultipartFile fileImg,MultipartFile fileStl,MultipartFile fileZIP, Works works,String deletImg,
                                              String deletfileStl ,String deletfileZIP ,HttpServletRequest request){

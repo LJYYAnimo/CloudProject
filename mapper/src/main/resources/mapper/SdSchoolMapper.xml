@@ -9,6 +9,7 @@
         <result column="school_loge" property="schoolLoge"/>
         <result column="school_typeid" property="schoolTypeid"/>
         <result column="school_province" property="schoolProvince"/>
+        <result column="sc_des" property="scDes"/>
         <result column="school_city" property="schoolCity"/>
         <result column="school_area" property="schoolArea"/>
         <result column="detailed_address" property="detailedAddress"/>
@@ -23,6 +24,7 @@
     </resultMap>
 
     <sql id="select_columns">
+        sd.id as id,
         sd.school_name as schoolName,
         sd.school_loge as schoolLoge,
         sd.school_typeid as schoolTypeid,
@@ -33,6 +35,7 @@
         sd.school_website as schoolWebsite,
         sd.school_about as schoolAbout,
         sd.audit_status as auditStatus,
+        sd.sc_des as scDes,
         sd.school_creatTime as schoolCreattime,
         sd.school_cover as schoolCover,
         sd.area_id as areaId,
