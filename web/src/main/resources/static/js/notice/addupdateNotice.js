@@ -44,6 +44,8 @@ layui.use(['table','upload','form','layedit'], function(){
                     "deletImg":value.titleImg,
                     "title":value.title,
                     "about":value.about,
+                    "editor":value.editor,
+                    "author":value.author,
                     "dept":value.dept
                 });
                 path ='/notice/updateNotice';
@@ -60,6 +62,8 @@ layui.use(['table','upload','form','layedit'], function(){
             "title":$("#title").val(),
             "about":$("#about").val(),
             "dept":$("#dept").val(),
+            "editor":$("#editor").val(),
+            "author":$("#author").val(),
             "content":layedit.getContent(index)
         }
         $("#btnform").addClass("layui-hide");//提交后就暂时隐藏按钮
@@ -102,6 +106,8 @@ layui.use(['table','upload','form','layedit'], function(){
                     ,"title":$("#title").val(),
                     "about":$("#about").val(),
                     "dept":$("#dept").val(),
+                    "editor":$("#editor").val(),
+                    "author":$("#author").val(),
                     "content":layedit.getContent(index)
                 };
             $("#btn").addClass("layui-hide");//提交后就暂时隐藏按钮

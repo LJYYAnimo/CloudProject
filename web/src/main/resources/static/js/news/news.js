@@ -22,8 +22,8 @@ layui.use(['table','upload','form'], function(){
             ,{field:'id', title:'序号',type:'numbers'}
             ,{field:'title', title:'资讯名称',align: 'center'}
             ,{field:'dept', title:'来源',align: 'center'}
-            ,{field:'author', title:'通讯员',align: 'center'}
-            ,{field:'shooter', title:'摄影',align: 'center'}
+            // ,{field:'author', title:'通讯员',align: 'center'}
+            // ,{field:'shooter', title:'摄影',align: 'center'}
             ,{field:'editor', title:'作者',align: 'center'}
             ,{field:'createTime', title:'创建时间',align: 'center'}
             ,{field:'updateTime', title:'更新时间',align: 'center'}
@@ -74,6 +74,23 @@ layui.use(['table','upload','form'], function(){
     $("#addNews").click(function () {
         openNews("","添加资讯");
     });
+
+    form.on('submit(search)', function(data){
+        artSearch();
+        return false;
+    });
+    function artSearch(){
+        table.reload('idTest', {
+            page: {
+                curr: 1
+            }
+            ,where: {
+                title: $("#title").val()
+                ,editor: $("#editor").val()
+                ,dept: $('#dept').val()
+            }
+        });
+    }
 
     //监听工具条
     table.on('tool(demo)', function(obj){

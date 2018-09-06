@@ -10,9 +10,33 @@
 <body style="padding-top: 20px">
 <fieldset class="layui-elem-field site-demo-button" >
     <legend>资讯管理</legend>
-    <div>
-        <button class="layui-btn" id="addNews">添加资讯</button>
-    </div>
+    <form class="layui-form">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <input type="button" class="layui-btn" id="addNews" value="添加资讯">
+            </div>
+
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    <input type="text" id="title" name="title" autocomplete="off" class="layui-input" placeholder=" 输入标题">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    <input type="text" id="editor" name="editor" autocomplete="off" class="layui-input" placeholder="请输入作者名称">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    <input type="text" id="dept" name="dept" autocomplete="off" class="layui-input" placeholder="请输入来源">
+                </div>
+            </div>
+            <button class="layui-btn" lay-submit="" lay-filter="search">搜索</button>
+            <button type="reset" class="layui-btn layui-btn-primary cz">重置</button>
+            <!--<button class="layui-btn" data-type="exportExcel">导出Excel</button>-->
+        </div>
+    </form>
+
 </fieldset>
 <table id="xinkai"  lay-filter="demo"></table>
 

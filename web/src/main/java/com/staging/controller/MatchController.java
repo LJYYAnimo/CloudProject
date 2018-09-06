@@ -1,6 +1,7 @@
 package com.staging.controller;
 
 
+import com.baomidou.mybatisplus.enums.SqlLike;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.staging.common.LayuiUploadMsg;
@@ -73,7 +74,9 @@ public class MatchController {
     public PagerLayui pager(PagerLayui pagerLayui , Match match, EntityWrapper<Match> entityWrapper){
         Page<Match> pageEntity = new Page(pagerLayui.getPage(), pagerLayui.getLimit());
         if(!StringUtils.isEmpty(match)){
-
+            if(!StringUtils.isEmpty(match.getTitle())){
+                entityWrapper.like("title",match.getTitle(), SqlLike.DEFAULT);
+            }
         }
         pageEntity = matchService.selectPage(pageEntity,entityWrapper);
         pagerLayui.setRows(pageEntity.getRecords());

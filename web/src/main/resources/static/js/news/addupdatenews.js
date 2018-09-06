@@ -60,6 +60,7 @@ layui.use(['table','upload','form','layedit'], function(){
             "title":$("#title").val(),
             "about":$("#about").val(),
             "dept":$("#dept").val(),
+            "editor":$("#editor").val(),
             "content":layedit.getContent(index)
         }
         $("#btnform").addClass("layui-hide");//提交后就暂时隐藏按钮
@@ -102,6 +103,7 @@ layui.use(['table','upload','form','layedit'], function(){
                     ,"title":$("#title").val(),
                     "about":$("#about").val(),
                     "dept":$("#dept").val(),
+                    "editor":$("#editor").val(),
                     "content":layedit.getContent(index)
                 };
             $("#btn").addClass("layui-hide");//提交后就暂时隐藏按钮

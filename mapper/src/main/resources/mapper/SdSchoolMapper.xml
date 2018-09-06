@@ -49,15 +49,33 @@
         </if>
     </sql>
 
+    <sql id="query_where_clause">
+        <if test="sdSchool.schoolTypeid!=null">
+            sd.school_typeid = #{sdSchool.schoolTypeid}
+        </if>
+        <if test="sdSchool != null and sdSchool.schoolName != null and sdSchool.schoolName != ''">
+            and sd.school_name like concat('%', #{sdSchool.schoolName}, '%')
+        </if>
+        <if test="sdSchool != null and sdSchool.auditStatus != null ">
+            and sd.audit_status = #{sdSchool.auditStatus}
+        </if>
+
+    </sql>
+
     <select id="selectSdSchoolVoPager" resultType="com.staging.entity.vo.SdSchoolVo">
         select <include refid="select_columns"></include>,st.name as schoolTypeName from  t_sd_school as sd left join t_school_type as st
         on sd.school_typeid = st.id
-        where <include refid="query_not_null"></include>
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
         limit #{pager.beginIndex},#{pager.pageSize}
     </select>
 
     <select id="countSdSchoolVo" resultType="java.lang.Long">
-        select count(sd.id) from t_sd_school as sd where <include refid="query_not_null"></include>
+        select count(sd.id) from t_sd_school as sd
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
     </select>
 
 </mapper>

@@ -10,9 +10,22 @@
 <body style="padding-top: 20px">
 <fieldset class="layui-elem-field site-demo-button" >
     <legend>大赛管理</legend>
-    <div>
-        <button class="layui-btn" id="add">添加比赛</button>
-    </div>
+    <form class="layui-form">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <input type="button" class="layui-btn" id="add" value="添加比赛">
+            </div>
+
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    <input type="text" id="title" name="title" autocomplete="off" class="layui-input" placeholder=" 输入标题">
+                </div>
+            </div>
+            <button class="layui-btn" lay-submit="" lay-filter="search">搜索</button>
+            <button type="reset" class="layui-btn layui-btn-primary cz">重置</button>
+            <!--<button class="layui-btn" data-type="exportExcel">导出Excel</button>-->
+        </div>
+    </form>
 </fieldset>
 <table id="xinkai"  lay-filter="demo"></table>
 

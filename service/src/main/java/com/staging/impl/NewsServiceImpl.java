@@ -34,4 +34,9 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements Ne
     public List<News> queryPageTitle(Pager pager, News news) {
         return newsMapper.queryPageTitle(pager,news);
     }
+
+    @Override
+    public int queryPageCount(News news) {
+        return newsMapper.queryPageCount(news);
+    }
 }

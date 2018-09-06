@@ -47,15 +47,11 @@ layui.use(['table', 'element', 'form','upload'], function () {
             , cols: [[
                 {checkbox: true, fixed: true}
                 , {field: 'id', title: '序号', type: 'numbers'}
-                , {field: 'schoolName', title: '名称', align: 'center',width:170}
-                , {field: 'detailedAddress', title: '地址', align: 'center',width:320}
-                , {field: 'schoolLoge', title: 'LOGO',width:160, align: 'center',templet:'#sdSchoolLogo'}
-                , {field: 'schoolCover', title: '封面',width:160, align: 'center',templet:'#sdSchoolCover'}
-                , {field: 'schoolTypeName', title: '类型', align: 'center'}
-                , {field: 'schoolAbout', title: '简介', align: 'center'}
-                , {field: 'schoolCreattime', title: '创建时间', align: 'center',width:120}
-                , {field: 'auditStatus', title: '状态', align: 'center',templet:'#sdSchoolStatus'}
-                , {field: 'scDes', title: '审核未通过原因', align: 'center'}
+                , {field: 'name', title: '名称', align: 'center',width:170}
+                , {field: 'path', title: '下载链接', align: 'center',width:320}
+                , {field: 'img', title: '封面',width:160, align: 'center',templet:'#imgURL'}
+                , {field: 'size', title: '文件大小', align: 'center'}
+                , {field: 'creatTime', title: '上传时间', align: 'center',width:120}
                 , {field: 'caozuo', width: 200, title: '操作', toolbar: '#barDemo', fixed: 'right'}
             ]]
             , id: 'idTest'
@@ -64,7 +60,6 @@ layui.use(['table', 'element', 'form','upload'], function () {
                 if(!$(".layui-table").is("tz-gallery")){
                     $(".layui-table").addClass("tz-gallery")
                 }
-
                 baguetteBox.run('.tz-gallery');
 
             }

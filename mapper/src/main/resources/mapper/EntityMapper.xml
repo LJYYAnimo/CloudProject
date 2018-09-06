@@ -56,6 +56,7 @@
         <where>
             <include refid="query_where_clause"/>
         </where>
+         Order By t_entity.creatTime Desc
         limit #{pager.beginIndex},#{pager.pageSize}
     </select>
     <select id="queryPageCount" resultType="java.lang.Integer">

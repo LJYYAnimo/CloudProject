@@ -3,11 +3,12 @@ layui.use(['table', 'element', 'form'], function () {
         element = layui.element,
         form = layui.form;
     var $ = layui.$;
-
-    tableData($(".xinkai_frist").val());
+    var value =$(".xinkai_frist").val();
+    tableData(value);
 
     element.on('tab(docDemoTabBrief)', function(data){
-        tableData(this.textContent);
+        value = this.textContent;
+        tableData(value);
     });
 
     function tableData(value){
@@ -17,7 +18,13 @@ layui.use(['table', 'element', 'form'], function () {
             , cellMinWidth: 100 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
             , method: 'post'
             ,dataType:'json'
-            ,where:{name:value}
+            ,where:{name:value,
+                userName: $("#userName").val()
+                ,email: $("#email").val()
+                ,phone: $('#phone').val()
+                ,realName: $("#realName").val()
+                ,sex: $("#sex").val()
+            }
             , response: {
                 statusName: 'code' //数据状态的字段名称，默认：code
                 , statusCode: 200 //成功的状态码，默认：0
@@ -46,6 +53,26 @@ layui.use(['table', 'element', 'form'], function () {
             ]]
             , id: 'idTest'
             , page: true
+        });
+    }
+
+    form.on('submit(search)', function(data){
+        artSearch();
+        return false;
+    });
+    function artSearch(){
+        table.reload('idTest', {
+            page: {
+                curr: 1
+            }
+            ,where: {
+                userName: $("#userName").val()
+                ,email: $("#email").val()
+                ,phone: $('#phone').val()
+                ,realName: $("#realName").val()
+                ,sex: $("#sex").val()
+                ,name: value
+            }
         });
     }
 

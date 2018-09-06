@@ -24,7 +24,7 @@ layui.use(['table','upload','form'], function(){
             ,{field:'editor', title:'编辑人',align: 'center'}
             ,{field:'dept', title:'来源',align: 'center'}
             ,{field:'author', title:'作者',align: 'center'}
-            ,{field:'shooter', title:'摄影',align: 'center'}
+            // ,{field:'shooter', title:'摄影',align: 'center'}
             ,{field:'createTime', title:'创建时间',align: 'center'}
             ,{field:'updateTime', title:'更新时间',align: 'center'}
             ,{field:'titleImg',width:170, title:'标题封面',align: 'center',templet:'<div><a class="" href="{{ d.titleImg }}"  alt="{{ d.titleImg }}">' +
@@ -44,6 +44,23 @@ layui.use(['table','upload','form'], function(){
         }
     });
 
+    form.on('submit(search)', function(data){
+        artSearch();
+        return false;
+    });
+    function artSearch(){
+        table.reload('idTest', {
+            page: {
+                curr: 1
+            }
+            ,where: {
+                title: $("#title").val()
+                ,editor: $("#editor").val()
+                ,author: $('#author').val()
+                ,dept: $("#dept").val()
+            }
+        });
+    }
 
     function reloads() {
         table.reload('idTest', {

@@ -4,22 +4,65 @@
     <meta charset="utf-8">
     <title>用户管理</title>
     <link rel="stylesheet" href="/layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="/xiangcecss/css/baguetteBox.min.css" media="all"/>
 </head>
-<body>
+<body  style="padding-top: 20px">
+<fieldset class="layui-elem-field site-demo-button" >
+    <legend>用户管理</legend>
+    <form class="layui-form">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <input type="button" class="layui-btn" id="add" value="添加用户">
+            </div>
+
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    <input type="text" id="userName" name="userName" autocomplete="off" class="layui-input" placeholder="请输入账号">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    <input type="text" id="email" name="email" autocomplete="off" class="layui-input" placeholder="请输入邮箱">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    <input type="text" id="phone" name="phone" autocomplete="off" class="layui-input" placeholder="请输入手机号码">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    <input type="text" id="realName" name="realName" autocomplete="off" class="layui-input" placeholder="请输入需要查找的姓名">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <select name="sex" id="sex" >
+                    <option value="">性别</option>
+                    <option value="0">女</option>
+                    <option value="1">男</option>
+                </select>
+            </div>
+            <button class="layui-btn" lay-submit="" lay-filter="search">搜索</button>
+            <button type="reset" class="layui-btn layui-btn-primary cz">重置</button>
+            <!--<button class="layui-btn" data-type="exportExcel">导出Excel</button>-->
+        </div>
+    </form>
+
+</fieldset>
 <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
     <ul class="layui-tab-title" id="">
-        <#list userTypeList as item>
-            <#if item_index==0>
-                <li class="layui-this">${item.name}</li>
-                <#continue>
-            </#if>
-            <li>${item.name}</li>
-        </#list>
+    <#list userTypeList as item>
+        <#if item_index==0>
+            <li class="layui-this">${item.name}</li>
+            <#continue>
+        </#if>
+        <li>${item.name}</li>
+    </#list>
     </ul>
-
-    <div class="layui-tab-content"><table id="xinkai" lay-filter="demo"></table></div>
+    <div class="layui-tab-content">
+        <table id="xinkai" lay-filter="demo"></table>
+    </div>
 </div>
-
 <#list userTypeList as item>
     <input hidden class="xinkai_frist" value="${item.name}">
     <#break>

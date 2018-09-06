@@ -34,8 +34,8 @@ layui.use(['table','upload','form','laydate','element','layedit'], function(){
             ,{field:'title', title:'大赛标题',align: 'center'}
             ,{field:'startTime', title:'开始时间',align: 'center'}
             ,{field:'endTime', title:'结束时间',align: 'center'}
-            ,{field:'notice', title:'比赛通知',align: 'center'}
-            ,{field:'commend', title:'比赛表彰',align: 'center'}
+            // ,{field:'notice', title:'比赛通知',align: 'center'}
+            // ,{field:'commend', title:'比赛表彰',align: 'center'}
             ,{field:'createTime', title:'创建时间',align: 'center'}
             ,{field:'updateTime', title:'更新时间',align: 'center'}
             // ,{field:'titleImg',width:170, title:'标题封面',align: 'center',templet:'<div><a class="" href="{{ d.titleImg }}"  alt="{{ d.titleImg }}">' +
@@ -58,6 +58,20 @@ layui.use(['table','upload','form','laydate','element','layedit'], function(){
         }
     });
 
+    form.on('submit(search)', function(data){
+        artSearch();
+        return false;
+    });
+    function artSearch(){
+        table.reload('idTest', {
+            page: {
+                curr: 1
+            }
+            ,where: {
+                title: $("#title").val()
+            }
+        });
+    }
 
     function reloads() {
         table.reload('idTest', {

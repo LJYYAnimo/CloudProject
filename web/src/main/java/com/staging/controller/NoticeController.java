@@ -1,6 +1,7 @@
 package com.staging.controller;
 
 
+import com.baomidou.mybatisplus.enums.SqlLike;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.staging.common.LayuiUploadMsg;
@@ -84,7 +85,16 @@ public class NoticeController {
     public PagerLayui pager(PagerLayui pagerLayui ,Notice notice, EntityWrapper<Notice> entityWrapper){
         Page<Notice> pageEntity = new Page(pagerLayui.getPage(), pagerLayui.getLimit());
         if(!StringUtils.isEmpty(notice)){
-
+            if(!StringUtils.isEmpty(notice.getTitle())){
+                entityWrapper.like("title",notice.getTitle(), SqlLike.DEFAULT);
+            }if(!StringUtils.isEmpty(notice.getDept())){
+                entityWrapper.like("dept",notice.getDept(), SqlLike.DEFAULT);
+            }if(!StringUtils.isEmpty(notice.getEditor())){
+                entityWrapper.like("editor",notice.getEditor(), SqlLike.DEFAULT);
+            }if(!StringUtils.isEmpty(notice.getAuthor())){
+                entityWrapper.like("author",notice.getAuthor(), SqlLike.DEFAULT);
+            }
+            entityWrapper.orderBy("createTime",false);
         }
         pageEntity = noticeService.selectPage(pageEntity,entityWrapper);
         pagerLayui.setRows(pageEntity.getRecords());
@@ -173,7 +183,6 @@ public class NoticeController {
             }
         }
         notice.setUpdateTime(Calendar.getInstance().getTime());
-        notice.setAuthor("admin");
         return  noticeService.updateById(notice)? ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_UPDATE):ServerResponse.createByError(1,ServerResponseConstant.SERVERRESPONSE_ERROR_UPDATE);
 
     }

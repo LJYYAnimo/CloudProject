@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="/xiangcecss/css/baguetteBox.min.css" media="all"/>
 </head>
 <body style="padding-top: 20px">
+<fieldset class="layui-elem-field site-demo-button" >
+    <legend>所有市区</legend>
+    <div class="layui-inline">
+        <input type="button" class="layui-btn" id="add" value="添加市区">
+    </div>
+</fieldset>
 <table id="xinkai" lay-filter="demo"></table>
 
 <script type="text/html" id="barDemo">

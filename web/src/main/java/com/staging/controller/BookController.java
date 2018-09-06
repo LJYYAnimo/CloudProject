@@ -15,6 +15,7 @@ import com.staging.entity.vo.BookVo;
 import com.staging.entity.vo.VideoVo;
 import com.staging.service.BookService;
 import com.staging.shiro.config.utils.ShiroUtils;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +44,7 @@ import java.util.Date;
  */
 @Controller
 @RequestMapping("/book")
+@Api(tags = "1.0", description = "书籍管理", value = "书籍管理")
 public class BookController {
 
     @Autowired
@@ -89,7 +91,6 @@ public class BookController {
         }
         if(!StringUtils.isEmpty(fileImg)&&!StringUtils.isEmpty(fileZIP)){
             String img = FileUtils.getExtensionWithoutDot(fileImg.getOriginalFilename());
-
             String zip = FileUtils.getExtensionWithoutDot(fileZIP.getOriginalFilename());
             if((MIMETypeEnum.JPEG.getValue().equals(img) || MIMETypeEnum.JPG.getValue().equals(img)|| MIMETypeEnum.PNG.getValue().equals(img))&&
                     (MIMETypeEnum.RAR.getValue().equals(zip)||MIMETypeEnum.ZIP.getValue().equals(zip))){
@@ -98,7 +99,6 @@ public class BookController {
                 try {
                     String imgName = FileUtils.uploadFile(fileImg, pathImg);
                     book.setImg("/upload/"+user.getUserName()+"/imgBook/"+imgName);
-
                     String zipName = FileUtils.uploadFile(fileZIP, pathZIP);
                     book.setUrl("/upload/"+user.getUserName()+"/ZIPBook/"+zipName);
                 } catch (IOException e) {

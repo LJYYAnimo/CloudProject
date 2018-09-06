@@ -31,11 +31,15 @@
     </sql>
 
     <sql id="query_where_clause">
-        <if test="news != null and news.id != null">
-            id = #{news.id}
-        </if>
+        1 = 1
         <if test="news != null and news.title != null and news.title != ''">
             and title like concat('%', #{news.title}, '%')
+        </if>
+        <if test="news != null and news.editor != null and news.editor != ''">
+            and editor like concat('%', #{news.editor}, '%')
+        </if>
+        <if test="news != null and news.dept != null and news.dept != ''">
+            and dept like concat('%', #{news.dept}, '%')
         </if>
         <!--<if test="news != null and news.create_timeStart != null and news.create_timeEnd == null">-->
             <!--and create_time <![CDATA[ >= ]]> #{news.create_timeStart}-->
@@ -64,20 +68,20 @@
         select
         <include refid="select_columns"/>
          from t_news
-        <!--<where>-->
-            <!--<include refid="query_where_clause"/>-->
-        <!--</where>-->
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        Order By createTime Desc
         limit #{pager.beginIndex},#{pager.pageSize}
     </select>
 
-    <!--<select id="queryPageCount" resultType="com.staging.entity.News">-->
-        <!--select-->
-        <!--<include refid="select_columns"/>-->
-        <!--from t_news-->
-        <!--&lt;!&ndash;<where>&ndash;&gt;-->
-        <!--&lt;!&ndash;<include refid="query_where_clause"/>&ndash;&gt;-->
-        <!--&lt;!&ndash;</where>&ndash;&gt;-->
-        <!--limit #{pager.beginIndex},#{pager.pageSize}-->
-    <!--</select>-->
+    <select id="queryPageCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from t_news
+        <where>
+          <include refid="query_where_clause"/>
+        </where>
+    </select>
 
 </mapper>

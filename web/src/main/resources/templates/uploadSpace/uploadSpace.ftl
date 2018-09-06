@@ -151,7 +151,7 @@
 <script src="/js/public.js"></script>
 <script src="/js/axios.min.js"></script>
 <script src="/js/qs.js"></script>
-<script src="/js/school/school.js"></script>
+<script src="/js/uploadSpace/uploadSpace.js"></script>
 </body>
 <#--格式化审核状态-->
 <script type="text/html" id="sdSchoolStatus">

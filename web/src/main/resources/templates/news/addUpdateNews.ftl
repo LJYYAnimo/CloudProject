@@ -42,6 +42,12 @@
             <input placeholder="请输入内容" id="dept"  class="layui-input" name="dept" />
         </div>
     </div>
+    <div class="layui-form-item layui-form-text layui-col-xs10 layui-col-sm12 layui-col-md11">
+        <label class="layui-form-label">作者</label>
+        <div class="layui-input-block">
+            <input placeholder="请输入内容" id="editor"  class="layui-input" name="editor" />
+        </div>
+    </div>
 
     <div class="layui-form-item layui-form-text layui-col-xs11 layui-col-sm11 layui-col-md11">
         <label class="layui-form-label ">资讯内容</label>

@@ -21,4 +21,6 @@ public interface NewsService extends IService<News> {
     List<News> queryPage(Pager pager);
 
     List<News> queryPageTitle(Pager pager,News news);
+
+    int queryPageCount(News news);
 }

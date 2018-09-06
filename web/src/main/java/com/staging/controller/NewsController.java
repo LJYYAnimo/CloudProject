@@ -99,11 +99,8 @@ public class NewsController {
     public Pager pager(Integer page, Integer limit, News news, EntityWrapper<News> entityWrapper){
         logger.info("进入资讯分页查询:"+news.toString());
         Pager p = new Pager(page,limit);
-        if(!StringUtils.isEmpty(news.getTitle())){
-            entityWrapper.like("title",news.getTitle());
-        }
         p.setRows(newsService.queryPageTitle(p,news));
-        p.setTotal(Long.valueOf(newsService.selectCount(entityWrapper)));
+        p.setTotal(Long.valueOf(newsService.queryPageCount(news)));
         return p;
     }
 
@@ -148,6 +145,7 @@ public class NewsController {
 
                 news.setTitleImg("/upload/admin/imgNews/"+file1);
                 news.setCreateTime(Calendar.getInstance().getTime());
+
                 newsService.insert(news);
                 return ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_SAVE);
             } catch (IOException e) {

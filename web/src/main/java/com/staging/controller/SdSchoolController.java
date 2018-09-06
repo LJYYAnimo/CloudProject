@@ -52,7 +52,7 @@ public class SdSchoolController {
 
     @PostMapping("pager")
     @ResponseBody
-    public Pager pager(Integer page,Integer limit, SchoolType schoolType){
+    public Pager pager(Integer page,Integer limit, SchoolType schoolType,SdSchool sdSchool){
         EntityWrapper schoolTypeEntityWrapper = new EntityWrapper();
         //判断学校类型有没有传入
         if(!StringUtils.isEmpty(schoolType.getName())){
@@ -60,7 +60,6 @@ public class SdSchoolController {
         }
         SchoolType schoolTypeOne = schoolTypeService.selectOne(schoolTypeEntityWrapper);
         if(!StringUtils.isEmpty(schoolTypeOne)){
-            SdSchool sdSchool = new SdSchool();
             sdSchool.setSchoolTypeid(schoolTypeOne.getId());
             return sdSchoolService.selectSdSchoolVoPager(new Pager(page,limit),sdSchool);
         }

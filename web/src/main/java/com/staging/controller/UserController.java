@@ -1,6 +1,7 @@
 package com.staging.controller;
 
 
+import com.baomidou.mybatisplus.enums.SqlLike;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.staging.common.Pager;
@@ -173,11 +174,24 @@ public class UserController {
 
     @PostMapping("pager")
     @ResponseBody
-    public PagerLayui pager(PagerLayui pagerLayui ,UserType userType,EntityWrapper<User> entityWrapper){
+    public PagerLayui pager(PagerLayui pagerLayui ,UserType userType,User user, EntityWrapper<User> entityWrapper){
         Page<User> pageEntity = new Page(pagerLayui.getPage(), pagerLayui.getLimit());
         UserType utp = userTypeService.selectOne(new EntityWrapper<UserType>().eq("name",userType.getName()));
         if(!StringUtils.isEmpty(utp)){
             entityWrapper.eq("user_type",utp.getId());
+            if(!StringUtils.isEmpty(user)){
+                if(!StringUtils.isEmpty(user.getUserName())){
+                    entityWrapper.like("userName",user.getUserName(), SqlLike.DEFAULT);
+                }if(!StringUtils.isEmpty(user.getEmail())){
+                    entityWrapper.like("email",user.getEmail(), SqlLike.DEFAULT);
+                }if(!StringUtils.isEmpty(user.getPhone())){
+                    entityWrapper.like("phone",user.getPhone(), SqlLike.DEFAULT);
+                }if(!StringUtils.isEmpty(user.getRealName())){
+                    entityWrapper.like("realName",user.getRealName(), SqlLike.DEFAULT);
+                }if(!StringUtils.isEmpty(user.getSex())){
+                    entityWrapper.eq("sex",user.getSex());
+                }
+            }
         }
         pageEntity = userService.selectPage(pageEntity,entityWrapper);
         PagerLayui p = new PagerLayui();
