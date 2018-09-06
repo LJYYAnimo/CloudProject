@@ -10,6 +10,7 @@ import com.staging.entity.User;
 import com.staging.entity.UserType;
 import com.staging.service.UserService;
 import com.staging.service.UserTypeService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/userType")
+@Api(tags = "1.0", description = "用户类型管理", value = "用户类型管理")
 public class UserTypeController {
 
     @Autowired

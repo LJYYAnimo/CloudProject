@@ -98,21 +98,30 @@ layui.use(['table','upload','form'], function(){
     }
 
     function openNews(data,title) {
+        var height;
         layer.open({
             type: 2,
             title: title,
-            area: ['70%', '730px'],
             fixed: false, //不固定
             maxmin: true,
             shadeClose: true,
+            resize:false,
+            move: false,
+            area: ['65%',"60%"],
             content: '/works/addUpdateWorks',
             success: function (layero, index) {
                 // 向子页面传递参数
+                height = index;
                 var iframe = window['layui-layer-iframe' + index];
                 data.worksTypeList = worksTypeList;
                 iframe.child(data);
             },end:function(index){
                 // reloads();
+            },full:function () {
+                // 向子页面传递参数
+                $('#layui-layer-iframe' + height).css({"height":$(window).height()*0.9});
+            },restore :function () {
+                $('#layui-layer-iframe' + height).css({"height":$(window).height()*0.53});
             }
         });
     }
@@ -191,21 +200,30 @@ layui.use(['table','upload','form'], function(){
                 }
             });
         }else if(obj.event === 'query'){
+            var height;
             if(data!=null&&data!=undefined){
                 layer.open({
                     type: 2,
                     title: '作品详情',
-                    area: ['70%', '730px'],
                     fixed: false, //不固定
                     maxmin: true,
                     shadeClose: true,
+                    resize:false,
+                    move: false,
+                    area: ['65%',"60%"],
                     content: '/works/article',
                     success: function (layero, index) {
+                        height = index;
                         // 向子页面传递参数
                         var iframe = window['layui-layer-iframe' + index];
                         iframe.child(data);
                     },end:function(index){
                         // reloads();
+                    },full:function () {
+                        // 向子页面传递参数
+                        $('#layui-layer-iframe' + height).css({"height":$(window).height()*0.9});
+                    },restore :function () {
+                        $('#layui-layer-iframe' + height).css({"height":$(window).height()*0.53});
                     }
                 });
             }
@@ -213,20 +231,29 @@ layui.use(['table','upload','form'], function(){
         }else if(obj.event === 'update'){
             openNews(data,"更新作品");
         }else if(obj.event === 'queryStl'){
+            var height;
             layer.open({
                 type: 2,
                 title: '预览效果',
-                area: ['70%', '730px'],
                 fixed: false, //不固定
                 maxmin: true,
                 shadeClose: true,
+                resize:false,
+                move: false,
+                area: ['65%',"60%"],
                 content: '/works/queryStl',
                 success: function (layero, index) {
+                    height = index;
                     // 向子页面传递参数
                     var iframe = window['layui-layer-iframe' + index];
                     iframe.child(data);
                 },end:function(index){
                     // reloads();
+                },full:function () {
+                    // 向子页面传递参数
+                    $('#layui-layer-iframe' + height).css({"height":$(window).height()*0.9});
+                },restore :function () {
+                    $('#layui-layer-iframe' + height).css({"height":$(window).height()*0.53});
                 }
             });
         }else if(obj.event === 'status'){

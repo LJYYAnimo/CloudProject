@@ -74,7 +74,7 @@ public class BookController {
     @ApiOperation("分页查询")
     @ResponseBody
     public Pager pager(Integer page, Integer limit, BookVo bookVo){
-        logger.info("进入作品分页查询:"+bookVo.toString());
+        logger.info("进入书籍分页查询:"+bookVo.toString());
         Pager p = new Pager(page,limit);
         p.setRows(bookService.queryPageBook(p,bookVo));
         p.setTotal(Long.valueOf(bookService.queryPageCount(bookVo)));
@@ -119,7 +119,7 @@ public class BookController {
     }
 
     @PostMapping("updateBook")
-    @ApiOperation("更新课件")
+    @ApiOperation("更新书籍")
     @ResponseBody
     public ServerResponse<Book> updateCase(MultipartFile fileImg, MultipartFile fileZIP, Book book, String deletImg,
                                                String deletfileZIP , HttpServletRequest request){
@@ -141,7 +141,7 @@ public class BookController {
     }
 
     @PostMapping("deletBook")
-    @ApiOperation("删除作品")
+    @ApiOperation("删除书籍")
     @ResponseBody
     public ServerResponse<Book> deletWorks(Book book){
         if(StringUtils.isEmpty(book.getImg())){
@@ -159,7 +159,7 @@ public class BookController {
     }
 
     @PostMapping("updateStatus")
-    @ApiOperation("冻结或激活作品")
+    @ApiOperation("冻结或激活书籍")
     @ResponseBody
     public ServerResponse<Book> updateStatus(Book book){
         book.setAuditTime(Calendar.getInstance().getTime());

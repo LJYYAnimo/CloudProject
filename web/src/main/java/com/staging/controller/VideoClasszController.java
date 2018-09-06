@@ -11,6 +11,7 @@ import com.staging.entity.*;
 import com.staging.service.CaseTypeService;
 import com.staging.service.VideoClasszService;
 import com.staging.service.VideoService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -32,6 +33,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/videoClassz")
+@Api(tags = "1.0", description = "视频类型管理", value = "视频类型管理")
 public class VideoClasszController {
 
     @Autowired
@@ -52,7 +54,7 @@ public class VideoClasszController {
     }
 
     @PostMapping("pager")
-    @ApiOperation("分页查询作品类型")
+    @ApiOperation("分页查询视频类型")
     @ResponseBody
     public PagerLayui pager(PagerLayui pagerLayui){
         Page page = videoClasszService.selectPage(new Page<>(pagerLayui.getPage(), pagerLayui.getLimit()));
@@ -75,7 +77,7 @@ public class VideoClasszController {
     }
 
     @PostMapping("save")
-    @ApiOperation(value = "类型添加")
+    @ApiOperation(value = "视频类型添加")
     @ResponseBody
     public ServerResponse save(@Validated(value = Groups.Default.class)VideoClassz videoClassz){
         int result = videoClasszService.selectCount(new EntityWrapper<VideoClassz>().eq("name",videoClassz.getName()));
@@ -90,12 +92,12 @@ public class VideoClasszController {
     }
 
     @PostMapping("delete")
-    @ApiOperation(value = "删除类型")
+    @ApiOperation(value = "删除视频类型")
     @ResponseBody
     public ServerResponse delete(VideoClassz videoClassz){
         int  result =  videoService.selectCount(new EntityWrapper<Video>().eq("classz_id",videoClassz.getId()));
         if(result!=0){
-            return ServerResponse.createByError("该类型下还有作品不能删除");
+            return ServerResponse.createByError("该类型下还有视频不能删除");
         }
         if(videoClasszService.deleteById(videoClassz.getId())){
             return ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_DELET);
@@ -104,7 +106,7 @@ public class VideoClasszController {
     }
 
     @PostMapping("update")
-    @ApiOperation(value = "更新类型")
+    @ApiOperation(value = "更新视频类型")
     @ResponseBody
     public ServerResponse update(@Validated(value = {Groups.Default.class, Groups.Update.class}) VideoClassz videoClassz){
         if(videoClasszService.updateAllColumnById(videoClassz)){

@@ -14,6 +14,7 @@ import com.staging.entity.vo.EntityVo;
 import com.staging.entity.vo.WorksVo;
 import com.staging.service.EntityService;
 import com.staging.shiro.config.utils.ShiroUtils;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +44,7 @@ import java.util.Date;
  */
 @Controller
 @RequestMapping("/entity")
+@Api(tags = "1.0", description = "积分物品管理", value = "积分物品管理")
 public class EntityController {
 
     @Autowired

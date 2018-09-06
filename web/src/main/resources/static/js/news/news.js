@@ -53,20 +53,28 @@ layui.use(['table','upload','form'], function(){
     }
 
     function openNews(data,title) {
+        var index1;
         layer.open({
             type: 2,
             title: title,
-            area: ['70%', '730px'],
             fixed: false, //不固定
             maxmin: true,
             shadeClose: true,
+            resize:false,
+            move: false,
+            area: ['65%',"60%"],
             content: '/news/addUpdateNews',
             success: function (layero, index) {
-                // 向子页面传递参数
+                index1=index;
                 var iframe = window['layui-layer-iframe' + index];
                 iframe.child(data);
             },end:function(index){
                 // reloads();
+            },full:function () {
+                // 向子页面传递参数
+                $('#layui-layer-iframe' + index1).css({"height":$(window).height()*0.9});
+            },restore :function () {
+                $('#layui-layer-iframe' + index1).css({"height":$(window).height()*0.55});
             }
         });
     }
@@ -110,21 +118,30 @@ layui.use(['table','upload','form'], function(){
                 }
             });
         }else if(obj.event === 'query'){
+            var height;
             if(data!=null&&data!=undefined){
                 layer.open({
                     type: 2,
                     title: '资讯详情',
-                    area: ['70%', '730px'],
                     fixed: false, //不固定
                     maxmin: true,
                     shadeClose: true,
+                    resize:false,
+                    move: false,
+                    area: ['65%',"60%"],
                     content: '/news/article',
                     success: function (layero, index) {
+                        height = index;
                         // 向子页面传递参数
                         var iframe = window['layui-layer-iframe' + index];
                         iframe.child(data);
                     },end:function(index){
                         // reloads();
+                    },full:function () {
+                        // 向子页面传递参数
+                        $('#layui-layer-iframe' + height).css({"height":$(window).height()*0.9});
+                    },restore :function () {
+                        $('#layui-layer-iframe' + height).css({"height":$(window).height()*0.53});
                     }
                 });
             }

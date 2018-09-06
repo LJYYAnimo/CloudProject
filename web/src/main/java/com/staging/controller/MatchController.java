@@ -15,6 +15,7 @@ import com.staging.entity.News;
 import com.staging.entity.Notice;
 import com.staging.entity.vo.LayEditMsg;
 import com.staging.service.MatchService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -41,6 +42,7 @@ import java.util.Date;
  */
 @Controller
 @RequestMapping("/match")
+@Api(tags = "1.0", description = "大赛管理", value = "大赛管理")
 public class MatchController {
 
     @Autowired

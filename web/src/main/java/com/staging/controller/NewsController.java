@@ -44,7 +44,7 @@ import java.util.Date;
  */
 @Controller
 @RequestMapping("/news")
-@Api(tags = "1.0", description = "所有资讯", value = "所有资讯")
+@Api(tags = "1.0", description = "资讯管理", value = "资讯管理")
 public class NewsController {
 
     private final Logger logger = LoggerFactory.getLogger(NewsController.class);

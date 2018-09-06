@@ -18,6 +18,7 @@ import com.staging.entity.vo.VideoVo;
 import com.staging.entity.vo.VideoVo;
 import com.staging.service.VideoService;
 import com.staging.shiro.config.utils.ShiroUtils;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.models.auth.In;
 import org.slf4j.Logger;
@@ -47,6 +48,7 @@ import java.util.Date;
  */
 @Controller
 @RequestMapping("/video")
+@Api(tags = "1.0", description = "教学视频管理", value = "教学视频管理")
 public class VideoController {
 
     private final Logger logger = LoggerFactory.getLogger(VideoController.class);
@@ -96,7 +98,7 @@ public class VideoController {
     @ApiOperation("分页查询")
     @ResponseBody
     public Pager pager(Integer page, Integer limit, VideoVo videoVo){
-        logger.info("进入作品分页查询:"+videoVo.toString());
+        logger.info("进入视频分页查询:"+videoVo.toString());
         Pager p = new Pager(page,limit);
         p.setRows(videoService.queryPageVideo(p,videoVo));
         p.setTotal(Long.valueOf(videoService.queryPageCount(videoVo)));
@@ -188,7 +190,7 @@ public class VideoController {
     }
 
     @PostMapping("updateStatus")
-    @ApiOperation("冻结或激活作品")
+    @ApiOperation("冻结或激活视频")
     @ResponseBody
     public ServerResponse<Video> updateStatus(Video video){
         video.setCheckDate(Calendar.getInstance().getTime());

@@ -27,7 +27,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/city")
-@Api(tags = "1.0", description = "省下市区", value = "省下市区")
+@Api(tags = "1.0", description = "省下市区管理", value = "省下市区管理")
 public class CityController {
 
     @Autowired
