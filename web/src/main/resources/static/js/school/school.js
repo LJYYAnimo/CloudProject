@@ -103,9 +103,12 @@ layui.use(['table', 'element', 'form','upload'], function () {
         layer.open({
             type: 1,
             title: '添加学校',
-            shadeClose: true,
+            fixed: false, //不固定
             maxmin: true,
-            area: ['60%', '650px'],
+            shadeClose: true,
+            resize:false,
+            move: false,
+            area: ['65%',"60%"],
             content: $('#addDiv'),
             success: function () {
                 axios.post('/schoolType/list').then(function (response) {
@@ -120,6 +123,11 @@ layui.use(['table', 'element', 'form','upload'], function () {
                 }).catch(function (error) {
                     layer.msg(error, {icon: 5});
                 });
+            },full:function () {
+                // 向子页面传递参数
+                $('.layui-layer-content').css({"height":$(window).height()*0.9});
+            },restore :function () {
+                $('.layui-layer-content').css({"height":$(window).height()*0.52});
             }
         });
     }

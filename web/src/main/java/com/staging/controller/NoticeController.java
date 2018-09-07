@@ -43,7 +43,7 @@ import java.util.Date;
  */
 @Controller
 @RequestMapping("/notice")
-@Api(tags = "1.0", description = "所有公告", value = "所有公告")
+@Api(tags = "1.0", description = "公告管理", value = "公告管理")
 public class NoticeController {
 
     private final Logger logger = LoggerFactory.getLogger(NoticeController.class);

@@ -35,7 +35,6 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/school")
-@Api(tags = "1.0", description = "所有学校", value = "所有学校")
 public class SchoolController {
 
     private final Logger logger = LoggerFactory.getLogger(SchoolController.class);

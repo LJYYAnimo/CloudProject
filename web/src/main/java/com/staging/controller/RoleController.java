@@ -12,6 +12,7 @@ import com.staging.entity.School;
 import com.staging.entity.SchoolType;
 import com.staging.service.RolePermissionService;
 import com.staging.service.RoleService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.slf4j.Logger;
@@ -35,6 +36,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/role")
+@Api(tags = "1.0", description = "角色管理", value = "角色管理")
 public class RoleController {
 
     private final Logger logger = LoggerFactory.getLogger(RoleController.class);

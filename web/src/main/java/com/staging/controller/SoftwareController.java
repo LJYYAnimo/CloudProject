@@ -15,6 +15,7 @@ import com.staging.entity.*;
 import com.staging.entity.vo.LayEditMsg;
 import com.staging.service.SoftwareService;
 import com.staging.shiro.config.utils.ShiroUtils;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +44,7 @@ import java.util.Date;
  */
 @Controller
 @RequestMapping("/software")
+@Api(tags = "1.0", description = "软件管理", value = "软件管理")
 public class SoftwareController {
 
     private final Logger logger = LoggerFactory.getLogger(SoftwareController.class);
@@ -54,7 +56,7 @@ public class SoftwareController {
     /**
      * @Author: 95DBC
      * @Date: 2018/8/11 16:39
-     * @Description:跳转课件管理的页面
+     * @Description:跳转软件管理的页面
      *
      */
     @GetMapping("page")
@@ -65,7 +67,7 @@ public class SoftwareController {
     /**
      * @Author: 95DBC
      * @Date: 2018/8/11 16:40
-     * @Description:添加课件管理的页面
+     * @Description:添加软件管理的页面
      *
      */
     @GetMapping("addUpdateSoftware")
@@ -76,7 +78,7 @@ public class SoftwareController {
     /**
      * @Author: 95DBC
      * @Date: 2018/8/11 14:29
-     * @Description: 查看课件详情的页面跳转
+     * @Description: 查看软件详情的页面跳转
      *
      */
     @GetMapping("article")
@@ -141,7 +143,7 @@ public class SoftwareController {
     }
 
     @PostMapping("addSoftwareUpload")
-    @ApiOperation("添加课件")
+    @ApiOperation("添加软件")
     @ResponseBody
     public ServerResponse<Software> addnewupload(MultipartFile fileImg, MultipartFile file32, MultipartFile file64, Software software, HttpServletRequest request){
         User user = ShiroUtils.getUserSession();
@@ -186,7 +188,7 @@ public class SoftwareController {
     }
 
     @PostMapping("updateSoftware")
-    @ApiOperation("更新课件")
+    @ApiOperation("更新软件")
     @ResponseBody
     public ServerResponse<Software> updateCase(MultipartFile fileImg, MultipartFile file32, MultipartFile file64, Software software, String deletImg,
                                                String deletfile32 , String deletfile64 , HttpServletRequest request){
@@ -253,7 +255,7 @@ public class SoftwareController {
     }
 
     @PostMapping("deletSoftware")
-    @ApiOperation("删除作品")
+    @ApiOperation("删除软件")
     @ResponseBody
     public ServerResponse<Software> deletWorks(Software software){
         if(StringUtils.isEmpty(software.getSoftwareImg())){
@@ -275,7 +277,7 @@ public class SoftwareController {
     }
 
     @PostMapping("updateStatus")
-    @ApiOperation("冻结或激活作品")
+    @ApiOperation("冻结或激活软件")
     @ResponseBody
     public ServerResponse<Software> updateStatus(Software software){
         software.setAuditTime(Calendar.getInstance().getTime());

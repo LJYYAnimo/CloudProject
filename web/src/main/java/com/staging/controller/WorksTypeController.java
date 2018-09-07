@@ -13,6 +13,7 @@ import com.staging.entity.Works;
 import com.staging.entity.WorksType;
 import com.staging.service.WorksService;
 import com.staging.service.WorksTypeService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -30,6 +31,7 @@ import org.springframework.stereotype.Controller;
  */
 @Controller
 @RequestMapping("/worksType")
+@Api(tags = "1.0", description = "作品类型管理", value = "作品类型管理")
 public class WorksTypeController {
 
     @Autowired
@@ -41,7 +43,7 @@ public class WorksTypeController {
     /**
      * @Author: 95DBC
      * @Date: 2018/7/11 16:39
-     * @Description:跳转资讯管理的页面
+     * @Description:跳转作品管理的页面
      *
      */
     @GetMapping("page")

@@ -10,6 +10,7 @@ import com.staging.entity.*;
 import com.staging.service.SchoolTypeService;
 import com.staging.service.SdSchoolService;
 import com.staging.shiro.config.utils.ShiroUtils;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -38,6 +39,7 @@ import java.util.Date;
  */
 @Controller
 @RequestMapping("/sdSchool")
+@Api(tags = "1.0", description = "学校管理", value = "学校管理")
 public class SdSchoolController {
 
     @Autowired

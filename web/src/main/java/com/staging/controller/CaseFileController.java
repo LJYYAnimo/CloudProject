@@ -14,6 +14,7 @@ import com.staging.entity.vo.CaseFileVo;
 import com.staging.entity.vo.LayEditMsg;
 import com.staging.service.CaseFileService;
 import com.staging.shiro.config.utils.ShiroUtils;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +43,7 @@ import java.util.Date;
  */
 @Controller
 @RequestMapping("/caseFile")
+@Api(tags = "1.0", description = "课件管理", value = "课件管理")
 public class CaseFileController {
 
     private final Logger logger = LoggerFactory.getLogger(CaseFileController.class);
@@ -119,7 +121,7 @@ public class CaseFileController {
     @ApiOperation("分页查询")
     @ResponseBody
     public Pager pager(Integer page, Integer limit, CaseFileVo caseFileVo){
-        logger.info("进入作品分页查询:"+caseFileVo.toString());
+        logger.info("进入课件分页查询:"+caseFileVo.toString());
         Pager p = new Pager(page,limit);
         p.setRows(caseFileService.queryPageCase(p,caseFileVo));
         p.setTotal(Long.valueOf(caseFileService.queryPageCount(caseFileVo)));
@@ -214,7 +216,7 @@ public class CaseFileController {
     }
 
     @PostMapping("deletCaseFile")
-    @ApiOperation("删除作品")
+    @ApiOperation("删除课件 ")
     @ResponseBody
     public ServerResponse<CaseFile> deletWorks(CaseFile caseFile){
         if(StringUtils.isEmpty(caseFile.getImg())){
@@ -236,7 +238,7 @@ public class CaseFileController {
     }
 
     @PostMapping("updateStatus")
-    @ApiOperation("冻结或激活作品")
+    @ApiOperation("冻结或激活课件  ")
     @ResponseBody
     public ServerResponse<CaseFile> updateStatus(CaseFile caseFile){
         caseFile.setAuditDate(Calendar.getInstance().getTime());

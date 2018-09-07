@@ -99,21 +99,30 @@ layui.use(['table','upload','form'], function(){
     }
 
     function openNews(data,title) {
+        var height;
         layer.open({
             type: 2,
             title: title,
-            area: ['70%', '730px'],
             fixed: false, //不固定
             maxmin: true,
             shadeClose: true,
+            resize:false,
+            move: false,
+            area: ['65%',"60%"],
             content: '/video/addUpdateVideo',
             success: function (layero, index) {
+                height = index;
                 // 向子页面传递参数
                 var iframe = window['layui-layer-iframe' + index];
                 data.classzIdList = classzIdList;
                 iframe.child(data);
             },end:function(index){
                 // reloads();
+            },full:function () {
+                // 向子页面传递参数
+                $('#layui-layer-iframe' + height).css({"height":$(window).height()*0.9});
+            },restore :function () {
+                $('#layui-layer-iframe' + height).css({"height":$(window).height()*0.53});
             }
         });
     }
@@ -189,21 +198,30 @@ layui.use(['table','upload','form'], function(){
                 }
             });
         }else if(obj.event === 'query'){
+            var height;
             if(data!=null&&data!=undefined){
                 layer.open({
                     type: 2,
                     title: '教学视频详情',
-                    area: ['70%', '730px'],
                     fixed: false, //不固定
                     maxmin: true,
                     shadeClose: true,
+                    resize:false,
+                    move: false,
+                    area: ['65%',"60%"],
                     content: '/video/article',
                     success: function (layero, index) {
+                        height =index;
                         // 向子页面传递参数
                         var iframe = window['layui-layer-iframe' + index];
                         iframe.child(data);
                     },end:function(index){
                         // reloads();
+                    },full:function () {
+                        // 向子页面传递参数
+                        $('#layui-layer-iframe' + height).css({"height":$(window).height()*0.9});
+                    },restore :function () {
+                        $('#layui-layer-iframe' + height).css({"height":$(window).height()*0.53});
                     }
                 });
             }
@@ -212,23 +230,30 @@ layui.use(['table','upload','form'], function(){
             console.log(data);
             openNews(data,"更新视频");
         }else if(obj.event === 'queryVideo'){
-
+            var height = index;
             layer.open({
                 type: 2,
                 title: '预览效果',
-                area: ['70%', '630px'],
                 fixed: false, //不固定
-                maxmin: false,
-                closeBtn:1,
+                maxmin: true,
                 shadeClose: true,
+                resize:false,
+                move: false,
+                area: ['65%',"60%"],
                 content: '/video/PreviewVideo',
                 success: function (layero, index) {
+                    height = index;
                     // 向子页面传递参数
                     var iframe = window['layui-layer-iframe' + index];
 
                     iframe.child(data);
                 },end:function(index){
                     // reloads();
+                },full:function () {
+                    // 向子页面传递参数
+                    $('#layui-layer-iframe' + height).css({"height":$(window).height()*0.9});
+                },restore :function () {
+                    $('#layui-layer-iframe' + height).css({"height":$(window).height()*0.53});
                 }
             });
         }else if(obj.event === 'status'){

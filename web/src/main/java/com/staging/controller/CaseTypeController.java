@@ -9,6 +9,7 @@ import com.staging.common.validated.Groups;
 import com.staging.entity.CaseType;
 import com.staging.entity.WorksType;
 import com.staging.service.CaseTypeService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/caseType")
+@Api(tags = "1.0", description = "课件类型管理", value = "课件类型管理")
 public class CaseTypeController {
 
     @Autowired
@@ -47,7 +49,7 @@ public class CaseTypeController {
     }
 
     @PostMapping("pager")
-    @ApiOperation("分页查询作品类型")
+    @ApiOperation("分页查询课件类型")
     @ResponseBody
     public PagerLayui pager(PagerLayui pagerLayui){
         Page page = caseTypeService.selectPage(new Page<>(pagerLayui.getPage(), pagerLayui.getLimit()));

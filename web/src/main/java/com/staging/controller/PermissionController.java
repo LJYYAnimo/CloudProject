@@ -13,6 +13,7 @@ import com.staging.entity.vo.PermissionIdsVo;
 import com.staging.service.PermissionService;
 import com.staging.service.RolePermissionService;
 import com.staging.shiro.config.utils.ShiroUtils;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -36,6 +37,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/permission")
+@Api(tags = "1.0", description = "权限管理", value = "权限管理")
 public class PermissionController {
 
     @Autowired

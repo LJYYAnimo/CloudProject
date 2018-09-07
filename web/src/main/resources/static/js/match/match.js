@@ -136,8 +136,12 @@ layui.use(['table','upload','form','laydate','element','layedit'], function(){
         index4 = layer.open({
             type: 1,
             title: title,
+            fixed: false, //不固定
+            maxmin: true,
             shadeClose: true,
-            area: ['65%', '650px'],
+            resize:false,
+            move: false,
+            area: ['65%',"60%"],
             content: $('#Setting')
             ,success: function(layero, index){  //层弹出后的成功回调方法
                 //开始时间选择器
@@ -179,6 +183,11 @@ layui.use(['table','upload','form','laydate','element','layedit'], function(){
                 if(data!=''&&data!=undefined){
                     $('#reset').click();
                 }
+            },full:function () {
+                // 向子页面传递参数
+                $('.layui-layer-content').css({"height":$(window).height()*0.9});
+            },restore :function () {
+                $('.layui-layer-content').css({"height":$(window).height()*0.52});
             }
         });
 
@@ -208,21 +217,30 @@ layui.use(['table','upload','form','laydate','element','layedit'], function(){
                 }
             });
         }else if(obj.event === 'query'){
+            var height;
             if(data!=null&&data!=undefined){
                 layer.open({
                     type: 2,
                     title: '大赛详情',
-                    area: ['70%', '730px'],
                     fixed: false, //不固定
                     maxmin: true,
                     shadeClose: true,
+                    resize:false,
+                    move: false,
+                    area: ['65%',"60%"],
                     content: '/match/article',
                     success: function (layero, index) {
                         // 向子页面传递参数
+                        height = index;
                         var iframe = window['layui-layer-iframe' + index];
                         iframe.child(data);
                     },end:function(index){
                         // reloads();
+                    },full:function () {
+                        // 向子页面传递参数
+                        $('#layui-layer-iframe' + height).css({"height":$(window).height()*0.9});
+                    },restore :function () {
+                        $('#layui-layer-iframe' + height).css({"height":$(window).height()*0.53});
                     }
                 });
             }
