@@ -6,6 +6,8 @@ layui.use(['table', 'element', 'form'], function () {
     var value =$(".xinkai_frist").val();
     tableData(value);
 
+    var uid;
+
     element.on('tab(docDemoTabBrief)', function(data){
         value = this.textContent;
         tableData(value);
@@ -71,9 +73,15 @@ layui.use(['table', 'element', 'form'], function () {
     });
     //监听提交
     form.on('submit(formDemo)', function(data){
-        layer.msg(JSON.stringify(data.field));
-        axios.post('/user/saveRole',Qs.stringify(data.field)).then(function (response) {
-            console.log(response);
+        var userRole = {
+            rid:data.field.rid,
+            uid:uid
+        };
+        axios.post('/user/saveRole',Qs.stringify(userRole)).then(function (response) {
+            if(response.data.code == 0){
+                return layer.msg(response.data.message,{icon:6});
+            }
+            layer.msg(response.data.message,{icon:5});
         }).catch(function (error) {
             layer.msg(error,{icon:5});
         });
@@ -130,6 +138,7 @@ layui.use(['table', 'element', 'form'], function () {
                 area: ['50%', '50%'],
                 content: $('#roleDiv')
             });
+            uid = data.id
         }
     });
 

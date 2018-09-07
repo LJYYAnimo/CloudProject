@@ -263,8 +263,8 @@ public class UserController {
     public ServerResponse saveRole(UserRole userRole){
         User user = ShiroUtils.getUserSession();
         if(user!=null){
-            userRole.setUid(user.getId());
             userRoleService.insert(userRole);
+            ShiroUtils.clearAuth();
             return ServerResponse.createBySuccess("授权成功");
         }
         return ServerResponse.createBySuccess("登录超时");

@@ -58,7 +58,7 @@
     <label class="layui-form-label">角色</label>
     <div class="layui-input-block">
         <select name="rid" id="role" lay-verify="required">
-
+            <option value=""></option>
         </select>
     </div>
 </div>
@@ -93,7 +93,9 @@
 
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn layui-btn-xs" lay-event="details">详情</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="reset">重置密码</a>
+     <@shiro.hasPermission name="role:chongzhi">
+             <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="reset">重置密码</a>
+     </@shiro.hasPermission>
     <@shiro.hasPermission name="role:fenpei">
 	    <a class="layui-btn layui-btn layui-btn-xs" lay-event="allot">分配权限</a>
     </@shiro.hasPermission>

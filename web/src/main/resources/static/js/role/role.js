@@ -100,6 +100,7 @@ layui.use(['table', 'upload', 'form'], function () {
                         axios.post('/permission/getPermission', Qs.stringify(data)).then(function (response) {
                             if(response.data.code == 0){
                                 var permissionVoList = response.data.data;
+                                console.log(permissionVoList);
                                 for(var i=0;i<permissionVoList.length;i++){
                                     ztree.checkNode(ztree.getNodeByParam("id", permissionVoList[i].permission.id, null));
                                     var permissionList = permissionVoList[i].permissionList;

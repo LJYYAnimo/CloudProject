@@ -69,6 +69,7 @@ layui.use(['table', 'layer', 'form'], function () {
     }
 
     axios.post('/permission/pager', Qs.stringify(pagerLayui)).then(function (response) {
+        console.log(response.data.rows);
         $.fn.zTree.init($("#treeDemo"), setting, response.data.rows);
     }).catch(function (error) {
         layer.msg(error);

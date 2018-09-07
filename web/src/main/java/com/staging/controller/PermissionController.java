@@ -82,6 +82,7 @@ public class PermissionController {
             }
             boolean res = rolePermissionService.insertBatch(rolePermissions);
             if(res){
+                ShiroUtils.clearAuth();
                 return ServerResponse.createBySuccess("授权成功");
             }
             return ServerResponse.createByError("授权失败");
