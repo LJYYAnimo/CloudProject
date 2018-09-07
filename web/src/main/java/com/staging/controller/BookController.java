@@ -85,7 +85,7 @@ public class BookController {
     @ApiOperation("添加书籍")
     @ResponseBody
     public ServerResponse<Book> addnewupload(MultipartFile fileImg,MultipartFile fileZIP, Book book, HttpServletRequest request){
-        User user = ShiroUtils.getUserSession(request);
+        User user = ShiroUtils.getUserSession();
         if(StringUtils.isEmpty(user)){
             return ServerResponse.createByError("你的登入信息已过期请刷新页面重写登入");
         }
@@ -123,7 +123,7 @@ public class BookController {
     @ResponseBody
     public ServerResponse<Book> updateCase(MultipartFile fileImg, MultipartFile fileZIP, Book book, String deletImg,
                                                String deletfileZIP , HttpServletRequest request){
-        User user = ShiroUtils.getUserSession(request);
+        User user = ShiroUtils.getUserSession();
         if(StringUtils.isEmpty(user)){
             return ServerResponse.createByError("你的登入信息已过期请刷新页面重写登入");
         }

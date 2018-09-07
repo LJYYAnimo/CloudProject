@@ -70,7 +70,7 @@ public class SdSchoolController {
     @ApiOperation("添加学校")
     @ResponseBody
     public ServerResponse save(MultipartFile fileLogo,MultipartFile fileImg, SdSchool sdSchool,HttpServletRequest request){
-        User user = ShiroUtils.getUserSession(request);
+        User user = ShiroUtils.getUserSession();
         if(StringUtils.isEmpty(user)){
             return ServerResponse.createByError("你的登入信息已过期请刷新页面重写登入");
         }
@@ -116,7 +116,7 @@ public class SdSchoolController {
     @ApiOperation("更新学校")
     @ResponseBody
     public ServerResponse updateSchool(MultipartFile fileLogo,MultipartFile fileImg, SdSchool sdSchool,String deletImg ,String deletLoge, HttpServletRequest request){
-        User user = ShiroUtils.getUserSession(request);
+        User user = ShiroUtils.getUserSession();
         if(StringUtils.isEmpty(user)){
             return ServerResponse.createByError("你的登入信息已过期请刷新页面重写登入");
         }

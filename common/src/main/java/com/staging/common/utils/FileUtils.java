@@ -1,13 +1,12 @@
 package com.staging.common.utils;
 
 import com.staging.common.constant.FileConstants;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.Date;
 
 /**
@@ -227,6 +226,16 @@ public class FileUtils {
         file.transferTo(tempFile);
         return tempFile.getName();
     }
-
+    public static void export(Workbook workbook, String fileName){
+        File file = new File(fileName);
+        try {
+            OutputStream outputStream = new FileOutputStream(file);
+            workbook.write(outputStream);
+            outputStream.close();
+            workbook.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

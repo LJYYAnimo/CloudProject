@@ -123,7 +123,7 @@ public class WorksController {
     @ApiOperation("添加作品")
     @ResponseBody
     public ServerResponse<Works> addnewupload(MultipartFile fileImg,MultipartFile fileStl,MultipartFile fileZIP, Works works, HttpServletRequest request){
-         User user = ShiroUtils.getUserSession(request);
+         User user = ShiroUtils.getUserSession();
          if(StringUtils.isEmpty(user)){
              return ServerResponse.createByError("你的登入信息已过期请刷新页面重写登入");
          }
@@ -180,7 +180,7 @@ public class WorksController {
     @ResponseBody
     public ServerResponse<Works> updateWorks(MultipartFile fileImg,MultipartFile fileStl,MultipartFile fileZIP, Works works,String deletImg,
                                              String deletfileStl ,String deletfileZIP ,HttpServletRequest request){
-         User user = ShiroUtils.getUserSession(request);
+         User user = ShiroUtils.getUserSession();
          if(StringUtils.isEmpty(user)){
              return ServerResponse.createByError("你的登入信息已过期请刷新页面重写登入");
          }

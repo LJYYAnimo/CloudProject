@@ -82,7 +82,7 @@ public class EntityController {
     @ApiOperation("添加物品")
     @ResponseBody
     public ServerResponse<Entity> addEntityUpload(MultipartFile file, Entity entity, HttpServletRequest request){
-        User user = ShiroUtils.getUserSession(request);
+        User user = ShiroUtils.getUserSession();
         if(StringUtils.isEmpty(user)){
             return ServerResponse.createByError("你的登入信息已过期请刷新页面重写登入");
         }
@@ -112,7 +112,7 @@ public class EntityController {
     @ApiOperation("更新物品")
     @ResponseBody
     public ServerResponse<Entity> updateEntity(MultipartFile file, Entity entity, String deletImg, HttpServletRequest request){
-        User user = ShiroUtils.getUserSession(request);
+        User user = ShiroUtils.getUserSession();
         if(StringUtils.isEmpty(user)){
             return ServerResponse.createByError("你的登入信息已过期请刷新页面重写登入");
         }

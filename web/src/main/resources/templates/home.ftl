@@ -82,8 +82,8 @@
                     <#list items.permissionList as item>
                     <dl class="layui-nav-child">
                         <dd>
-                            <a href="javascript:;" kit-target data-options="{url:'${item.jurUrl}',icon:'&#xe770;',title:'${item.name}',id:'${item.id}'}">
-                                <i class="layui-icon">&#xe770;</i><span>${item.name}</span></a>
+                            <a href="javascript:;" kit-target data-options="{url:'${item.jurUrl}',icon:'${item.icon}',title:'${item.name}',id:'${item.id}'}">
+                                <i class="layui-icon">${item.icon}</i><span>${item.name}</span></a>
                         </dd>
                     </dl>
                     </#list>

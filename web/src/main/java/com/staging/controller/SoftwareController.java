@@ -89,7 +89,7 @@ public class SoftwareController {
     @ResponseBody
     public LayuiUploadMsg<LayEditMsg> adduploadImg(MultipartFile file, HttpServletRequest request){
         LayuiUploadMsg<LayEditMsg> layui = new LayuiUploadMsg<LayEditMsg>();
-        User user = ShiroUtils.getUserSession(request);
+        User user = ShiroUtils.getUserSession();
         if(StringUtils.isEmpty(user)){
             layui.setCode(1);
             layui.setMsg("你的登入信息已过期，请重新刷新页面重新登入");
@@ -144,7 +144,7 @@ public class SoftwareController {
     @ApiOperation("添加课件")
     @ResponseBody
     public ServerResponse<Software> addnewupload(MultipartFile fileImg, MultipartFile file32, MultipartFile file64, Software software, HttpServletRequest request){
-        User user = ShiroUtils.getUserSession(request);
+        User user = ShiroUtils.getUserSession();
         if(StringUtils.isEmpty(user)){
             return ServerResponse.createByError("你的登入信息已过期请刷新页面重写登入");
         }
@@ -190,7 +190,7 @@ public class SoftwareController {
     @ResponseBody
     public ServerResponse<Software> updateCase(MultipartFile fileImg, MultipartFile file32, MultipartFile file64, Software software, String deletImg,
                                                String deletfile32 , String deletfile64 , HttpServletRequest request){
-        User user = ShiroUtils.getUserSession(request);
+        User user = ShiroUtils.getUserSession();
         if(StringUtils.isEmpty(user)){
             return ServerResponse.createByError("你的登入信息已过期请刷新页面重写登入");
         }

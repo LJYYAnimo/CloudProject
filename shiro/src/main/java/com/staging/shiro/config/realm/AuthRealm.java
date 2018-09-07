@@ -84,6 +84,12 @@ public class AuthRealm extends AuthorizingRealm{
         if(user==null){
             throw new UnknownAccountException("账号不存在");
         }
+        UserRole userRole = userRoleService.selectOne(new EntityWrapper<UserRole>()
+                .eq("uid",user.getId())
+        );
+        if(userRole==null && !user.getUserName().equals(ShiroConstant.ROLE)){
+            throw new LockedAccountException("用户无权限");
+        }
         //因为账号是唯一的 所以user不为空就能获取到数据库加密的密码
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user.getUserName(), user.getUserPassword(),ByteSource.Util.bytes(user.getSalt()),getName());
         Session session = ShiroUtils.getSession();

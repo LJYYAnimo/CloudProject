@@ -11,6 +11,15 @@ layui.use(['table', 'element', 'form'], function () {
         tableData(value);
     });
 
+    axios.post('/role/list').then(function (response) {
+        for (var i=0;i<response.data.data.length;i++){
+            $('#role').append("<option value="+response.data.data[i].id+">"+response.data.data[i].role+"</option>");
+        }
+        form.render();
+    }).catch(function (error) {
+        layer.msg(error,{icon:5});
+    });
+
     function tableData(value){
         table.render({
             elem: '#xinkai'
@@ -60,6 +69,17 @@ layui.use(['table', 'element', 'form'], function () {
         artSearch();
         return false;
     });
+    //监听提交
+    form.on('submit(formDemo)', function(data){
+        layer.msg(JSON.stringify(data.field));
+        axios.post('/user/saveRole',Qs.stringify(data.field)).then(function (response) {
+            console.log(response);
+        }).catch(function (error) {
+            layer.msg(error,{icon:5});
+        });
+        return false;
+    });
+
     function artSearch(){
         table.reload('idTest', {
             page: {
@@ -75,6 +95,8 @@ layui.use(['table', 'element', 'form'], function () {
             }
         });
     }
+
+
 
     //监听工具条
     table.on('tool(demo)', function (obj) {
@@ -101,7 +123,13 @@ layui.use(['table', 'element', 'form'], function () {
                 }
             });
         } else if(obj.event === 'allot'){
-            layer.msg("分配权限");
+            layer.open({
+                type: 1,
+                title: '分配权限',
+                shadeClose: true,
+                area: ['50%', '50%'],
+                content: $('#roleDiv')
+            });
         }
     });
 

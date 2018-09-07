@@ -87,7 +87,7 @@ public class CaseFileController {
     @ResponseBody
     public LayuiUploadMsg<LayEditMsg> adduploadImg(MultipartFile file, HttpServletRequest request){
         LayuiUploadMsg<LayEditMsg> layui = new LayuiUploadMsg<LayEditMsg>();
-        User user = ShiroUtils.getUserSession(request);
+        User user = ShiroUtils.getUserSession();
         if(StringUtils.isEmpty(user)){
             layui.setCode(1);
             layui.setMsg("你的登入信息已过期，请重新刷新页面重新登入");
@@ -139,7 +139,7 @@ public class CaseFileController {
     @ApiOperation("添加课件")
     @ResponseBody
     public ServerResponse<CaseFile> addnewupload(MultipartFile fileImg,MultipartFile fileStl,MultipartFile fileZIP, CaseFile caseFile, HttpServletRequest request){
-        User user = ShiroUtils.getUserSession(request);
+        User user = ShiroUtils.getUserSession();
         if(StringUtils.isEmpty(user)){
             return ServerResponse.createByError("你的登入信息已过期请刷新页面重写登入");
         }
@@ -196,7 +196,7 @@ public class CaseFileController {
     @ResponseBody
     public ServerResponse<CaseFile> updateCase(MultipartFile fileImg, MultipartFile fileStl, MultipartFile fileZIP, CaseFile caseFile, String deletImg,
                                              String deletfileStl , String deletfileZIP , HttpServletRequest request){
-        User user = ShiroUtils.getUserSession(request);
+        User user = ShiroUtils.getUserSession();
         if(StringUtils.isEmpty(user)){
             return ServerResponse.createByError("你的登入信息已过期请刷新页面重写登入");
         }

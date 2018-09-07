@@ -108,7 +108,7 @@ public class VideoController {
     @ApiOperation("添加视频")
     @ResponseBody
     public ServerResponse<Video> addnewupload(MultipartFile fileImg, MultipartFile fileVideo, Video video, HttpServletRequest request){
-        User user = ShiroUtils.getUserSession(request);
+        User user = ShiroUtils.getUserSession();
         if(StringUtils.isEmpty(user)){
             return ServerResponse.createByError("你的登入信息已过期请刷新页面重写登入");
         }
@@ -152,7 +152,7 @@ public class VideoController {
     @ResponseBody
     public ServerResponse<Video> updateCase(MultipartFile fileImg, MultipartFile fileVideo, Video video, String deletImg,
                                                String deletfileVideo , HttpServletRequest request){
-        User user = ShiroUtils.getUserSession(request);
+        User user = ShiroUtils.getUserSession();
         if(StringUtils.isEmpty(user)){
             return ServerResponse.createByError("你的登入信息已过期请刷新页面重写登入");
         }

@@ -4,9 +4,9 @@ package com.staging.controller;
 import com.baomidou.mybatisplus.enums.SqlLike;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.staging.common.Pager;
 import com.staging.common.PagerLayui;
 import com.staging.common.ServerResponse;
+import com.staging.common.constant.ServerResponseConstant;
 import com.staging.entity.*;
 import com.staging.entity.vo.RolePermissionVo;
 import com.staging.service.*;
@@ -16,10 +16,10 @@ import com.staging.shiro.config.utils.ShiroUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
-import org.omg.PortableInterceptor.USER_EXCEPTION;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,6 +125,10 @@ public class UserController {
             log.error("对用户[{}]进行登录验证,验证未通过,用户密码错误", user.getUserName());
             token.clear();
             return ServerResponse.createByError("密码错误");
+        } catch(LockedAccountException e){
+            log.error("对用户[{}]进行登录验证,验证未通过,没有分配权限", user.getUserName());
+            token.clear();
+            return ServerResponse.createByError(e.getMessage());
         }
         return ServerResponse.createBySuccess();
     }
@@ -252,6 +256,18 @@ public class UserController {
             permissionVo.setPermissionVoList(ShiroUtils.getPermissionVo(permissions));
             return ServerResponse.createBySuccess(permissionVo);
         }
+    }
+
+    @PostMapping("saveRole")
+    @ResponseBody
+    public ServerResponse saveRole(UserRole userRole){
+        User user = ShiroUtils.getUserSession();
+        if(user!=null){
+            userRole.setUid(user.getId());
+            userRoleService.insert(userRole);
+            return ServerResponse.createBySuccess("授权成功");
+        }
+        return ServerResponse.createBySuccess("登录超时");
     }
 
     @InitBinder

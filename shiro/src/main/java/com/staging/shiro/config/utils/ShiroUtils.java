@@ -85,9 +85,11 @@ public class ShiroUtils {
      *
      */
     
-    public static User getUserSession(HttpServletRequest request){
-        HttpSession session = request.getSession();
-        return session.getAttribute(ShiroConstant.USER)!=null?(User) session.getAttribute(ShiroConstant.USER):null;
+    public static User getUserSession(){
+        Session session = ShiroUtils.getSession();
+        //获取当前登陆用户
+        Object object = session.getAttribute(ShiroConstant.USER);
+        return object!=null?(User)object:null;
     }
 
     /**
