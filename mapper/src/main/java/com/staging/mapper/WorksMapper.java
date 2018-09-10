@@ -1,7 +1,6 @@
 package com.staging.mapper;
 
 import com.staging.common.Pager;
-import com.staging.entity.News;
 import com.staging.entity.Works;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.staging.entity.vo.WorksVo;

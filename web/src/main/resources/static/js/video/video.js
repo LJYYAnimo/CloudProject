@@ -109,7 +109,7 @@ layui.use(['table','upload','form'], function(){
             resize:false,
             move: false,
             area: ['65%',"60%"],
-            content: '/video/addUpdateVideo',
+            content: '/admin/video/addUpdateVideo',
             success: function (layero, index) {
                 height = index;
                 // 向子页面传递参数
@@ -163,7 +163,7 @@ layui.use(['table','upload','form'], function(){
 
     function statusform(data,stats) {
         data.field.ischecked=stats;
-        axios.post('/video/updateStatus', Qs.stringify(data.field)).then(function (response) {
+        axios.post('/admin/video/updateStatus', Qs.stringify(data.field)).then(function (response) {
             layer.closeAll();
             layer.msg(response.data.message, {icon:response.data.code == 0?6:5});
             $('#reset').click();
@@ -209,7 +209,7 @@ layui.use(['table','upload','form'], function(){
                     resize:false,
                     move: false,
                     area: ['65%',"60%"],
-                    content: '/video/article',
+                    content: '/admin/video/article',
                     success: function (layero, index) {
                         height =index;
                         // 向子页面传递参数
@@ -240,7 +240,7 @@ layui.use(['table','upload','form'], function(){
                 resize:false,
                 move: false,
                 area: ['65%',"60%"],
-                content: '/video/PreviewVideo',
+                content: '/admin/video/PreviewVideo',
                 success: function (layero, index) {
                     height = index;
                     // 向子页面传递参数

@@ -4,6 +4,7 @@ package com.staging.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Controller;
  * @author Animo123
  * @since 2018-07-06
  */
-@Controller
+@RestController
 @RequestMapping("/message")
 public class MessageController {
 

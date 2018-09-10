@@ -11,8 +11,6 @@ import com.staging.common.constant.ServerResponseConstant;
 import com.staging.common.enums.MIMETypeEnum;
 import com.staging.common.utils.FileUtils;
 import com.staging.entity.Match;
-import com.staging.entity.News;
-import com.staging.entity.Notice;
 import com.staging.entity.vo.LayEditMsg;
 import com.staging.service.MatchService;
 import io.swagger.annotations.Api;
@@ -40,7 +38,7 @@ import java.util.Date;
  * @author Animo123
  * @since 2018-07-06
  */
-@Controller
+@RestController
 @RequestMapping("/match")
 @Api(tags = "1.0", description = "大赛管理", value = "大赛管理")
 public class MatchController {
@@ -48,31 +46,8 @@ public class MatchController {
     @Autowired
     private MatchService matchService;
 
-    /**
-     * @Author: 95DBC
-     * @Date: 2018/7/20 15:12
-     * @Description:大赛管理的页面跳转
-     *
-     */
-    @GetMapping("page")
-    public String  page(){
-        return "match/match";
-    }
-
-    /**
-     * @Author: 95DBC
-     * @Date: 2018/7/19 14:29
-     * @Description: 查看大赛详情的页面跳转
-     *
-     */
-    @GetMapping("article")
-    public String Article(){
-        return "match/article";
-    }
-
     @PostMapping("pager")
     @ApiOperation("分页查询")
-    @ResponseBody
     public PagerLayui pager(PagerLayui pagerLayui , Match match, EntityWrapper<Match> entityWrapper){
         Page<Match> pageEntity = new Page(pagerLayui.getPage(), pagerLayui.getLimit());
         if(!StringUtils.isEmpty(match)){
@@ -88,7 +63,6 @@ public class MatchController {
 
     @PostMapping("adduploadImg")
     @ApiOperation("Layui富文本编辑器插入图片的接口")
-    @ResponseBody
     public LayuiUploadMsg<LayEditMsg> adduploadImg(MultipartFile file, HttpServletRequest request){
         LayuiUploadMsg<LayEditMsg> layui = new LayuiUploadMsg<LayEditMsg>();
         String fileName = file.getOriginalFilename();
@@ -114,7 +88,6 @@ public class MatchController {
 
     @PostMapping("addMatch")
     @ApiOperation("添加大赛")
-    @ResponseBody
     public ServerResponse<Match> addMatch(Match match){
         try {
             match.setCreateTime(Calendar.getInstance().getTime());
@@ -128,7 +101,6 @@ public class MatchController {
 
     @PostMapping("updateMatch")
     @ApiOperation("更新大赛信息")
-    @ResponseBody
     public ServerResponse<Match> updateMatch(Match match){
         try {
             match.setUpdateTime(Calendar.getInstance().getTime());
@@ -140,17 +112,8 @@ public class MatchController {
        return ServerResponse.createByError(ServerResponseConstant.SERVERRESPONSE_ERROR_UPDATE);
     }
 
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-//        System.out.println("============处理所有@RequestMapping注解方法，在其执行之前初始化数据绑定器");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//        dateFormat.setLenient(false);//这句一个不要存在，不然还是处理不了时间转换
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
-    }
-
     @PostMapping("deletMatch")
     @ApiOperation("更新大赛信息")
-    @ResponseBody
     public ServerResponse<Match> deletMatch(Match match){
         try {
             matchService.deleteById(match);
@@ -159,6 +122,12 @@ public class MatchController {
 
         }
         return ServerResponse.createByError(ServerResponseConstant.SERVERRESPONSE_ERROR_DELET);
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
 }

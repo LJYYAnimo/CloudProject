@@ -28,10 +28,9 @@ import java.util.List;
  * @author Animo123
  * @since 2018-07-06
  */
-@Controller
+@RestController
 @RequestMapping("/schoolType")
 @Validated
-@Api(tags = "1.0", description = "学校类型", value = "学校类型")
 public class SchoolTypeController {
 
     @Autowired
@@ -42,7 +41,6 @@ public class SchoolTypeController {
 
     @PostMapping("save")
     @ApiOperation(value = "类型添加")
-    @ResponseBody
     public ServerResponse save(@Validated(value = Groups.Default.class)SchoolType schoolType){
         int result = schoolTypeService.selectCount(new EntityWrapper<SchoolType>().eq("name",schoolType.getName()));
         if(result==1){
@@ -56,7 +54,6 @@ public class SchoolTypeController {
 
     @PostMapping("delete")
     @ApiOperation(value = "删除类型")
-    @ResponseBody
     public ServerResponse delete(SchoolType schoolType){
         int  result =  schoolService.selectCount(new EntityWrapper<School>().eq("school_type",schoolType.getId()));
         if(result!=0){
@@ -70,7 +67,6 @@ public class SchoolTypeController {
 
     @PostMapping("update")
     @ApiOperation(value = "更新类型")
-    @ResponseBody
     public ServerResponse update(@Validated(value = {Groups.Default.class, Groups.Update.class})@RequestBody SchoolType schoolType){
         if(schoolTypeService.updateAllColumnById(schoolType)){
             return ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_UPDATE);
@@ -80,7 +76,6 @@ public class SchoolTypeController {
 
     @PostMapping("pager")
     @ApiOperation("分页查询")
-    @ResponseBody
     public PagerLayui pager(PagerLayui pagerLayui){
         Page page = schoolTypeService.selectPage(new Page<>(pagerLayui.getPage(), pagerLayui.getLimit()));
         PagerLayui p = new PagerLayui();
@@ -90,16 +85,12 @@ public class SchoolTypeController {
     }
 
     @PostMapping("list")
-    @ResponseBody
     public ServerResponse list(){
         List<SchoolType> schoolTypes = schoolTypeService.selectList(new EntityWrapper<>());
         return schoolTypes.size()>0?ServerResponse.createBySuccess(schoolTypes):ServerResponse.createByError("暂无学校类型");
     }
 
-    @GetMapping("page")
-    public String page(){
-        return "school/schoolType";
-    }
+
 
 }
 

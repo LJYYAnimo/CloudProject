@@ -9,7 +9,6 @@ import com.staging.common.utils.DeleteFileUtil;
 import com.staging.common.utils.FileUtils;
 import com.staging.entity.CaseFile;
 import com.staging.entity.User;
-import com.staging.entity.Works;
 import com.staging.entity.vo.CaseFileVo;
 import com.staging.entity.vo.LayEditMsg;
 import com.staging.service.CaseFileService;
@@ -41,7 +40,7 @@ import java.util.Date;
  * @author Animo123
  * @since 2018-07-06
  */
-@Controller
+@RestController
 @RequestMapping("/caseFile")
 @Api(tags = "1.0", description = "课件管理", value = "课件管理")
 public class CaseFileController {
@@ -51,42 +50,8 @@ public class CaseFileController {
     @Autowired
     private CaseFileService caseFileService;
 
-    /**
-     * @Author: 95DBC
-     * @Date: 2018/8/11 16:39
-     * @Description:跳转课件管理的页面
-     *
-     */
-    @GetMapping("page")
-    public String page(){
-        return "caseFile/caseFile";
-    }
-
-    /**
-     * @Author: 95DBC
-     * @Date: 2018/8/11 16:40
-     * @Description:添加课件管理的页面
-     *
-     */
-    @GetMapping("addUpdateCaseFile")
-    public String addUpdateCaseFile(){
-        return "caseFile/addUpdateCaseFile";
-    }
-
-    /**
-     * @Author: 95DBC
-     * @Date: 2018/8/11 14:29
-     * @Description: 查看课件详情的页面跳转
-     *
-     */
-    @GetMapping("article")
-    public String Article(){
-        return "caseFile/article";
-    }
-
     @PostMapping("adduploadImg")
     @ApiOperation("Layui富文本编辑器插入图片的接口")
-    @ResponseBody
     public LayuiUploadMsg<LayEditMsg> adduploadImg(MultipartFile file, HttpServletRequest request){
         LayuiUploadMsg<LayEditMsg> layui = new LayuiUploadMsg<LayEditMsg>();
         User user = ShiroUtils.getUserSession();
@@ -119,7 +84,6 @@ public class CaseFileController {
 
     @PostMapping("pager")
     @ApiOperation("分页查询")
-    @ResponseBody
     public Pager pager(Integer page, Integer limit, CaseFileVo caseFileVo){
         logger.info("进入课件分页查询:"+caseFileVo.toString());
         Pager p = new Pager(page,limit);
@@ -139,7 +103,6 @@ public class CaseFileController {
      */
     @PostMapping("addCaseupload")
     @ApiOperation("添加课件")
-    @ResponseBody
     public ServerResponse<CaseFile> addnewupload(MultipartFile fileImg,MultipartFile fileStl,MultipartFile fileZIP, CaseFile caseFile, HttpServletRequest request){
         User user = ShiroUtils.getUserSession();
         if(StringUtils.isEmpty(user)){
@@ -195,7 +158,6 @@ public class CaseFileController {
      */
     @PostMapping("updateCase")
     @ApiOperation("更新课件")
-    @ResponseBody
     public ServerResponse<CaseFile> updateCase(MultipartFile fileImg, MultipartFile fileStl, MultipartFile fileZIP, CaseFile caseFile, String deletImg,
                                              String deletfileStl , String deletfileZIP , HttpServletRequest request){
         User user = ShiroUtils.getUserSession();
@@ -217,7 +179,6 @@ public class CaseFileController {
 
     @PostMapping("deletCaseFile")
     @ApiOperation("删除课件 ")
-    @ResponseBody
     public ServerResponse<CaseFile> deletWorks(CaseFile caseFile){
         if(StringUtils.isEmpty(caseFile.getImg())){
             //如果图片路径为空就让DeleteFileUtil.delete删除一个名为null文件夹，这样就不会出现只删除/static/下的所有文件，而是删除/static/null下的文件夹
@@ -239,20 +200,11 @@ public class CaseFileController {
 
     @PostMapping("updateStatus")
     @ApiOperation("冻结或激活课件  ")
-    @ResponseBody
     public ServerResponse<CaseFile> updateStatus(CaseFile caseFile){
         caseFile.setAuditDate(Calendar.getInstance().getTime());
         return caseFile.getCaseAudit()==2&&caseFile.updateById()?ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_STATUS)
                 :caseFile.getCaseAudit()==3&&caseFile.updateById()?ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_FREEZE):
                 ServerResponse.createByError("操作失败");
-    }
-
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-//        System.out.println("============处理所有@RequestMapping注解方法，在其执行之前初始化数据绑定器");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//        dateFormat.setLenient(false);//这句一个不要存在，不然还是处理不了时间转换
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
     private void addZIP(MultipartFile fileZIP, CaseFile caseFile, String deletfileZIP, HttpServletRequest request, User user) throws IOException {
@@ -296,6 +248,13 @@ public class CaseFileController {
                 caseFile.setImg("/upload/"+user.getUserName()+"/imgCase/"+imgName);
             }
         }
+    }
+
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
 }

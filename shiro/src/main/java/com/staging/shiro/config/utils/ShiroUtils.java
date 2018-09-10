@@ -4,19 +4,13 @@ import com.staging.entity.Permission;
 import com.staging.entity.Role;
 import com.staging.entity.User;
 import com.staging.entity.vo.PermissionVo;
-import com.staging.entity.vo.SearchPermissionVO;
 import com.staging.shiro.config.constant.ShiroConstant;
 import com.staging.shiro.config.realm.AuthRealm;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.cache.Cache;
-import org.apache.shiro.cache.MemoryConstrainedCacheManager;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.mgt.RealmSecurityManager;
-import org.apache.shiro.realm.jdbc.JdbcRealm;
 import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -119,44 +113,26 @@ public class ShiroUtils {
 
     /**
      * 组装前台自己要的树结构
-     *
      * @param permissions
      * @return
      */
-    public static List<PermissionVo> getPermissionVo(List<Permission> permissions) {
-        //创建最外层的VO
+    public static List<PermissionVo> getPermissionVo(List<Permission> permissions){
         List<PermissionVo> permissionVoList = new ArrayList<>();
-        int id ;
-        int pid;
-        for (Permission permission : permissions) {
-            //里面放第一个目录和目录下的导航栏list
-            PermissionVo permissionVo = new PermissionVo();
-            //类型为1  就是最上层
-            if (Integer.valueOf(permission.getJurType()) == 1) {
+        for(Permission permission : permissions){
+            PermissionVo permissionVo;
+            //如果父id为0  这个就是目录
+            if(permission.getpId()==0){
+                permissionVo = new PermissionVo();
                 permissionVo.setPermission(permission);
-                //把当前目录的id值放入进去
-                id = permission.getId();
-                List<SearchPermissionVO> voList = new ArrayList<>();
+                List<Permission> permissionList = new ArrayList<>();
                 for(Permission permission1 : permissions){
-                    SearchPermissionVO vo = new SearchPermissionVO();
-                    if(permission1.getpId() == id && Integer.valueOf(permission1.getJurType())== 2){
-                        vo.setPermission(permission1);
-                        pid = permission1.getId();
-                        List<Permission> list= new ArrayList<>();
-                        for(Permission permission2 : permissions){
-                            if(permission2.getpId() == pid && Integer.valueOf(permission2.getJurType())==3){
-                                list.add(permission2);
-                            }
-                        }
-                        vo.setPermissions(list);
+                    if(permission1.getpId()==permission.getId()){
+                        permissionList.add(permission1);
                     }
-                    if(vo.getPermission()!=null)
-                        voList.add(vo);
                 }
-                permissionVo.setSearchPermissionVOS(voList);
+                permissionVo.setPermissionList(permissionList);
+                permissionVoList.add(permissionVo);
             }
-            if(permissionVo.getPermission()!=null)
-            permissionVoList.add(permissionVo);
         }
         return permissionVoList;
     }

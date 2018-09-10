@@ -16,26 +16,23 @@ import com.staging.shiro.config.utils.ShiroUtils;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author Animo123
  * @since 2018-07-12
  */
-@Controller
+@RestController
 @RequestMapping("/permission")
 @Api(tags = "1.0", description = "权限管理", value = "权限管理")
 public class PermissionController {
@@ -47,8 +44,7 @@ public class PermissionController {
     private RolePermissionService rolePermissionService;
 
     @PostMapping("pager")
-    @ResponseBody
-    public PagerLayui pager(PagerLayui pagerLayui){
+    public PagerLayui pager(PagerLayui pagerLayui) {
         Page page = permissionService.selectPage(new Page<>(pagerLayui.getPage(), pagerLayui.getLimit()));
         PagerLayui p = new PagerLayui();
         p.setRows(page.getRecords());
@@ -57,31 +53,30 @@ public class PermissionController {
     }
 
     @PostMapping("update")
-    @ResponseBody
-    public ServerResponse update(Permission permission){
+    public ServerResponse update(Permission permission) {
         boolean result = permissionService.updateById(permission);
-        if(result){
+        if (result) {
             return ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_UPDATE);
         }
         return ServerResponse.createByError(ServerResponseConstant.SERVERRESPONSE_ERROR_UPDATE);
     }
 
     /**
-     *  授权
+     * 授权
+     *
      * @return
      */
     @PostMapping("save")
-    @ResponseBody
-    public ServerResponse save(PermissionIdsVo permissionIdsVo){
-        boolean result = rolePermissionService.delete(new EntityWrapper<RolePermission>().eq("rid",permissionIdsVo.getRid()));
-        if(result){
+    public ServerResponse save(PermissionIdsVo permissionIdsVo) {
+        boolean result = rolePermissionService.delete(new EntityWrapper<RolePermission>().eq("rid", permissionIdsVo.getRid()));
+        if (result) {
             String[] id = permissionIdsVo.getIds().split(",");
             List<RolePermission> rolePermissions = new ArrayList<>();
-            for(String i: id){
-                rolePermissions.add(new RolePermission(permissionIdsVo.getRid(),Integer.valueOf(i)));
+            for (String i : id) {
+                rolePermissions.add(new RolePermission(permissionIdsVo.getRid(), Integer.valueOf(i)));
             }
             boolean res = rolePermissionService.insertBatch(rolePermissions);
-            if(res){
+            if (res) {
                 ShiroUtils.clearAuth();
                 return ServerResponse.createBySuccess("授权成功");
             }
@@ -91,29 +86,19 @@ public class PermissionController {
     }
 
     @PostMapping("getPermission")
-    @ResponseBody
-    public ServerResponse getPermission(Role role){
-        List<RolePermission> rolePermissions = rolePermissionService.selectList(new EntityWrapper<RolePermission>().eq("rid",role.getId()));
-        if(rolePermissions.size()==0){
+    public ServerResponse getPermission(Role role) {
+        List<RolePermission> rolePermissions = rolePermissionService.selectList(new EntityWrapper<RolePermission>().eq("rid", role.getId()));
+        if (rolePermissions.size() == 0) {
             return ServerResponse.createByError();
         }
         List<Integer> list = new ArrayList<>();
-        for(RolePermission selectBatchIds : rolePermissions){
+        for (RolePermission selectBatchIds : rolePermissions) {
             list.add(selectBatchIds.getPid());
         }
         return ServerResponse.createBySuccess(ShiroUtils.getPermissionVo(permissionService.selectBatchIds(list)));
     }
 
-    /**
-     * 权限地址
-     * @return
-     */
-    @GetMapping("page")
-    public String page(ModelMap map){
-        List<Permission> list = permissionService.selectList(new EntityWrapper<Permission>().eq("p_id",0));
-        map.addAttribute("permissionList",list);
-        return "permission/permission";
-    }
+
 
 }
 

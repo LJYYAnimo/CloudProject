@@ -16,11 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,9 +34,8 @@ import java.util.Date;
  * @author Animo123
  * @since 2018-07-20
  */
-@Controller
+@RestController
 @RequestMapping("/sdSchool")
-@Api(tags = "1.0", description = "学校管理", value = "学校管理")
 public class SdSchoolController {
 
     @Autowired
@@ -47,10 +43,6 @@ public class SdSchoolController {
 
     @Autowired
     private SchoolTypeService schoolTypeService;
-
-    public String page(){
-        return "school/school";
-    }
 
     @PostMapping("pager")
     @ResponseBody
@@ -204,9 +196,7 @@ public class SdSchoolController {
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
-//        System.out.println("============处理所有@RequestMapping注解方法，在其执行之前初始化数据绑定器");
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//        dateFormat.setLenient(false);//这句一个不要存在，不然还是处理不了时间转换
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 }

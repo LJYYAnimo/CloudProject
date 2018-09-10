@@ -6,13 +6,12 @@ layui.use(['table', 'upload', 'form'], function () {
     form.on('submit(formDemo)', function (data) {
         $.ajax({
             url: "/user/login",
-            data: JSON.stringify(data.field),
+            data: data.field,
             type: "POST",
-            contentType: "application/json",
             success: function (response) {
                 if (response.code == 0) {
                     layer.msg("登录成功", {icon: 6});
-                    window.location.href = "/user/home";
+                    window.location.href = "/admin/home";
                 } else {
                     layer.msg(response.message, {icon: 5})
                 }

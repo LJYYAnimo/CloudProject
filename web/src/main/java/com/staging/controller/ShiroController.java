@@ -1,28 +1,14 @@
 package com.staging.controller;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.staging.common.ServerResponse;
-import com.staging.common.enums.MenuEnum;
-import com.staging.entity.*;
-import com.staging.entity.vo.PermissionVo;
-import com.staging.entity.vo.RolePermissionVo;
-import com.staging.service.*;
-import com.staging.shiro.config.constant.ShiroConstant;
 import com.staging.shiro.config.realm.AuthRealm;
 import com.staging.shiro.config.utils.ShiroUtils;
-import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * ┏┓　　　┏┓
@@ -48,7 +34,7 @@ import java.util.Set;
  * @Author : Animo QQ:1151757358
  * @Date : 2018/7/12
  */
-@Controller
+@RestController
 @RequestMapping("/")
 public class ShiroController {
 
@@ -60,7 +46,6 @@ public class ShiroController {
     }
 
     @GetMapping("cache")
-    @ResponseBody
     public ServerResponse getAuthorizationCache(){
         return ServerResponse.createBySuccess(authRealm.getAuthorizationCache().get(ShiroUtils.getSubJect().getPrincipals()));
     }

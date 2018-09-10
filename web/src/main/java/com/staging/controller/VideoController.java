@@ -1,26 +1,19 @@
 package com.staging.controller;
 
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
 import com.staging.common.Pager;
-import com.staging.common.PagerLayui;
 import com.staging.common.ServerResponse;
 import com.staging.common.constant.ServerResponseConstant;
 import com.staging.common.enums.MIMETypeEnum;
 import com.staging.common.utils.DeleteFileUtil;
 import com.staging.common.utils.FileUtils;
 import com.staging.entity.Video;
-import com.staging.entity.Notice;
 import com.staging.entity.User;
-import com.staging.entity.Video;
-import com.staging.entity.vo.VideoVo;
 import com.staging.entity.vo.VideoVo;
 import com.staging.service.VideoService;
 import com.staging.shiro.config.utils.ShiroUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.auth.In;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +39,8 @@ import java.util.Date;
  * @author Animo123
  * @since 2018-07-06
  */
-@Controller
+@RestController
 @RequestMapping("/video")
-@Api(tags = "1.0", description = "教学视频管理", value = "教学视频管理")
 public class VideoController {
 
     private final Logger logger = LoggerFactory.getLogger(VideoController.class);
@@ -56,47 +48,11 @@ public class VideoController {
     @Autowired
     private VideoService videoService;
 
-    /**
-     * @Author: 95DBC
-     * @Date: 2018/8/11 16:39
-     * @Description:教学视频的管理
-     *
-     */
-    @GetMapping("page")
-    public String page(){
-        return "video/video";
-    }
 
-    /**
-     * @Author: 95DBC
-     * @Date: 2018/8/11 16:40
-     * @Description:添加视频的页面
-     *
-     */
-    @GetMapping("addUpdateVideo")
-    public String addUpdateVideo(){
-        return "video/addUpdateVideo";
-    }
 
-    /**
-     * @Author: 95DBC
-     * @Date: 2018/8/19 14:29
-     * @Description: 查看课视频的页面跳转
-     *
-     */
-    @GetMapping("article")
-    public String Article(){
-        return "video/article";
-    }
 
-    @GetMapping("PreviewVideo")
-    public String PreviewVideo(){
-        return "video/PreviewVideo";
-    }
 
     @PostMapping("pager")
-    @ApiOperation("分页查询")
-    @ResponseBody
     public Pager pager(Integer page, Integer limit, VideoVo videoVo){
         logger.info("进入视频分页查询:"+videoVo.toString());
         Pager p = new Pager(page,limit);
@@ -107,8 +63,6 @@ public class VideoController {
 
 
     @PostMapping("addVideoupload")
-    @ApiOperation("添加视频")
-    @ResponseBody
     public ServerResponse<Video> addnewupload(MultipartFile fileImg, MultipartFile fileVideo, Video video, HttpServletRequest request){
         User user = ShiroUtils.getUserSession();
         if(StringUtils.isEmpty(user)){
@@ -150,8 +104,6 @@ public class VideoController {
     }
 
     @PostMapping("updateVideo")
-    @ApiOperation("更新视频")
-    @ResponseBody
     public ServerResponse<Video> updateCase(MultipartFile fileImg, MultipartFile fileVideo, Video video, String deletImg,
                                                String deletfileVideo , HttpServletRequest request){
         User user = ShiroUtils.getUserSession();
@@ -171,8 +123,6 @@ public class VideoController {
     }
 
     @PostMapping("deletVideo")
-    @ApiOperation("删除教学视频")
-    @ResponseBody
     public ServerResponse<Video> deletWorks(Video video){
         if(StringUtils.isEmpty(video.getImgPath())){
             //如果图片路径为空就让DeleteFileUtil.delete删除一个名为null文件夹，这样就不会出现只删除/static/下的所有文件，而是删除/static/null下的文件夹
@@ -190,8 +140,6 @@ public class VideoController {
     }
 
     @PostMapping("updateStatus")
-    @ApiOperation("冻结或激活视频")
-    @ResponseBody
     public ServerResponse<Video> updateStatus(Video video){
         video.setCheckDate(Calendar.getInstance().getTime());
         return video.getIschecked()==2&&video.updateById()?ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_STATUS)
@@ -233,9 +181,7 @@ public class VideoController {
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
-//        System.out.println("============处理所有@RequestMapping注解方法，在其执行之前初始化数据绑定器");
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//        dateFormat.setLenient(false);//这句一个不要存在，不然还是处理不了时间转换
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 }

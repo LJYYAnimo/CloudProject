@@ -4,7 +4,6 @@ import com.staging.common.Pager;
 import com.staging.entity.Entity;
 import com.baomidou.mybatisplus.service.IService;
 import com.staging.entity.vo.EntityVo;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

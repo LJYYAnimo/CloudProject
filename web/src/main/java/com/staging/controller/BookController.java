@@ -2,7 +2,6 @@ package com.staging.controller;
 
 
 import com.staging.common.Pager;
-import com.staging.common.PagerLayui;
 import com.staging.common.ServerResponse;
 import com.staging.common.constant.ServerResponseConstant;
 import com.staging.common.enums.MIMETypeEnum;
@@ -10,9 +9,7 @@ import com.staging.common.utils.DeleteFileUtil;
 import com.staging.common.utils.FileUtils;
 import com.staging.entity.Book;
 import com.staging.entity.User;
-import com.staging.entity.Video;
 import com.staging.entity.vo.BookVo;
-import com.staging.entity.vo.VideoVo;
 import com.staging.service.BookService;
 import com.staging.shiro.config.utils.ShiroUtils;
 import io.swagger.annotations.Api;
@@ -42,9 +39,8 @@ import java.util.Date;
  * @author Animo123
  * @since 2018-07-06
  */
-@Controller
+@RestController
 @RequestMapping("/book")
-@Api(tags = "1.0", description = "书籍管理", value = "书籍管理")
 public class BookController {
 
     @Autowired
@@ -52,27 +48,7 @@ public class BookController {
 
     private final Logger logger = LoggerFactory.getLogger(BookController.class);
 
-    @GetMapping("page")
-    public String page(){
-        return "book/book";
-    }
-
-
-    @GetMapping("addUpdateBook")
-    public String addUpdateVideo(){
-        return "book/addUpdateBook";
-    }
-
-
-    @GetMapping("article")
-    public String Article(){
-        return "book/article";
-    }
-
-
     @PostMapping("pager")
-    @ApiOperation("分页查询")
-    @ResponseBody
     public Pager pager(Integer page, Integer limit, BookVo bookVo){
         logger.info("进入书籍分页查询:"+bookVo.toString());
         Pager p = new Pager(page,limit);
@@ -83,7 +59,6 @@ public class BookController {
 
     @PostMapping("addBookUpload")
     @ApiOperation("添加书籍")
-    @ResponseBody
     public ServerResponse<Book> addnewupload(MultipartFile fileImg,MultipartFile fileZIP, Book book, HttpServletRequest request){
         User user = ShiroUtils.getUserSession();
         if(StringUtils.isEmpty(user)){
@@ -120,7 +95,6 @@ public class BookController {
 
     @PostMapping("updateBook")
     @ApiOperation("更新书籍")
-    @ResponseBody
     public ServerResponse<Book> updateCase(MultipartFile fileImg, MultipartFile fileZIP, Book book, String deletImg,
                                                String deletfileZIP , HttpServletRequest request){
         User user = ShiroUtils.getUserSession();
@@ -142,7 +116,6 @@ public class BookController {
 
     @PostMapping("deletBook")
     @ApiOperation("删除书籍")
-    @ResponseBody
     public ServerResponse<Book> deletWorks(Book book){
         if(StringUtils.isEmpty(book.getImg())){
             //如果图片路径为空就让DeleteFileUtil.delete删除一个名为null文件夹，这样就不会出现只删除/static/下的所有文件，而是删除/static/null下的文件夹
@@ -160,20 +133,11 @@ public class BookController {
 
     @PostMapping("updateStatus")
     @ApiOperation("冻结或激活书籍")
-    @ResponseBody
     public ServerResponse<Book> updateStatus(Book book){
         book.setAuditTime(Calendar.getInstance().getTime());
         return book.getBookAudit()==2&&book.updateById()?ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_STATUS)
                 :book.getBookAudit()==3&&book.updateById()?ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_FREEZE):
                 ServerResponse.createByError("操作失败");
-    }
-
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-//        System.out.println("============处理所有@RequestMapping注解方法，在其执行之前初始化数据绑定器");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//        dateFormat.setLenient(false);//这句一个不要存在，不然还是处理不了时间转换
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
     private void addZIP(MultipartFile fileZIP, Book book, String deletfileZIP, HttpServletRequest request, User user) throws IOException {
@@ -203,5 +167,12 @@ public class BookController {
             }
         }
     }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
+
 }
 

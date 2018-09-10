@@ -3,7 +3,6 @@ package com.staging.mapper;
 import com.staging.common.Pager;
 import com.staging.entity.School;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.staging.entity.SchoolType;
 import com.staging.entity.vo.SchoolTypeVo;
 import org.apache.ibatis.annotations.Param;
 

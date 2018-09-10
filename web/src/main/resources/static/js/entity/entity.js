@@ -74,7 +74,7 @@ layui.use(['table','upload','element'], function(){
             resize:false,
             move: false,
             area: ['65%',"60%"],
-            content: '/entity/addUpdateEntity',
+            content: '/admin/entity/addUpdateEntity',
             success: function (layero, index) {
                 height = index;
                 // 向子页面传递参数
@@ -124,7 +124,7 @@ layui.use(['table','upload','element'], function(){
                     resize:false,
                     move: false,
                     area: ['65%',"60%"],
-                    content: '/entity/article',
+                    content: '/admin/entity/article',
                     success: function (layero, index) {
                         height = index;
                         // 向子页面传递参数

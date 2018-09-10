@@ -8,12 +8,9 @@ import com.staging.service.ProvinceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -25,7 +22,7 @@ import java.util.List;
  * @author Animo123
  * @since 2018-07-06
  */
-@Controller
+@RestController
 @RequestMapping("/province")
 @Api(tags = "1.0", description = "省级", value = "省级")
 public class ProvinceController {
@@ -35,7 +32,6 @@ public class ProvinceController {
 
     @PostMapping("pager")
     @ApiOperation("分页查询")
-    @ResponseBody
     public PagerLayui pager(PagerLayui pagerLayui){
         Page page = provinceService.selectPage(new Page<>(pagerLayui.getPage(), pagerLayui.getLimit()));
         PagerLayui p = new PagerLayui();
@@ -45,14 +41,9 @@ public class ProvinceController {
     }
     
     @PostMapping("list")
-    @ResponseBody
     public List<Province> list(){
         return provinceService.selectList(null);
     }
 
-    @GetMapping("page")
-    public String page(){
-        return "province/province";
-    }
 }
 

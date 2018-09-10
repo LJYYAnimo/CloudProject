@@ -29,9 +29,8 @@ import org.springframework.stereotype.Controller;
  * @author Animo123
  * @since 2018-07-06
  */
-@Controller
+@RestController
 @RequestMapping("/worksType")
-@Api(tags = "1.0", description = "作品类型管理", value = "作品类型管理")
 public class WorksTypeController {
 
     @Autowired
@@ -40,20 +39,9 @@ public class WorksTypeController {
     @Autowired
     private WorksService worksService;
 
-    /**
-     * @Author: 95DBC
-     * @Date: 2018/7/11 16:39
-     * @Description:跳转作品管理的页面
-     *
-     */
-    @GetMapping("page")
-    public String page(){
-        return "worksType/worksType";
-    }
+
 
     @PostMapping("pager")
-    @ApiOperation("分页查询作品类型")
-    @ResponseBody
     public PagerLayui pager(PagerLayui pagerLayui){
         Page page = worksTypeService.selectPage(new Page<>(pagerLayui.getPage(), pagerLayui.getLimit()));
         PagerLayui p = new PagerLayui();
@@ -63,8 +51,6 @@ public class WorksTypeController {
     }
 
     @PostMapping("save")
-    @ApiOperation(value = "类型添加")
-    @ResponseBody
     public ServerResponse save(@Validated(value = Groups.Default.class)WorksType worksType){
         int result = worksTypeService.selectCount(new EntityWrapper<WorksType>().eq("works_type",worksType.getWorksType()));
         if(result==1){
@@ -77,8 +63,6 @@ public class WorksTypeController {
     }
 
     @PostMapping("delete")
-    @ApiOperation(value = "删除类型")
-    @ResponseBody
     public ServerResponse delete(WorksType worksType){
         int  result =  worksService.selectCount(new EntityWrapper<Works>().eq("works_typeid",worksType.getId()));
         if(result!=0){
@@ -91,8 +75,6 @@ public class WorksTypeController {
     }
 
     @PostMapping("update")
-    @ApiOperation(value = "更新类型")
-    @ResponseBody
     public ServerResponse update(@Validated(value = {Groups.Default.class, Groups.Update.class}) WorksType worksType){
         if(worksTypeService.updateAllColumnById(worksType)){
             return ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_UPDATE);

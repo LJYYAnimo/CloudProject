@@ -16,12 +16,9 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * <p>
@@ -31,9 +28,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author Animo123
  * @since 2018-08-16
  */
-@Controller
+@RestController
 @RequestMapping("/videoClassz")
-@Api(tags = "1.0", description = "视频类型管理", value = "视频类型管理")
 public class VideoClasszController {
 
     @Autowired
@@ -42,20 +38,9 @@ public class VideoClasszController {
     @Autowired
     private VideoService videoService;
 
-    /**
-     * @Author: 95DBC
-     * @Date: 2018/7/11 16:39
-     * @Description:跳转课件类型管理页面
-     *
-     */
-    @GetMapping("page")
-    public String page(){
-        return "videoClassz/videoClassz";
-    }
+
 
     @PostMapping("pager")
-    @ApiOperation("分页查询视频类型")
-    @ResponseBody
     public PagerLayui pager(PagerLayui pagerLayui){
         Page page = videoClasszService.selectPage(new Page<>(pagerLayui.getPage(), pagerLayui.getLimit()));
         PagerLayui p = new PagerLayui();
@@ -65,8 +50,6 @@ public class VideoClasszController {
     }
 
     @PostMapping("updateStatus")
-    @ApiOperation(value = "冻结激活")
-    @ResponseBody
     public ServerResponse updateStatus(@Validated(value = {Groups.Default.class, Groups.Update.class}) VideoClassz videoClassz){
         if(!StringUtils.isEmpty(videoClassz)&&videoClasszService.updateAllColumnById(videoClassz)&&!StringUtils.isEmpty(videoClassz.getStatus())){
             return videoClassz.getStatus()==0?ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_FREEZE):
@@ -77,8 +60,6 @@ public class VideoClasszController {
     }
 
     @PostMapping("save")
-    @ApiOperation(value = "视频类型添加")
-    @ResponseBody
     public ServerResponse save(@Validated(value = Groups.Default.class)VideoClassz videoClassz){
         int result = videoClasszService.selectCount(new EntityWrapper<VideoClassz>().eq("name",videoClassz.getName()));
         if(result==1){
@@ -92,8 +73,6 @@ public class VideoClasszController {
     }
 
     @PostMapping("delete")
-    @ApiOperation(value = "删除视频类型")
-    @ResponseBody
     public ServerResponse delete(VideoClassz videoClassz){
         int  result =  videoService.selectCount(new EntityWrapper<Video>().eq("classz_id",videoClassz.getId()));
         if(result!=0){
@@ -106,8 +85,6 @@ public class VideoClasszController {
     }
 
     @PostMapping("update")
-    @ApiOperation(value = "更新视频类型")
-    @ResponseBody
     public ServerResponse update(@Validated(value = {Groups.Default.class, Groups.Update.class}) VideoClassz videoClassz){
         if(videoClasszService.updateAllColumnById(videoClassz)){
             return ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_UPDATE);

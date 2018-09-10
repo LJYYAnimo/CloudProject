@@ -1,21 +1,14 @@
 package com.staging.controller;
 
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.staging.common.LayuiUploadMsg;
 import com.staging.common.Pager;
-import com.staging.common.PagerLayui;
 import com.staging.common.ServerResponse;
 import com.staging.common.constant.ServerResponseConstant;
 import com.staging.common.enums.MIMETypeEnum;
 import com.staging.common.utils.DeleteFileUtil;
 import com.staging.common.utils.FileUtils;
-import com.staging.entity.News;
-import com.staging.entity.Notice;
 import com.staging.entity.User;
 import com.staging.entity.Works;
-import com.staging.entity.vo.LayEditMsg;
 import com.staging.entity.vo.WorksVo;
 import com.staging.service.WorksService;
 import com.staging.shiro.config.utils.ShiroUtils;
@@ -45,7 +38,7 @@ import java.util.Date;
  * @author Animo123
  * @since 2018-07-06
  */
-@Controller
+@RestController
 @RequestMapping("/works")
 public class WorksController {
 
@@ -54,53 +47,9 @@ public class WorksController {
     @Autowired
     private WorksService worksService;
 
-    /**
-     * @Author: 95DBC
-     * @Date: 2018/7/11 16:39
-     * @Description:跳转作品管理的页面
-     *
-     */
-    @GetMapping("page")
-    public String page(){
-        return "works/works";
-    }
 
-    /**
-     * @Author: 95DBC
-     * @Date: 2018/7/11 16:40
-     * @Description:添加作品管理的页面
-     *
-     */
-    @GetMapping("addUpdateWorks")
-    public String addUpdateWorks(){
-        return "works/addUpdateWorks";
-    }
-
-    /**
-     * @Author: 95DBC
-     * @Date: 2018/7/19 14:29
-     * @Description: 查看作品详情的页面跳转
-     *
-     */
-    @GetMapping("article")
-    public String Article(){
-        return "works/article";
-    }
-
-    /**
-     * @Author: 95DBC
-     * @Date: 2018/7/19 14:29
-     * @Description: 预览3d文件效果
-     *
-     */
-    @GetMapping("queryStl")
-    public String queryStl(){
-        return "works/STL";
-    }
 
     @PostMapping("pager")
-    @ApiOperation("分页查询")
-    @ResponseBody
     public Pager pager(Integer page, Integer limit, WorksVo worksVo){
         logger.info("进入作品分页查询:"+worksVo.toString());
         Pager p = new Pager(page,limit);
@@ -120,8 +69,6 @@ public class WorksController {
      *
      */
     @PostMapping("addworksupload")
-    @ApiOperation("添加作品")
-    @ResponseBody
     public ServerResponse<Works> addnewupload(MultipartFile fileImg,MultipartFile fileStl,MultipartFile fileZIP, Works works, HttpServletRequest request){
          User user = ShiroUtils.getUserSession();
          if(StringUtils.isEmpty(user)){
@@ -176,8 +123,6 @@ public class WorksController {
      *
      */
     @PostMapping("updateWorks")
-    @ApiOperation("更新作品")
-    @ResponseBody
     public ServerResponse<Works> updateWorks(MultipartFile fileImg,MultipartFile fileStl,MultipartFile fileZIP, Works works,String deletImg,
                                              String deletfileStl ,String deletfileZIP ,HttpServletRequest request){
          User user = ShiroUtils.getUserSession();
@@ -197,8 +142,6 @@ public class WorksController {
     }
 
     @PostMapping("deletWorks")
-    @ApiOperation("删除作品")
-    @ResponseBody
     public ServerResponse<Works> deletWorks(Works works){
         if(StringUtils.isEmpty(works.getWorksPhotoaddress())){
             //如果图片路径为空就让DeleteFileUtil.delete删除一个名为null文件夹，这样就不会出现只删除/static/下的所有文件，而是删除/static/null下的文件夹
@@ -220,8 +163,6 @@ public class WorksController {
     }
 
     @PostMapping("updateStatus")
-    @ApiOperation("冻结或激活作品")
-    @ResponseBody
     public ServerResponse<Works> updateStatus(Works works){
         works.setAuditDate(Calendar.getInstance().getTime());
         return works.getWorksAudit()==2&&works.updateById()?ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_STATUS)
@@ -229,13 +170,7 @@ public class WorksController {
                 ServerResponse.createByError("操作失败");
     }
 
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-//        System.out.println("============处理所有@RequestMapping注解方法，在其执行之前初始化数据绑定器");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//        dateFormat.setLenient(false);//这句一个不要存在，不然还是处理不了时间转换
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
-    }
+
 
     private void addZIP(MultipartFile fileZIP, Works works, String deletfileZIP, HttpServletRequest request, User user) throws IOException {
         if(!StringUtils.isEmpty(fileZIP)){
@@ -279,6 +214,12 @@ public class WorksController {
                 works.setWorksPhotoaddress("/upload/"+user.getUserName()+"/imgWorks/"+imgName);
             }
         }
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 }
 

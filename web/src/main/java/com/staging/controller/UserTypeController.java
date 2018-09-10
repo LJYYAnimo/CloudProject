@@ -12,12 +12,9 @@ import com.staging.service.UserService;
 import com.staging.service.UserTypeService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * <p>
@@ -27,9 +24,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author Animo123
  * @since 2018-07-18
  */
-@Controller
+@RestController
 @RequestMapping("/userType")
-@Api(tags = "1.0", description = "用户类型管理", value = "用户类型管理")
 public class UserTypeController {
 
     @Autowired
@@ -44,7 +40,6 @@ public class UserTypeController {
      * @return
      */
     @PostMapping("pager")
-    @ResponseBody
     public PagerLayui pager(PagerLayui pagerLayui){
         Page page = userTypeService.selectPage(new Page<>(pagerLayui.getPage(), pagerLayui.getLimit()));
         PagerLayui p = new PagerLayui();
@@ -59,7 +54,6 @@ public class UserTypeController {
      * @return
      */
     @PostMapping("save")
-    @ResponseBody
     public ServerResponse save(UserType userType){
         int res = userTypeService.selectCount(new EntityWrapper<UserType>().eq("name",userType.getName()));
         if(res==1){
@@ -73,7 +67,6 @@ public class UserTypeController {
     }
 
     @PostMapping("delete")
-    @ResponseBody
     public ServerResponse delete(UserType userType){
         int result = userService.selectCount(new EntityWrapper<User>().eq("user_type",userType.getId()));
         if(result!=0){
@@ -86,10 +79,7 @@ public class UserTypeController {
     }
 
 
-    @GetMapping("page")
-    public String page(){
-        return "user/userType";
-    }
+
 
 
 }

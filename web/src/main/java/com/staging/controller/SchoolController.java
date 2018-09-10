@@ -33,7 +33,7 @@ import java.util.List;
  * @author Animo123
  * @since 2018-07-06
  */
-@Controller
+@RestController
 @RequestMapping("/school")
 public class SchoolController {
 
@@ -53,19 +53,13 @@ public class SchoolController {
      * @return
      */
     @PostMapping("pager")
-    @ApiOperation("分页查询")
-    @ResponseBody
     public Pager pager(PagerLayui pager, SchoolType schoolType, School school){
         SchoolType sct = schoolTypeService.selectOne(new EntityWrapper<SchoolType>().eq("name",schoolType.getName()));
         school.setSchoolType(sct.getId());
         return schoolService.selectSchool(new Pager(pager.getPage(),pager.getLimit()), school);
     }
 
-    @GetMapping("page")
-    public String page(ModelMap map){
-        map.addAttribute("schoolTypes",schoolTypeService.selectList(new EntityWrapper<>()));
-        return "school/school";
-    }
+
 
 }
 

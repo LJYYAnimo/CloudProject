@@ -63,7 +63,7 @@ layui.use(['table','upload','form'], function(){
             resize:false,
             move: false,
             area: ['65%',"60%"],
-            content: '/news/addUpdateNews',
+            content: '/admin/news/addUpdateNews',
             success: function (layero, index) {
                 index1=index;
                 var iframe = window['layui-layer-iframe' + index];
@@ -129,7 +129,7 @@ layui.use(['table','upload','form'], function(){
                     resize:false,
                     move: false,
                     area: ['65%',"60%"],
-                    content: '/news/article',
+                    content: '/admin/news/article',
                     success: function (layero, index) {
                         height = index;
                         // 向子页面传递参数

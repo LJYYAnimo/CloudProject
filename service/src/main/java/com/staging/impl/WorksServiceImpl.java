@@ -6,7 +6,6 @@ import com.staging.entity.vo.WorksVo;
 import com.staging.mapper.WorksMapper;
 import com.staging.service.WorksService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

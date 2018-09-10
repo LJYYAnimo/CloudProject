@@ -34,9 +34,8 @@ import java.util.List;
  * @author Animo123
  * @since 2018-07-12
  */
-@Controller
+@RestController
 @RequestMapping("/role")
-@Api(tags = "1.0", description = "角色管理", value = "角色管理")
 public class RoleController {
 
     private final Logger logger = LoggerFactory.getLogger(RoleController.class);
@@ -53,8 +52,6 @@ public class RoleController {
      * @return
      */
     @PostMapping("pager")
-    @ApiOperation("分页查询")
-    @ResponseBody
     public PagerLayui pager(PagerLayui pagerLayui){
         Page<Role> pageEntity = new Page(pagerLayui.getPage(), pagerLayui.getLimit());
         pageEntity= roleService.selectPage(pageEntity);
@@ -65,7 +62,6 @@ public class RoleController {
     }
 
     @PostMapping("list")
-    @ResponseBody
     public ServerResponse selectList(){
         return ServerResponse.createBySuccess(roleService.selectList(null));
     }
@@ -76,7 +72,6 @@ public class RoleController {
      * @return
      */
     @PostMapping("save")
-    @ResponseBody
     public ServerResponse save(Role role){
         int result = roleService.selectCount(new EntityWrapper<Role>().eq("role",role.getRole()));
         if(result==1){
@@ -91,7 +86,6 @@ public class RoleController {
      * @return
      */
     @PostMapping("delete")
-    @ResponseBody
     public ServerResponse delete(Role role){
         if(role.getRole()=="超级管理员"){
             return ServerResponse.createByError("不可删除");
@@ -111,10 +105,6 @@ public class RoleController {
         return ServerResponse.createByError(ServerResponseConstant.SERVERRESPONSE_ERROR_DELET);
     }
 
-    @GetMapping("page")
-    public String page(){
-        return "role/role";
-    }
 
 }
 

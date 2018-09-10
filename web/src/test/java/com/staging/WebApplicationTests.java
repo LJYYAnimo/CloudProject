@@ -1,10 +1,7 @@
 package com.staging;
 
-import cn.afterturn.easypoi.excel.ExcelExportUtil;
-import cn.afterturn.easypoi.excel.entity.ExportParams;
-import com.staging.common.utils.FileUtils;
 import com.staging.entity.Permission;
-import org.apache.poi.ss.usermodel.Workbook;
+import com.staging.web.WebApplication;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,10 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = WebApplication.class)
 public class WebApplicationTests {
 
     private ArrayList list;
@@ -30,5 +26,20 @@ public class WebApplicationTests {
         Permission permission = new Permission();
         permission.setDes("5");
         list.add(permission);
+    }
+
+    @Test
+    public void testArr(){
+        int[][] arr={
+                {1,2,3},
+                {4,5,6,7},
+                {7,7,7,7,7,9}
+        };
+
+        for(int[] value : arr){
+            for(int i : value){
+                System.out.println(i);
+            }
+        }
     }
 }

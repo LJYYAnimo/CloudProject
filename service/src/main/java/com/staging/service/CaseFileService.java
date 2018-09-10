@@ -4,7 +4,6 @@ import com.staging.common.Pager;
 import com.staging.entity.CaseFile;
 import com.baomidou.mybatisplus.service.IService;
 import com.staging.entity.vo.CaseFileVo;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,7 +17,7 @@ import java.util.List;
  */
 public interface CaseFileService extends IService<CaseFile> {
 
-    List<CaseFileVo> queryPageCase(Pager pager,CaseFileVo caseFileVo);
+    List<CaseFileVo> queryPageCase(Pager pager, CaseFileVo caseFileVo);
 
     int queryPageCount(CaseFileVo caseFileVo);
 

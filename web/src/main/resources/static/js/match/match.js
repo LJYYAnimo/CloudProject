@@ -228,7 +228,7 @@ layui.use(['table','upload','form','laydate','element','layedit'], function(){
                     resize:false,
                     move: false,
                     area: ['65%',"60%"],
-                    content: '/match/article',
+                    content: '/admin/match/article',
                     success: function (layero, index) {
                         // 向子页面传递参数
                         height = index;

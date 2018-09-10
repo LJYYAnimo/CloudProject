@@ -108,7 +108,7 @@ layui.use(['table','upload','form'], function(){
             resize:false,
             move: false,
             area: ['65%',"60%"],
-            content: '/works/addUpdateWorks',
+            content: '/admin/works/addUpdateWorks',
             success: function (layero, index) {
                 // 向子页面传递参数
                 height = index;
@@ -162,7 +162,7 @@ layui.use(['table','upload','form'], function(){
 
     function statusform(data,stats) {
         data.field.worksAudit=stats;
-        axios.post('/works/updateStatus', Qs.stringify(data.field)).then(function (response) {
+        axios.post('/admin/works/updateStatus', Qs.stringify(data.field)).then(function (response) {
             if (response.data.code == 0) {
                 layer.closeAll();
                 layer.msg(response.data.message, {icon: 6});
@@ -211,7 +211,7 @@ layui.use(['table','upload','form'], function(){
                     resize:false,
                     move: false,
                     area: ['65%',"60%"],
-                    content: '/works/article',
+                    content: '/admin/works/article',
                     success: function (layero, index) {
                         height = index;
                         // 向子页面传递参数
@@ -241,7 +241,7 @@ layui.use(['table','upload','form'], function(){
                 resize:false,
                 move: false,
                 area: ['65%',"60%"],
-                content: '/works/queryStl',
+                content: '/admin/works/queryStl',
                 success: function (layero, index) {
                     height = index;
                     // 向子页面传递参数

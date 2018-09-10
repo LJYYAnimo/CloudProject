@@ -81,7 +81,7 @@ layui.use(['table','upload','form'], function(){
             resize:false,
             move: false,
             area: ['65%',"60%"],
-            content: '/notice/addUpdateNotice',
+            content: '/admin/notice/addUpdateNotice',
             success: function (layero, index) {
                 height = index;
                 // 向子页面传递参数
@@ -131,7 +131,7 @@ layui.use(['table','upload','form'], function(){
                     resize:false,
                     move: false,
                     area: ['65%',"60%"],
-                    content: '/notice/article',
+                    content: '/admin/notice/article',
                     success: function (layero, index) {
                         height = index;
                         // 向子页面传递参数

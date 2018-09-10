@@ -25,7 +25,7 @@ import java.util.List;
  * 　　　┃┫┫　┃┫┫
  * 　　　┗┻┛　┗┻┛
  *
- * @Description :父接口的VO
+ * @Description :
  * ---------------------------------
  * @Author : Animo QQ:1151757358
  * @Date : 2018/7/13
@@ -35,6 +35,6 @@ public class PermissionVo {
 
     private Permission permission;
 
-    private List<SearchPermissionVO> searchPermissionVOS;
+    private List<Permission> permissionList;
 
 }

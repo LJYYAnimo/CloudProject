@@ -9,7 +9,6 @@ layui.use(['table','upload','form'], function(){
         elem: '#xinkai'
         ,url: '/book/pager'
         ,cellMinWidth: 100 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-        // ,contentType: "application/json"
         ,method:'post'
         ,response: {
             statusName: 'code' //数据状态的字段名称，默认：code
@@ -88,7 +87,7 @@ layui.use(['table','upload','form'], function(){
             resize:false,
             move: false,
             area: ['65%',"60%"],
-            content: '/book/addUpdateBook',
+            content: '/admin/book/addUpdateBook',
             success: function (layero, index) {
                 height = index;
                 // 向子页面传递参数
@@ -191,7 +190,7 @@ layui.use(['table','upload','form'], function(){
                     resize:false,
                     move: false,
                     area: ['65%',"60%"],
-                    content: '/book/article',
+                    content: '/admin/book/article',
                     success: function (layero, index) {
                         height = index;
                         // 向子页面传递参数
@@ -221,7 +220,7 @@ layui.use(['table','upload','form'], function(){
                 resize:false,
                 move: false,
                 area: ['65%',"60%"],
-                content: '/works/queryStl',
+                content: '/admin/works/queryStl',
                 success: function (layero, index) {
                     height = index;
                     // 向子页面传递参数

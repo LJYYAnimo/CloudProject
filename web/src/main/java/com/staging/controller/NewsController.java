@@ -10,25 +10,22 @@ import com.staging.common.enums.MIMETypeEnum;
 import com.staging.common.utils.DeleteFileUtil;
 import com.staging.common.utils.FileUtils;
 import com.staging.entity.News;
-import com.staging.entity.User;
 import com.staging.entity.vo.LayEditMsg;
 import com.staging.impl.NewsServiceImpl;
-import com.staging.shiro.config.utils.ShiroUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -42,7 +39,7 @@ import java.util.Date;
  * @author Animo123
  * @since 2018-07-06
  */
-@Controller
+@RestController
 @RequestMapping("/news")
 @Api(tags = "1.0", description = "资讯管理", value = "资讯管理")
 public class NewsController {
@@ -54,38 +51,11 @@ public class NewsController {
 
 
 
-    /**
-     * @Author: 95DBC
-     * @Date: 2018/7/11 16:39
-     * @Description:跳转资讯管理的页面
-     *
-     */
-    @GetMapping("page")
-    public String page(){
-        return "news/news";
-    }
 
-    /**
-     * @Author: 95DBC
-     * @Date: 2018/7/11 16:40
-     * @Description:添加资讯管理的页面
-     *
-     */
-    @GetMapping("addUpdateNews")
-    public String addUpdateNews(){
-        return "news/addUpdateNews";
-    }
 
-    /**
-     * @Author: 95DBC 
-     * @Date: 2018/7/19 14:29
-     * @Description: 查看资讯详情的页面跳转
-     *
-     */
-    @GetMapping("article")
-    public String Article(){
-        return "news/article";
-    }
+
+
+
 
     /**
      *  TODO 资讯搜索后期可能会增加多个字段查询
@@ -209,9 +179,7 @@ public class NewsController {
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
-//        System.out.println("============处理所有@RequestMapping注解方法，在其执行之前初始化数据绑定器");
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//        dateFormat.setLenient(false);//这句一个不要存在，不然还是处理不了时间转换
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 }

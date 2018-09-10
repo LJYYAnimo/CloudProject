@@ -85,7 +85,7 @@ layui.use(['table','upload','form'], function(){
             resize:false,
             move: false,
             area: ['65%',"60%"],
-            content: '/software/addUpdateSoftware',
+            content: '/admin/software/addUpdateSoftware',
             success: function (layero, index) {
                 height = index;
                 // 向子页面传递参数
@@ -139,7 +139,7 @@ layui.use(['table','upload','form'], function(){
 
     function statusform(data,stats) {
         data.field.softwareAudit=stats;
-        axios.post('/software/updateStatus', Qs.stringify(data.field)).then(function (response) {
+        axios.post('/admin/software/updateStatus', Qs.stringify(data.field)).then(function (response) {
             if (response.data.code == 0) {
                 layer.closeAll();
                 layer.msg(response.data.message, {icon: 6});
@@ -188,7 +188,7 @@ layui.use(['table','upload','form'], function(){
                     resize:false,
                     move: false,
                     area: ['65%',"60%"],
-                    content: '/software/article',
+                    content: '/admin/software/article',
                     success: function (layero, index) {
                         height = index;
                         // 向子页面传递参数

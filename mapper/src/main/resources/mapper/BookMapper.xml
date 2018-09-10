@@ -39,7 +39,7 @@
         ,t_book.area_id as areaId
         ,t_book.province_id as provinceId
         ,t_book.city_id as cityId
-        ,t_user.userName as userName
+        ,t_user.userName as 'userName'
     </sql>
 
     <sql id="query_where_clause">

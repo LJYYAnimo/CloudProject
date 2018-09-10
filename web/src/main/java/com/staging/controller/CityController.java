@@ -25,7 +25,7 @@ import java.util.List;
  * @author Animo123
  * @since 2018-07-06
  */
-@Controller
+@RestController
 @RequestMapping("/city")
 @Api(tags = "1.0", description = "省下市区管理", value = "省下市区管理")
 public class CityController {
@@ -35,7 +35,6 @@ public class CityController {
 
     @PostMapping("save")
     @ApiOperation(value = "市区添加")
-    @ResponseBody
     public ServerResponse save(@RequestBody City city){
         if(cityService.insert(city)){
             return ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_SAVE);
@@ -49,7 +48,6 @@ public class CityController {
      */
     @PostMapping("delete")
     @ApiOperation(value = "市区删除")
-    @ResponseBody
     public ServerResponse delete(@RequestBody City city){
 //        int  result =  schoolService.selectCount(new EntityWrapper<School>().eq("school_type",schoolType.getId()));
 //        if(result!=0){
@@ -69,7 +67,6 @@ public class CityController {
      */
     @PostMapping("update")
     @ApiOperation(value = "市区更新")
-    @ResponseBody
     public ServerResponse update(@RequestBody City city){
         if(cityService.updateAllColumnById(city)){
             return ServerResponse.createBySuccess(ServerResponseConstant.SERVERRESPONSE_SUCCESS_UPDATE);
@@ -84,7 +81,6 @@ public class CityController {
      */
     @PostMapping("pager")
     @ApiOperation("分页查询")
-    @ResponseBody
     public Pager pager(Integer page,Integer limit){
         Pager p = new Pager(page,limit);
         p.setRows(cityService.queryPage(p));
@@ -94,15 +90,8 @@ public class CityController {
 
 
     @PostMapping("list")
-    @ResponseBody
     public List<City> list(){
         return cityService.selectList(null);
     }
-
-    @GetMapping("page")
-    public String page(){
-        return "city/city";
-    }
-
 }
 

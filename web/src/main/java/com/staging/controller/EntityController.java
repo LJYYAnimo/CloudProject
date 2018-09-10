@@ -8,10 +8,9 @@ import com.staging.common.enums.MIMETypeEnum;
 import com.staging.common.utils.DeleteFileUtil;
 import com.staging.common.utils.FileUtils;
 import com.staging.common.validated.Groups;
-import com.staging.entity.*;
 import com.staging.entity.Entity;
+import com.staging.entity.User;
 import com.staging.entity.vo.EntityVo;
-import com.staging.entity.vo.WorksVo;
 import com.staging.service.EntityService;
 import com.staging.shiro.config.utils.ShiroUtils;
 import io.swagger.annotations.Api;
@@ -24,12 +23,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-
-import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -42,7 +38,7 @@ import java.util.Date;
  * @author Animo123
  * @since 2018-07-06
  */
-@Controller
+@RestController
 @RequestMapping("/entity")
 @Api(tags = "1.0", description = "积分物品管理", value = "积分物品管理")
 public class EntityController {
@@ -52,22 +48,13 @@ public class EntityController {
 
     private final Logger logger = LoggerFactory.getLogger(EntityController.class);
 
-    @GetMapping("page")
-    public String page(){
-        return "entity/entity";
-    }
 
 
-    @GetMapping("addUpdateEntity")
-    public String addUpdateEntity(){
-        return "entity/addUpdateEntity";
-    }
 
 
-    @GetMapping("article")
-    public String Article(){
-        return "entity/article";
-    }
+
+
+
 
     @PostMapping("pager")
     @ApiOperation("分页查询")
@@ -171,9 +158,7 @@ public class EntityController {
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
-//        System.out.println("============处理所有@RequestMapping注解方法，在其执行之前初始化数据绑定器");
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//        dateFormat.setLenient(false);//这句一个不要存在，不然还是处理不了时间转换
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 }

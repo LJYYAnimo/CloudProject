@@ -192,9 +192,8 @@ public class ShiroConfiguration {
             }
             filterChainDefinitionMap.putAll(permissions);
         }
-        permissions.put("/users/find", "perms[user:find]");
         filterChainDefinitionMap.putAll(permissions);
-        filterChainDefinitionMap.put("/**", "authc");
+        filterChainDefinitionMap.put("/admin/**", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
     }
 
